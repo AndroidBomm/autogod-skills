@@ -1,0 +1,9 @@
+dex        加载单个dex文件示例
+dex_so     加载dex和so文件示例
+dexs       加载多个dex文件示例
+jar        加载单个jar文件示例
+jar_so     加载jar和so文件示例
+jars       加载多个jar文件示例
+apk        加载单个apk文件示例
+
+$ext是一个专门负责拓展API功能的对象，你可以使用它加载你自己开发的API

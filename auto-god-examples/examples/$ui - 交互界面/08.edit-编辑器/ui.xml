@@ -1,0 +1,19 @@
+<!--指定ui的模式是edit模式-->
+<ui mode="edit">
+    <!--当ui处于edit模式的时候,状态条会使用系统自带的,所以这里就不能再使用statusbar了-->
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="应用条" title="Appbar" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--                <text gravity="center" h="50" selectable="true" text="标题 title='我是标题'" />-->
+
+                <edit h="max" w="max" />
+
+            </linear>
+        </nested>
+    </coord>
+</ui>

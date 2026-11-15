@@ -1,0 +1,112 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="按钮组" title="ButtonGroup" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="15" w="max">
+
+                <!--默认样式-->
+                <text gravity="center" h="50" selectable="true" text="默认样式" />
+                <button-group>
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <!--排列方向-->
+                <text gravity="center" h="50" selectable="true" text="水平排列 dir='h'" />
+                <button-group dir="h">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <!--单选模式-->
+                <text gravity="center" h="50" selectable="true"
+                    text="使用单选模式 singleSelect='true'" />
+                <button-group dir="h" singleSelect="true">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <text gravity="center" h="50" selectable="true"
+                    text="单选模式,至少选一个 selectRequire='true'" />
+                <button-group dir="h" selectRequire="true" singleSelect="true">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <!--背景颜色-->
+                <text gravity="center" h="50" selectable="true" text="背景颜色 bg='#553574F0'" />
+                <button-group bg="#553574F0" dir="h">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <!--内边距-->
+                <text gravity="center" h="50" selectable="true" text="内边距 padding='30'" />
+                <button-group bg="#553574F0" dir="h" padding="30">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <!--重力-->
+                <text gravity="center" h="50" selectable="true" text="重力 使用gravity='start'" />
+                <!--为了更好的演示,添加上背景演示,设置一定的宽高-->
+                <button-group bg="#553574F0" dir="h" gravity="start" h="300" w="max">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+                <!--单选事件-->
+                <text gravity="center" h="50" selectable="true" text="设置单选事件监听" />
+                <button-group dir="h" id="mButGroup">
+                    <button text="按钮1" />
+                    <button text="按钮2" />
+                    <button text="按钮3" />
+                </button-group>
+
+
+                <!--案例-->
+                <text gravity="center" h="50" selectable="true" text="清新的样式" />
+                <button-group w="max" dir="h">
+                    <button style="outline" id="mButton" text="按钮1" weight="1" />
+                    <button style="outline" text="按钮2" weight="1" />
+                    <button style="outline" text="按钮3" weight="1" />
+                </button-group>
+
+                <!--案例-->
+                <text gravity="center" h="50" selectable="true" text="登录案例" />
+                <card h="auto" margin="5" type="outline" w="max">
+                    <linear gravity="center" h="max" padding="15" w="max">
+                        <text gravity="center|start" padding="7" text="登录" textSize="18"
+                            w="max" />
+                        <linear padding="5" w="max">
+                            <input prefix="邮箱:" suffix="@qq.com" text="2540645023" type="num"
+                                w="max" />
+                            <input prefix="密码:" text="123456" type="pass" w="max" />
+                        </linear>
+                        <check text="记住密码" />
+
+                        <button-group dir="h" gravity="center" padding="10,0,10,10"
+                            singleSelect="true" w="max">
+                            <button style="outline" text="登录" weight="1" />
+                            <button style="outline" text="注册" weight="1" />
+                            <button style="outline" text="重置" weight="1" />
+                        </button-group>
+                    </linear>
+                </card>
+
+                <text h="100" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

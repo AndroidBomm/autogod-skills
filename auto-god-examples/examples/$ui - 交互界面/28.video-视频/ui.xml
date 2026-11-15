@@ -1,0 +1,34 @@
+<ui>
+    <!--使用约束布局：下面显示视频，视频上面显示界面-->
+    <const bg="null" h="max" w="max">
+        <!--视频:当使用约束布局的时候,视频可以被展开,但未必是全屏的
+        path:可以指定相对路径,也可以指定绝对路径
+        autoStart:当视频加载完成之后，会自动播放视频
+        loop:是否循环播放视频
+        -->
+        <video autoStart="true" h="max" id="mVideo" loop="true"
+            path="ag-app-example/$ui - 交互界面/28.video-视频/video.mp4" w="max" />
+        <!--布局 bg 都设置为 null 表示背景颜色是透明的-->
+        <linear bg="null" dir="v" gravity="center" h="max" w="max">
+            <statusbar />
+            <!--标题栏  bg 都设置为 null 表示背景颜色是透明的-->
+            <appbar-layout bg="null" w="max">
+                <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                    subTitle="视频播放" title="Video" w="max" />
+            </appbar-layout>
+            <!--滑动控件-->
+            <nested h="max" w="max">
+                <!--滑动控件需要包裹一个布局-->
+                <linear dir="v" gravity="center" h="max" w="max">
+                    <text h="200" />
+                    <text color="#FFFFFF" gravity="center" h="50" size="25" text="嗯？你想干嘛？" />
+                    <text h="40" />
+                    <button style="outline" color="null" text="悄悄溜走( ⓛ ω ⓛ )"
+                        textColor="#FFFFFF" />
+                    <button style="outline" color="null" text="进入洞房(❤️ ω ❤️)"
+                        textColor="#FFFFFF" />
+                </linear>
+            </nested>
+        </linear>
+    </const>
+</ui>

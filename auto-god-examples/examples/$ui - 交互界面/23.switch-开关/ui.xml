@@ -1,0 +1,46 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="开关" title="Switch" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--设置文字-->
+                <text gravity="center" h="80" selectable="true" text="设置文字 text='我是问文字'" />
+                <switch text="我是文字" />
+
+                <!--设置文字尺寸-->
+                <text gravity="center" h="80" selectable="true" text="设置文字尺寸 textSize='15'" />
+                <switch text="文字尺寸:15" textSize="15" />
+                <switch text="文字尺寸:17" textSize="17" />
+
+                <!--设置文字颜色-->
+                <text gravity="center" h="80" selectable="true"
+                    text="设置文字颜色 textColor='#C94F4F'" />
+                <switch text="我是文字" textColor="#C94F4F" />
+
+                <!--设置选中状态-->
+                <text gravity="center" h="80" selectable="true"
+                    text="设置选中状态 checked='true'" />
+                <switch checked="true" text="设置选中状态" />
+
+                <!--设置主题颜色-->
+                <text gravity="center" h="80" selectable="true"
+                    text="设置主题颜色 color='#C94F4F'" />
+                <switch color="#C94F4F" text="主题颜色:#C94F4F" />
+                <switch color="#57965C" text="主题颜色:#57965C" />
+                <switch color="#3574F0" text="主题颜色:#3574F0" />
+
+                <!--设置背景颜色-->
+                <text gravity="center" h="80" selectable="true"
+                    text="设置背景颜色 bg='#55C94F4F'" />
+                <switch bg="#55C94F4F" text="背景颜色:#55C94F4F" />
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

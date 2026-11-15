@@ -1,0 +1,10 @@
+<ui>
+    <linear w="max" dir="h">
+        <card margin="60,5,5,5" w="max" weight="1" minH="60">
+            <linear w="max" padding="10" >
+                <text id="content" text="正在输入..." />
+            </linear>
+        </card>
+        <img weight="0" margin="10" gravity="center" path="ag-app-example/拓展示例/03.DeepSeek对话/res/me.png" w="46" h="46" radius="23" />
+    </linear>
+</ui>

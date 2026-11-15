@@ -1,0 +1,10 @@
+# ---- 打包产物 / 临时文件 ----
+*.zip
+*.tmp
+*.log
+~$*
+.DS_Store
+Thumbs.db
+desktop.ini
+__pycache__/
+*.pyc

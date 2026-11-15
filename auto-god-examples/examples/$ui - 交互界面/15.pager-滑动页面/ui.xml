@@ -1,0 +1,30 @@
+<ui>
+    <statusbar />
+    <appbar-layout w="max">
+        <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways" subTitle="Pager"
+            title="滑动页面" w="max" />
+    </appbar-layout>
+    <!--这里显示一个tab可以用来和pager进行联动-->
+    <tab id="mTab" w="max">
+        <item icon="ic_map" text="地图" />
+        <item icon="ic_flight" text="机场" />
+        <item icon="ic_explore" text="景点" />
+    </tab>
+    <pager h="max" id="mPager" w="max">
+        <fragment h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+                <text gravity="center" h="50" selectable="true" text="界面1" />
+            </linear>
+        </fragment>
+        <fragment h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+                <text gravity="center" h="50" selectable="true" text="界面2" />
+            </linear>
+        </fragment>
+        <fragment h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+                <text gravity="center" h="50" selectable="true" text="界面3" />
+            </linear>
+        </fragment>
+    </pager>
+</ui>

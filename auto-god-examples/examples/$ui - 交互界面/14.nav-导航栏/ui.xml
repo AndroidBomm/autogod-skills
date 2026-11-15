@@ -1,0 +1,60 @@
+<ui>
+    <statusbar />
+    <coord h="max" w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" subTitle="导航栏" title="Nav" w="max" />
+        </appbar-layout>
+
+        <!--注意：导航栏在其他布局中不能正常显示,在coord中可以,下面的示例中，我是使用margin进行调节间距的-->
+
+        <!--设置背景颜色-->
+        <text gravity="center" h="50" layout_gravity="top" margin="0,50,0,0" selectable="true"
+            text="设置背景颜色: bg='#55C94F4F'" w="max" />
+        <nav bg="#55C94F4F" layout_gravity="top" margin="0,90,0,0">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+        </nav>
+
+        <!--设置图标颜色-->
+        <text gravity="center" h="50" layout_gravity="top" margin="0,160,0,0" selectable="true"
+            text="设置图标颜色: iconTint='#C94F4F'" w="max" />
+        <nav bg="#55C94F4F" iconTint="#C94F4F" layout_gravity="top" margin="0,200,0,0">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+        </nav>
+
+        <!--设置文字颜色-->
+        <text gravity="center" h="50" layout_gravity="top" margin="0,270,0,0" selectable="true"
+            text="设置文字颜色: textColor='#FFFFFF'" w="max" />
+        <nav bg="#55C94F4F" iconTint="#C94F4F" layout_gravity="top" margin="0,310,0,0"
+            textColor="#FFFFFF">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+        </nav>
+
+        <!--设置选中块颜色-->
+        <text gravity="center" h="50" layout_gravity="top" margin="0,380,0,0" selectable="true"
+            text="设置选中块颜色: checkColor='#553574F0'" w="max" />
+        <nav bg="#55C94F4F" checkColor="#553574F0" iconTint="#C94F4F" layout_gravity="top"
+            margin="0,420,0,0" textColor="#FFFFFF">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+        </nav>
+
+        <!--这个导航栏我固定在底部了-->
+        <nav id="mNav" layout_gravity="bottom">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+        </nav>
+    </coord>
+</ui>

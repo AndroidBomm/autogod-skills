@@ -1,0 +1,37 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="进度条" title="Progress" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+
+                <text gravity="center" h="100" selectable="true" text="监听点击事件" />
+                <progress id="mPg" style="line" />
+                <button id="mButton1" text="设置进度" />
+                <button id="mButton2" text="获取进度" />
+
+                <text gravity="center" h="100" selectable="true" text="样式 style='line'" />
+                <progress />
+                <progress style="line" />
+
+                <text gravity="center" h="100" selectable="true" text="运行动画 run='true'" />
+                <progress run="true" />
+                <progress style="line" run="true" />
+
+                <text gravity="center" h="100" selectable="true" text="主题颜色 color='#57965C'" />
+                <progress style="line" color="#57965C" margin="10" run="true" />
+                <progress style="line" color="#C94F4F" margin="10" run="true" />
+
+                <text gravity="center" h="100" selectable="true" text="厚度 thickness='10'" />
+                <progress run="true" thickness="10" />
+                <progress style="line" run="true" thickness="10" />
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

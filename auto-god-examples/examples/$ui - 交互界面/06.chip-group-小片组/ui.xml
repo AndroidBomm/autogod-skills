@@ -1,0 +1,106 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="小片组" title="Chip" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <chip-group>
+                    <chip checkable="true" color="#C94F4F" radius="15" showCheckIcon="true"
+                        text="Chip1" />
+                    <chip checkable="true" showCheckIcon="true" text="Chip2" />
+                    <chip checkable="true" showCheckIcon="true" text="Chip3" />
+                    <chip checkable="true" showCheckIcon="true" showCloseIcon="true" text="Chip3" />
+                    <chip checkable="true" icon="ic_3d" iconTint="#000000" showCheckIcon="true"
+                        showCloseIcon="true" text="Chip3" />
+                </chip-group>
+
+
+
+                <!--设置文本-->
+                <text gravity="center" h="50" selectable="true" text="设置文本 text='文本'" />
+                <chip text="文本" />
+
+                <!--设置图标-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置图标 icon='ic_calendar_today'" />
+                <chip icon="ic_calendar_today" iconTint="#000000" text="设置图标" />
+
+                <!--设置图标颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置图标颜色 iconTint='#C94F4F'" />
+                <chip icon="ic_apps" iconTint="#C94F4F" text="设置图标颜色" />
+
+                <!--设置文本颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置文本颜色 textColor='#C94F4F'" />
+                <chip text="设置文本颜色" textColor="#C94F4F" />
+
+                <!--设置文本尺寸-->
+                <text gravity="center" h="50" selectable="true" text="设置文本尺寸 textSize='12'" />
+                <chip text="设置文本尺寸:12" textSize="12" />
+                <chip text="设置文本尺寸:14" textSize="14" />
+                <chip text="设置文本尺寸:16" textSize="16" />
+
+                <!--设置弧度-->
+                <text gravity="center" h="50" selectable="true" text="设置弧度 radius='0'" />
+                <chip radius="0" text="设置弧度: 0dp" />
+                <chip radius="5" text="设置弧度: 5dp" />
+                <chip radius="10" text="设置弧度:10dp" />
+                <chip radius="15" text="设置弧度:15dp" />
+
+                <!--支持选中-->
+                <text gravity="center" h="50" selectable="true" text="支持选中 checkable='true'" />
+                <chip checkable="true" text="支持选中" />
+
+                <!--支持选中并显示选中图标-->
+                <text gravity="center" h="50" selectable="true"
+                    text="支持选中并显示选中图标 showCheckIcon='true'" />
+                <chip checkable="true" showCheckIcon="true" text="支持选中" />
+
+                <!--选中图标颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="选中图标颜色 checkIconTint='#B54747'" />
+                <chip checkIconTint="#B54747" checkable="true" showCheckIcon="true"
+                    text="选中图标颜色" />
+
+                <!--开启关闭图标-->
+                <text gravity="center" h="50" selectable="true"
+                    text="开启关闭图标 showCloseIcon='true'" />
+                <chip showCloseIcon="true" text="开启关闭图标" />
+
+                <!--关闭图标颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="关闭图标颜色 closeIconTint='#C94F4F'" />
+                <chip closeIconTint="#C94F4F" showCloseIcon="true" text="关闭图标颜色" />
+
+                <!--涟漪颜色-->
+                <text gravity="center" h="50" selectable="true" text="涟漪颜色 ripper='#C94F4F'" />
+                <chip ripper="#C94F4F" text="涟漪颜色" />
+
+                <!--主题颜色-->
+                <text gravity="center" h="50" selectable="true" text="主题颜色 color='#C94F4F'" />
+                <chip checkable="true" color="#C94F4F" text="主题颜色:#C94F4F" />
+                <chip checkable="true" color="#57965C" text="主题颜色:#57965C" />
+                <chip checkable="true" color="#3574F0" text="主题颜色:#3574F0" />
+
+
+                <chip-group>
+                    <chip checkable="true" color="#C94F4F" radius="15" showCheckIcon="true"
+                        text="Chip1" />
+                    <chip checkable="true" showCheckIcon="true" text="Chip2" />
+                    <chip checkable="true" showCheckIcon="true" text="Chip3" />
+                    <chip checkable="true" showCheckIcon="true" showCloseIcon="true" text="Chip3" />
+                    <chip checkable="true" icon="ic_3d" iconTint="#000000" showCheckIcon="true"
+                        showCloseIcon="true" text="Chip3" />
+                </chip-group>
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

@@ -1,0 +1,67 @@
+<ui>
+    <statusbar />
+    <drawer h="max" id="mDrawer" w="max">
+        <coord h="max" w="max">
+            <appbar-layout w="max">
+                <!--设置scrollFlags="never"来固定appbar-->
+                <appbar h="max" id="mAppbar" scrollFlags="never" title="项目" w="max">
+                    <menu icon="ic_library_books" text="日志" />
+                    <menu icon="ic_share_w" text="分享" />
+                </appbar>
+            </appbar-layout>
+
+            <!--设置margin距离上方64dp(留出应用条)距离下方80dp(留出导航栏的位置)-->
+            <linear gravity="center" h="max" padding="0,64,0,80" w="max">
+                <pager h="max" id="mPager" w="max">
+                    <!--主页-->
+                    <fragment h="max" w="max">
+                        <linear bg="colorSurface" gravity="center" h="max" padding="30" w="max">
+                            <!--编写一些脚本启动配置的信息-->
+                            <text text="在这里编写一些脚本配置吧~" />
+                        </linear>
+                    </fragment>
+                    <!--[日志]-->
+                    <fragment h="max" w="max">
+                        <!-- margin="0,0,0,80" 底部要把导航栏的位置空出来,导航栏的高度刚好是80dp-->
+                        <!-- singleLine="false" 日志设置为多行显示-->
+                        <log h="max" singleLine="false" w="max" />
+                    </fragment>
+                </pager>
+            </linear>
+
+            <!--这个按钮用来启动运行脚本-->
+            <fab behavior="fab" icon="ic_play_circle_outline" iconTint="#4E8752" id="mFab"
+                layout_gravity="bottom|center" margin="0,0,0,50" radius="30" size="60" tip="运行" />
+
+            <!--导航栏固定在底部-->
+            <nav bg="colorSurface" id="mNav" layout_gravity="bottom" w="max">
+                <menu icon="ic_home_fill" text="主页" />
+                <menu icon="ic_library_books" text="日志" />
+            </nav>
+        </coord>
+
+        <!-- layout_gravity="start" 在drawer中用这个属性设置为左侧侧滑栏-->
+        <!-- bg="colorSurface" 使用Material3自带的背景颜色-->
+        <linear bg="colorSurface" layout_gravity="start" padding="5">
+            <nested h="max" w="max">
+                <linear padding="15" w="max">
+                    <linear dir="h" gravity="center|left" minH="60" padding="15,0,0,0" w="max">
+                        <img h="70" src="ag-app-uix/img/logo.png" w="70" weight="0" />
+                        <text gravity="center|start" padding="15" size="20" text="项目"
+                            weight="1" />
+                    </linear>
+                    <text color="#3574F0" gravity="center" h="40" size="12" text="获取权限" />
+                    <switch gravity="start|center" text="无障碍" w="max" />
+                    <switch gravity="start|center" text="悬浮窗" w="max" />
+                    <switch gravity="start|center" text="Shizuku" w="max" />
+                    <text color="#3574F0" gravity="center" h="40" size="12" text="其他" />
+                    <switch gravity="start|center" text="保活服务" w="max" />
+                    <switch gravity="start|center" text="悬浮日志" w="max" />
+                    <switch gravity="start|center" text="音量减关闭所有脚本" w="max" />
+                </linear>
+            </nested>
+        </linear>
+
+
+    </drawer>
+</ui>

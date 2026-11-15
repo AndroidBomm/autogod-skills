@@ -1,0 +1,17 @@
+<ui>
+    <statusbar />
+    <linear gravity="center|top" h="max" w="max">
+        <appbar-layout w="max" weight="0">
+            <!--设置scrollFlags="never"来固定appbar-->
+            <appbar h="max" id="mAppbar" back="true" scrollFlags="never" title="DeepSeek" w="max">
+                <menu icon="ic_clear" text="清除" />
+                <menu icon="ic_setting" text="设置" />
+            </appbar>
+        </appbar-layout>
+        <nested id="nested" w="max" h="max" weight="1">
+            <!--用来显示对话内容视图-->
+            <linear id="layout" w="max" h="max"/>
+        </nested>
+        <button id="input" weight="0" w="max" text="输入内容" radius="0"/>
+    </linear>
+</ui>

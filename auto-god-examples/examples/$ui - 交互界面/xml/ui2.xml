@@ -1,0 +1,58 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="副标题" title="我是标题" w="max">
+                <menu clickSubMenu="true">
+                    <item text="菜单1" />
+                    <item text="菜单2" />
+                    <item text="菜单3" />
+                    <item text="菜单4" title="自定义标题1">
+                        <item text="选项1" />
+                        <item text="选项2" />
+                        <item text="选项3" />
+                        <item text="选项4" />
+                        <item text="选项5" title="自定义标题2">
+                            <item text="超级选项1" />
+                            <item text="超级选项2" />
+                            <item text="超级选项3" title="自定义标题3">
+                                <item text="选项1" />
+                                <item text="选项2" />
+                                <item text="选项3" />
+                            </item>
+                            <item text="超级选项4" />
+                            <item text="没有啦" />
+                        </item>
+                    </item>
+                </menu>
+            </appbar>
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+                <radio-group>
+                    <radio text="选项1" />
+                    <radio text="选项2" />
+                    <radio text="选项3" />
+                </radio-group>
+                <button id="mButton" text="我是按钮" />
+                <range />
+                <slider />
+                <switch color="#57965C" gravity="center|start" text="我是开关1" />
+                <switch color="#C94F4F" gravity="center|start" text="我是开关2" />
+                <text h="500" />
+                <switch color="#57965C" gravity="center|start" text="我是开关1" />
+                <switch color="#C94F4F" gravity="center|start" text="我是开关2" />
+                <text h="500" />
+
+
+            </linear>
+
+        </nested>
+
+
+        <!--悬浮按钮-->
+        <fab color="#57965C" iconTint="#FFFFFF" layout_gravity="bottom|end" margin="50" />
+
+    </coord>
+</ui>

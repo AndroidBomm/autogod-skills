@@ -1,0 +1,65 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="图片/图标" title="Img" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--预览-->
+                <text gravity="center" h="50" selectable="true" text="预览" />
+                <linear dir="h" gravity="center" w="max">
+                    <img margin="2" radius="15" src="ag-app-uix/img/q01.png" />
+                    <img margin="2" radius="15" src="ag-app-uix/img/q02.png" />
+                    <img margin="2" radius="15" src="ag-app-uix/img/q03.png" />
+                </linear>
+
+
+                <!--设置图片-->
+                <text gravity="center|start" padding="15" selectable="true"
+                    text="设置图片的方式：\n1.src=icon或者图片路径\n2.path=本地图片地址\n3.url=网络地址"
+                    w="max" />
+
+                <!--设置图标-->
+                <text gravity="center" h="50" selectable="true" text="设置图标 src='ic_apps'" />
+                <linear dir="h" gravity="center" padding="15" w="max">
+                    <img tint="colorOnSurface" margin="5" src="ic_apps" />
+                    <img tint="colorOnSurface" margin="5" src="ic_mail_outline" />
+                    <img tint="colorOnSurface" margin="5" src="ic_share_w" />
+                </linear>
+                <!--设置弧度-->
+                <text gravity="center" h="50" selectable="true" text="设置弧度 radius='15'" />
+                <img radius="15" src="ag-app-uix/img/t01.png" />
+
+
+                <!--设置边框宽度-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置边框宽度 strokeWidth='15'" />
+                <img src="ag-app-uix/img/t02.png" strokeWidth="15" />
+
+                <!--设置边框颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置边框颜色 strokeColor='#C9C0CF'" />
+                <img src="ag-app-uix/img/t03.png" strokeColor="#C9C0CF" strokeWidth="15" />
+
+
+                <!--自动旋转-->
+                <text gravity="center" h="50" selectable="true" text="自动旋转 rotate='true'" />
+                <img h="200" radius="100" rotate="true" scaleType="fit_xy"
+                    src="ag-app-uix/img/t04.png" w="200" />
+
+                <!--设置角度-->
+                <text gravity="center" h="50" selectable="true" text="设置角度 rotation='45'" />
+                <linear dir="h" padding="5" w="max">
+                    <img margin="2" src="ag-app-uix/img/t05.png" />
+                    <img margin="2" rotation="45" src="ag-app-uix/img/t05.png" />
+                </linear>
+
+
+                <text gravity="center" h="200" text="更多的属性请参考网页文档" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

@@ -1,0 +1,12 @@
+<ui>
+    <statusbar />
+    <linear h="max" w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="日志显示" title="Log" w="max" />
+        </appbar-layout>
+        <!--日志控件-->
+        <!-- singleLine="false" 日志设置为多行显示-->
+        <log h="max" singleLine="false" w="max" />
+    </linear>
+</ui>

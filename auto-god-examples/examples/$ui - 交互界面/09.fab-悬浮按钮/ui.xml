@@ -1,0 +1,67 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <!--
+            当设置为scrollFlags="scroll|enterAlways|snap"时,
+            表示当滑动到一定位置时,appbar会自动隐藏和出现
+            -->
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways|snap"
+                subTitle="悬浮按钮" title="Fab" w="max" />
+        </appbar-layout>
+        <!--
+        当被当被coord布局包裹后,appbar可以设置behavior="appbar"属性,
+        表示appbar在被coord布局滑动时,appbar会自动隐藏和出现
+        -->
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="15" w="max">
+                <text color="#FF0000" gravity="center|start" h="100" selectable="true" size="15"
+                    text="注意:在本示例的右下角有一个悬浮按钮,这个悬浮按钮是会跟随滑动页面而自动显示和隐藏的，只需要配置两个属性即可，详细做法请参考代码中的注释。" />
+                <!--主题颜色-->
+                <text gravity="center" h="100" selectable="true" text="主题颜色 color='#57965C'" />
+                <fab color="#57965C" />
+                <fab color="#C94F4F" />
+
+                <!--设置图标-->
+                <text gravity="center" h="100" selectable="true" text="设置图标 icon='ic_apps'" />
+                <fab icon="ic_apps" />
+
+                <!--可以使用icon属性设置本地图片,也可以使用path属性设置本地图片-->
+                <text gravity="center" h="100" selectable="true"
+                    text="使用本地存储的图片 icon='ag-app-uix/img/girl_01.png'" />
+                <fab icon="ag-app-uix/img/girl_01.png" />
+
+                <!--设置图标颜色-->
+                <text gravity="center" h="100" selectable="true"
+                    text="设置图标颜色 iconTint='#000000'" />
+                <fab iconTint="#000000" />
+
+                <!--设置长按提示-->
+                <text gravity="center" h="100" selectable="true"
+                    text="设置长按提示 tip='我是提示'" />
+                <fab tip="我是提示" />
+
+
+                <!--设置弧度-->
+                <text gravity="center" h="100" selectable="true" text="设置弧度 radius='25'" />
+                <fab radius="25" />
+
+
+                <!--设置尺寸-->
+                <text gravity="center" h="100" selectable="true" text="设置尺寸 size='35'" />
+                <fab size="35" />
+                <fab size="45" />
+                <fab size="55" />
+
+
+                <text h="100" />
+            </linear>
+        </nested>
+        <!--
+        当被coord布局包裹后,fab可以设置behavior="fab"属性,
+        表示悬浮按钮在被coord布局滑动时,悬浮按钮会自动隐藏和出现
+        -->
+        <fab behavior="fab" color="#57965C" iconTint="#FFFFFF" layout_gravity="bottom|end"
+            margin="50" tip="发送邮件" />
+    </coord>
+</ui>

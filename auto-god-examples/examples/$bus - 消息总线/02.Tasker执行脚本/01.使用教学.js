@@ -1,0 +1,24 @@
+
+$dialog.create()
+.title("Tasker执行脚本")
+.msg(`
+1.打开Tasker
+2.创建Tasker意图任务
+3.操作(action)填写:'runJs:/sdcard/main.js'
+4.包名(package)填写:'org.aigame.pro'
+5.类名(class)填写:'org.aigame.api.bus.receiver.AgBusReceiver'
+6.目标(type)设置成:'(广播)BroadcastReceiver'
+7.最后执行任务,发送意图,AIGame便会执行/sdcard/main.js脚本
+`)
+.but1("复制类名",(dialog)=>{
+    dialog.dismiss();
+    setClip("org.aigame.api.bus.receiver.AgBusReceiver");
+})
+.but2("复制包名",(dialog)=>{
+    dialog.dismiss();
+    setClip("org.aigame.pro");
+})
+.but3("关闭",(dialog)=>{
+    dialog.dismiss();
+})
+.show();

@@ -1,0 +1,26 @@
+<ui>
+    <statusbar/>
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar id="mAppbar" h="max" title="我是标题" subTitle="副标题" w="max" back="true" scrollFlags="scroll|enterAlways" />
+        </appbar-layout>
+        <nested h="max" w="max" behavior="appbar">
+            <linear gravity="center" h="max" w="max">
+                <radio-group>
+                    <radio text="选项1" />
+                    <radio text="选项2" />
+                    <radio text="选项3" />
+                </radio-group>
+                <range />
+                <slider />
+                <switch color="#57965C" gravity="center|start" text="我是开关1" />
+                <switch color="#C94F4F" gravity="center|start" text="我是开关2" />
+                <text h="500" />
+                <switch color="#57965C" gravity="center|start" text="我是开关1" />
+                <switch color="#C94F4F" gravity="center|start" text="我是开关2" />
+                <text h="500" />
+            </linear>
+        </nested>
+
+    </coord>
+</ui>

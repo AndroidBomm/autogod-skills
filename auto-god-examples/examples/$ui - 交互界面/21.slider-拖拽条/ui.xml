@@ -1,0 +1,41 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="拖拽条" title="Slider" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--设置区间-->
+                <text gravity="center" h="50" selectable="true" text="设置区间 from='0' to='10'" />
+                <slider from="0" to="10" />
+
+                <!--设置当前值-->
+                <text gravity="center" h="50" selectable="true" text="设置当前值 value='35'" />
+                <slider value="35" />
+
+                <!--设置进步-->
+                <text gravity="center" h="50" selectable="true" text="设置进步 step='5'" />
+                <slider step="5" />
+
+                <!--设置主题颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置主题颜色 color='#C94F4F'" />
+                <slider color="#C94F4F" />
+
+                <!--设置标签文字-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置标签文字 label='透明度:'" />
+                <slider label="透明度:" />
+
+                <!--设置背景-->
+                <text gravity="center" h="50" selectable="true" text="设置背景 bg='#55C94F4F'" />
+                <slider bg="#55C94F4F" />
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

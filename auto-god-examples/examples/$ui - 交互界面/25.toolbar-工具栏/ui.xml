@@ -1,0 +1,41 @@
+<ui>
+    <statusbar />
+    <coord h="max" w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="工具条" title="Toolbar" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+                <text h="220" text="内容" />
+                <text h="220" text="内容" />
+                <text h="220" text="内容" />
+                <text h="220" text="内容" />
+                <text h="220" text="内容" />
+                <text h="220" text="内容" />
+            </linear>
+        </nested>
+
+        <toolbar id="mBtmAppbar" layout_gravity="bottom|center" w="max">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+            <menu>
+                <item text="菜单1" />
+                <item text="菜单2" />
+                <item text="菜单3">
+                    <item text="菜单3-1" />
+                    <item text="菜单3-2">
+                        <item text="菜单3-2-1" />
+                        <item text="菜单3-2-2" />
+                        <item text="菜单3-2-3" />
+                    </item>
+                    <item text="菜单3-3" />
+                </item>
+            </menu>
+        </toolbar>
+
+        <fab icon="ic_add" iconTint="#000000" layout_gravity="bottom|end" margin="15" />
+    </coord>
+</ui>

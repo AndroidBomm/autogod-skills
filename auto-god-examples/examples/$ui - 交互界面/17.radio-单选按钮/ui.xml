@@ -1,0 +1,30 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="单选按钮" title="Radio" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+
+                <!--设置主题颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置主题颜色: color='#57965C'" />
+                <radio color="#57965C" text="单选按钮" />
+
+                <!--设置文本颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置文本颜色: textColor='#57965C'" />
+                <radio color="#57965C" text="单选按钮" textColor="#57965C" />
+
+                <!--设置重力:注意把w(宽度)设置最大,否则就默认最小宽度就看不见重力效果了-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置重力: gravity='center|end'" />
+                <radio gravity="center|end" text="我在最右边" w="max" />
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

@@ -1,0 +1,30 @@
+<ui>
+    <statusbar />
+    <appbar back="true" id="mAppbar" title="无障碍授权" w="max" >
+        <menu icon="ic_help" text="帮助"/>
+    </appbar>
+    <!--下拉刷新布局-->
+    <flush id="mFlush" w="max" h="max">
+        <!--列表：用来显示应用信息-->
+        <ls id="mLs" w="max" h="max">
+            <layout w="max">
+                <linear padding="10,10,10,0" w="max">
+                    <card id="card" w="max">
+                        <linear padding="10" w="max" dir="h" gravity="start|center">
+                            <!--应用图标-->
+                            <img id="appIcon" weight="0" w="30" h="30" margin_right="10" />
+                            <linear weight="1" w="max" dir="v" gravity="start|center">
+                                <!--应用名称-->
+                                <text id="appName" />
+                                <!--包名-->
+                                <text id="pkgName" run="true" />
+                            </linear>
+                            <!--无障碍状态-->
+                            <text id="permitStatus" weight="0" />
+                        </linear>
+                    </card>
+                </linear>
+            </layout>
+        </ls>
+    </flush>
+</ui>

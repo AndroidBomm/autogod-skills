@@ -1,0 +1,43 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="文本" title="Text" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <text gravity="center" h="150" selectable="true" text="跑马灯 run='true'" />
+                <text gravity="center" run="true" selectable="true"
+                    text="不丹风景如画，喜马拉雅群峰巍峨，山谷间古寺林立，森林葱郁，河流奔腾，田园村庄点缀其中，宛如世外桃源。" />
+
+
+                <text gravity="center" h="150" selectable="true" text="尺寸 size='12'" />
+                <text gravity="center" size="12" text="文字" />
+                <text gravity="center" size="14" text="文字" />
+                <text gravity="center" size="16" text="文字" />
+
+                <text gravity="center" h="150" selectable="true" text="颜色 color='#57965C'" />
+                <text gravity="center" color="#57965C" text="文字颜色" />
+                <text gravity="center" color="#C94F4F" text="文字颜色" />
+                <text gravity="center" color="#3574F0" text="文字颜色" />
+
+                <text gravity="center" h="150" selectable="true" text="字体 typeface='sans'" />
+                <text gravity="center" typeface="sans" text="文字字体:sans" />
+                <text gravity="center" typeface="serif" text="文字字体:serif" />
+                <text gravity="center" typeface="mono" text="文字字体:mono" />
+                <text gravity="center" typeface="default" text="文字字体:default" />
+                <text gravity="center" typeface="bold" text="文字字体:bold" />
+                <text gravity="center" typeface="italic" text="文字字体:italic" />
+                <text gravity="center" typeface="boldItalic" text="文字字体:boldItalic" />
+
+                <text gravity="center" h="150" selectable="true" text="支持选择复制 selectable='true'" />
+                <text gravity="center" selectable="true" text="在喜马拉雅山脉的东段南麓，隐匿着一个如诗如画的国度 —— 不丹，它宛如一颗未经雕琢的璞玉，散发着独特而迷人的魅力。" />
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

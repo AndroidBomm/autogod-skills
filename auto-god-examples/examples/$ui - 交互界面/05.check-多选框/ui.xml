@@ -1,0 +1,75 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="复选框" title="Check" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+
+                <text gravity="center" h="50" selectable="true" text="先展示一波" />
+                <linear dir="h" w="max">
+                    <check checked="true" color="#57965C" text="吃饭" tint="#FFFFFF" weight="1" />
+                    <check checked="true" color="#C94F4F" text="睡觉" tint="#FFFFFF" weight="1" />
+                    <check checked="true" color="#3574F0" text="追剧" tint="#FFFFFF" weight="1" />
+                </linear>
+                <linear dir="h" w="max">
+                    <check text="撸猫" textColor="#57965C" weight="1" />
+                    <check text="象棋" textColor="#C94F4F" weight="1" />
+                    <check text="吉他" textColor="#3574F0" weight="1" />
+                </linear>
+
+                <!--设置选中-->
+                <text gravity="center" h="50" selectable="true" text="是否选中 checked='true'" />
+                <check checked="true" text="多选按钮" />
+
+                <!--设置文本-->
+                <text gravity="center" h="50" selectable="true" text="设置文本 text='我是文本'" />
+                <check text="我是文本" />
+
+                <!--设置文本颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置文本颜色 textColor='#B54747'" />
+                <check text="我是文本" textColor="#B54747" />
+
+                <!--设置按钮颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置按钮颜色 color='#B54747'" />
+                <check color="#B54747" text="我是文本" />
+
+                <!--设置对勾颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置对勾颜色 tint='#B54747'" />
+                <check color="#2B2D30" text="对勾颜色" tint="#B54747" />
+
+                <!--设置重力-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置重力 gravity='center|end'" />
+                <check gravity="center|end" text="我在最右边" w="max" />
+
+                <!--示例-->
+                <text gravity="center" h="50" selectable="true" text="示例" />
+
+                <card h="auto" type="outline" w="max">
+                    <linear gravity="center" h="max" padding="15" w="max">
+                        <text color="#000000" text="你最爱的家庭成员是?" />
+                        <linear dir="h" w="max">
+                            <check text="爸爸" weight="1" />
+                            <check text="妈妈" weight="1" />
+                            <check text="姐姐" weight="1" />
+                        </linear>
+                        <linear dir="h" w="max">
+                            <check text="妹妹" weight="1" />
+                            <check text="弟弟" weight="1" />
+                            <check checked="true" text="全部" weight="1" />
+                        </linear>
+                    </linear>
+                </card>
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

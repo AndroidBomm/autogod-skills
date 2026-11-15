@@ -1,0 +1,29 @@
+<ui>
+    <statusbar />
+    <appbar-layout w="max">
+        <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+            subTitle="列表" title="ls" w="max" >
+            <menu text="添加元素" icon="ic_plus_round"/>
+        </appbar>
+    </appbar-layout>
+    <linear gravity="center" h="max" w="max" dir="v">
+        <!--列表控件-->
+        <ls h="max" id="mLs" w="max">
+            <!--使用layout标签来定义每个列表元素的布局-->
+            <layout w="max">
+                <linear padding="15,5,15,1" w="max">
+                    <card h="50" w="max" clickable="true">
+                        <linear dir="h" w="max">
+                            <!--适配器会不断创建子view,通过holder.id("mText")获取元素来设置文本-->
+                            <text gravity="start|center" h="max" id="mText" weight="1" padding="15"
+                                text="我是文本" w="max" />
+                            <button text="修改" style="text" textColor="#57965C" id="edtBut" weight="0"/>
+                            <button text="删除" style="text" textColor="#B54747" id="delBut" weight="0"/>
+                        </linear>
+
+                    </card>
+                </linear>
+            </layout>
+        </ls>
+    </linear>
+</ui>

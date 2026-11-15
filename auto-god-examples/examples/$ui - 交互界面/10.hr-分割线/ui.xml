@@ -1,0 +1,34 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="分割线" title="Hr" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--设置颜色-->
+                <text gravity="center" h="70" selectable="true" text="设置颜色 color='#C94F4F'" />
+                <hr color="#C94F4F" />
+
+                <!--设置尺寸-->
+                <text gravity="center" h="70" selectable="true" text="设置尺寸(xp) size='10'" />
+                <hr size="10" />
+
+                <!--设置起点内边距-->
+                <text gravity="center" h="70" selectable="true"
+                    text="设置起点内边距(dp) start='25'" />
+                <hr start="25" />
+
+                <!--设置终点内边距-->
+                <text gravity="center" h="70" selectable="true"
+                    text="设置终点内边距(dp) end='25'" />
+                <hr end="25" />
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

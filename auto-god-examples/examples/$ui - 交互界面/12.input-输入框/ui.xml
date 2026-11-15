@@ -1,0 +1,102 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="输入框" title="Input" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+
+                <!--基础使用-->
+                <text gravity="center" h="50" selectable="true" text="监听事件" />
+                <input id="mInput" text="我是文本" w="max" />
+                <button style="outline" id="mButton" text="点击获取输入框内容" w="max" />
+
+                <!--设置样式-->
+                <text gravity="center" h="50" selectable="true" text="样式 style='outline|fill'" />
+
+                <input text="默认样式" w="max" />
+                <input style="outline" text="outline样式" w="max" />
+                <input style="fill" text="fill样式" w="max" />
+
+                <!--提示文字-->
+                <text gravity="center" h="50" selectable="true" text="提示文字 hint='请输入'" />
+                <input hint="请输入" w="max" />
+
+                <!--默认内容-->
+                <text gravity="center" h="50" selectable="true" text="默认文字 def='默认文字'" />
+                <input def="默认文字" w="max" />
+
+                <!--最大行数-->
+                <text gravity="center" h="50" selectable="true" text="最多行数 maxLines='3'" />
+                <input maxLines="3" w="max" />
+
+                <!--最少行数-->
+                <text gravity="center" h="50" selectable="true" text="最少行数 minLines='3'" />
+                <input minLines="3" w="max" />
+
+                <!--帮助文字-->
+                <text gravity="center" h="50" selectable="true"
+                    text="帮助文字 help='可以输入中文'" />
+                <input help="可以输入中文" w="max" />
+
+                <!--前缀-->
+                <text gravity="center" h="50" selectable="true" text="前缀 prefix='phone:'" />
+                <input prefix="phone:" text="110" w="max" />
+
+                <!--后缀-->
+                <text gravity="center" h="50" selectable="true" text="后缀 suffix='@qq.com'" />
+                <input suffix="@qq.com" text="2450099002" w="max" />
+
+                <!--类型-->
+                <text gravity="center" h="50" selectable="true" text="类型 type='pass'" />
+                <input text="123456" type="pass" w="max" />
+
+                <text gravity="center" h="50" selectable="true" text="类型 type='num'" />
+                <input text="3.1415926535" type="num" w="max" />
+
+                <text gravity="center" h="50" selectable="true" text="类型 type='phone'" />
+                <input text="19972566635" type="phone" w="max" />
+
+                <!--背景颜色-->
+                <text gravity="center" h="50" selectable="true" text="背景颜色 bg='#55C94F4F'" />
+                <input bg="#55C94F4F" w="max" />
+
+                <!--弧度-->
+                <text gravity="center" h="50" selectable="true"
+                    text="弧度 radius='上左,上右,下左,下右'" />
+                <input radius="16" w="max" />
+                <input radius="0,16" w="max" />
+                <input radius="20,20,5,5" w="max" />
+
+                <!--边框颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="边框颜色 strokeColor='#FF0000'" />
+                <input strokeColor="#FF0000" w="max" />
+
+                <!--边框宽度-->
+                <text gravity="center" h="50" selectable="true"
+                    text="边框宽度 strokeWidth='5'" />
+                <input strokeWidth="5" w="max" />
+
+                <!--主题颜色-->
+                <text gravity="center" h="50" selectable="true" text="主题颜色 color='#553574F0'" />
+                <input color="#553574F0" text="主题颜色" w="max" />
+
+                <!--文本颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="文本颜色 textColor='#C94F4F'" />
+                <input text="文本颜色" textColor="#C94F4F" w="max" />
+
+                <!--文本重力-->
+                <text gravity="center" h="50" selectable="true"
+                    text="文本重力 view_gravity='start|bottom'" />
+                <input minLines="3" text="文本" view_gravity="start|bottom" w="max" />
+
+
+                <text h="100" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

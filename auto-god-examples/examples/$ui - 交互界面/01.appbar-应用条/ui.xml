@@ -1,0 +1,71 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="应用条" title="Appbar" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--设置标题-->
+                <text gravity="center" h="50" selectable="true" text="标题 title='我是标题'" />
+                <!--为了方便演示,后续都会加上背景颜色:bg="#F1F0FA"-->
+                <appbar bg="#F1F0FA" title="我是标题" w="max" />
+
+                <!--设置副标题-->
+                <text gravity="center" h="50" selectable="true" text="副标题 subTitle='副标题'" />
+                <appbar bg="#F1F0FA" subTitle="副标题" title="我是标题" w="max" />
+
+                <!--设置标题颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="标题颜色 titleColor='#57965C'" />
+                <appbar bg="#F1F0FA" title="我是标题" titleColor="#57965C" w="max" />
+
+                <!--设置副标题颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="副标题颜色 subTitleColor='#C94F4F'" />
+                <appbar bg="#F1F0FA" subTitle="副标题" subTitleColor="#C94F4F" title="我是标题"
+                    w="max" />
+
+                <!--开启返回按钮-->
+                <text gravity="center" h="50" selectable="true" text="返回按钮 back='true'" />
+                <appbar back="true" bg="#F1F0FA" subTitle="返回按钮" title="我是标题" w="max" />
+
+
+                <!--添加菜单-->
+                <text gravity="center" h="50" selectable="true" text="主菜单 menu(text)" />
+
+                <!--[用法一]只用主菜单-->
+                <appbar back="true" bg="#F1F0FA" subTitle="安卓自动化平台..." title="主菜单"
+                    w="max">
+                    <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+                    <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+                    <menu icon="ic_3d" iconTint="#000000" text="转换" />
+                </appbar>
+
+                <!--添加子菜单-->
+                <text gravity="center" h="50" selectable="true" text="子菜单 menu->item(text)" />
+                <!--[用法二]多级子菜单-->
+                <appbar back="true" bg="#F1F0FA" subTitle="可设置多级子菜单" title="子菜单" w="max">
+                    <menu>
+                        <item text="菜单1" />
+                        <item text="菜单2" />
+                        <item text="菜单3">
+                            <!--item中还允许添加item子菜单-->
+                            <item text="菜单3-1" />
+                            <item text="菜单3-2">
+                                <item text="菜单3-2-1" />
+                                <item text="菜单3-2-2" />
+                                <item text="菜单3-2-3" />
+                            </item>
+                            <item text="菜单3-3" />
+                        </item>
+                    </menu>
+                </appbar>
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

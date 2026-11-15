@@ -1,0 +1,44 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="范围条" title="Range" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+                <!--设置数据区间-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置数据区间 from='0' to='100'" />
+                <range from="0" to="100" />
+
+                <!--设置当前数据区间-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置当前数据区间 fromValue='10' toValue='70'" />
+                <range from="0" fromValue="10" to="100" toValue="70" />
+
+                <!--设置进步-->
+                <text gravity="center" h="50" selectable="true" text="设置进步 step='1' " />
+                <range step="1" to="100" />
+
+                <!--设置主题颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置主题颜色 color='#C94F4F' " />
+                <range color="#C94F4F" to="100" />
+
+                <!--设置文字前缀-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置文字前缀 label='进度:' " />
+                <range label="进度:" to="100" />
+
+                <!--设置背景颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置背景颜色 bg='#55C94F4F' " />
+                <range bg="#55C94F4F" to="100" />
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

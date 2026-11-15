@@ -1,0 +1,33 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="单选按钮组" title="RadioGroup" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+
+                <!--设置背景颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="设置背景颜色: bg='#55C94F4F'" />
+                <radio-group bg="#55C94F4F">
+                    <radio text="单选按钮1" />
+                    <radio text="单选按钮2" />
+                    <radio text="单选按钮3" />
+                </radio-group>
+
+                <!--设置方向-->
+                <text gravity="center" h="50" selectable="true" text="设置方向: dir='h'" />
+                <radio-group dir="h">
+                    <radio text="单选按钮1" />
+                    <radio text="单选按钮2" />
+                    <radio text="单选按钮3" />
+                </radio-group>
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

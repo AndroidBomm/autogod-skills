@@ -1,0 +1,86 @@
+<ui>
+    <statusbar />
+    <appbar-layout w="max">
+        <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways" title="我的旅程" w="max">
+            <menu icon="ic_search_w" iconTint="#000000" text="搜索" />
+            <menu icon="ic_favorite_border" iconTint="#000000" text="收藏" />
+            <menu icon="ic_share_w" iconTint="#000000" text="分享" />
+            <menu>
+                <item text="我的账单"/>
+                <item text="行程记录"/>
+                <item text="客服"/>
+            </menu>
+        </appbar>
+    </appbar-layout>
+    <tab id="mTab" w="max">
+        <item icon="ic_map" text="地图" />
+        <item icon="ic_explore" text="景点" />
+        <item icon="ic_flight" text="机票" />
+    </tab>
+    <pager h="max" id="mPager" w="max">
+        <fragment h="max" w="max">
+            <img h="max" path="ag-app-uix/img/bg_map.png" w="max" />
+        </fragment>
+        <fragment h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+                <text gravity="center" h="50" selectable="true" text="界面2" />
+            </linear>
+        </fragment>
+        <fragment h="max" w="max">
+            <linear h="max" padding="15" w="max">
+
+                <text text="即将起飞" />
+                <text text="2025年7月8日" />
+                <linear dir="h" padding="15" w="max">
+                    <linear gravity="center" weight="0.5">
+                        <text size="30" text="中国" />
+                        <text text="2025年7月8日" />
+                    </linear>
+                    <linear gravity="center" h="max" weight="0">
+                        <img imgTint="#000000" src="ic_arrow_right_alt" />
+                    </linear>
+                    <linear gravity="center" weight="0.5">
+                        <text size="30" text="不丹" />
+                        <text text="2025年7月9日" />
+                    </linear>
+                </linear>
+                <hr margin="0,10,0,10" />
+
+                <text text="已过期" />
+                <text text="2025年3月12日" />
+                <linear dir="h" padding="15" w="max">
+                    <linear gravity="center" weight="0.5">
+                        <text size="30" text="纽约" />
+                        <text text="2025年3月12日" />
+                    </linear>
+                    <linear gravity="center" h="max" weight="0">
+                        <img imgTint="#000000" src="ic_arrow_right_alt" />
+                    </linear>
+                    <linear gravity="center" weight="0.5">
+                        <text size="30" text="加拿大" />
+                        <text text="2025年3月13日" />
+                    </linear>
+                </linear>
+                <hr margin="0,10,0,10" />
+
+                <text text="已过期" />
+                <text text="2024年8月3日" />
+                <linear dir="h" padding="15" w="max">
+                    <linear gravity="center" weight="0.5">
+                        <text size="30" text="尼泊尔" />
+                        <text text="2024年8月3日" />
+                    </linear>
+                    <linear gravity="center" h="max" weight="0">
+                        <img imgTint="#000000" src="ic_arrow_right_alt" />
+                    </linear>
+                    <linear gravity="center" weight="0.5">
+                        <text size="30" text="柬埔寨" />
+                        <text text="2024年8月4日" />
+                    </linear>
+                </linear>
+                <hr margin="0,10,0,10" />
+
+            </linear>
+        </fragment>
+    </pager>
+</ui>

@@ -1,0 +1,25 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="状态条" title="Statusbar" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+
+
+                <text gravity="start" h="100" selectable="true" text="注意:statusbar的本质就是一个TextView,不过它的高度是状态条的高度,用来占位用的,避免有些状态栏把界面挡住了,只有color属性来设置：" />
+
+                <!--设置颜色-->
+                <text gravity="center" h="50" selectable="true" text="设置颜色 color='#57965C'" />
+                <statusbar />
+                <statusbar color="#57965C"/>
+                <statusbar color="#C94F4F"/>
+                <statusbar color="#3574F0"/>
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

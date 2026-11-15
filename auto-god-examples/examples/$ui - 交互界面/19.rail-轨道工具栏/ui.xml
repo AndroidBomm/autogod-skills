@@ -1,0 +1,43 @@
+<ui>
+    <statusbar />
+    <coord h="max" w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="轨道工作条" title="Rail" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <!--使用padding给左边空出来,这样rai不会遮挡这里的控件了-->
+            <linear gravity="center" h="max" padding="100,15,15,15" w="max">
+                <text gravity="start" h="50" selectable="true"
+                    text="设置图标颜色:iconTint='#FF0000'" w="max" />
+                <text gravity="start" h="50" selectable="true"
+                    text="设置文本颜色:textColor='#FF0000'" w="max" />
+                <text gravity="start" h="50" selectable="true"
+                    text="设置选中项颜色:checkColor='#FF0000'" w="max" />
+                <text gravity="start" h="50" selectable="true" text="设置背景颜色:bg='#55FF0000'"
+                    w="max" />
+                <hr />
+                <text gravity="start" selectable="true"
+                    text="接下来讲解menu元素:menu是用来设置选项的,在rail中只有主菜单的概念,在menu中有如下属性："
+                    w="max" />
+                <text gravity="start" selectable="true" text="1.text:设置菜单文字" w="max" />
+                <text gravity="start" selectable="true" text="2.icon:设置菜单图标" w="max" />
+                <text gravity="start" selectable="true" text="3.iconTint:设置菜单图标颜色" w="max" />
+                <text gravity="start" selectable="true"
+                    text="4.showAction:设置菜单显示的模式,有:ifroom,always,never,withtext(不区分大小写)"
+                    w="max" />
+                <text h="100" w="max" />
+            </linear>
+        </nested>
+
+        <!--这里的margin设置上方为100dp,免得把appbar挡住了-->
+        <rail id="mRail" layout_gravity="start" margin="10,100,0,0">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_home_fill" iconTint="#000000" text="主页" />
+            <menu icon="ic_3d" iconTint="#000000" text="转换" />
+            <menu icon="ic_apps" iconTint="#000000" text="应用" />
+        </rail>
+
+
+    </coord>
+</ui>

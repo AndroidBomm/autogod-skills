@@ -1,0 +1,76 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="卡片" title="Card" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+                <!--样式-->
+                <text gravity="center" h="50" selectable="true" text="样式 style='outline'" />
+                <card style="default" h="50" margin="5" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="样式:默认" />
+                    </linear>
+                </card>
+                <card style="fill" h="50" margin="5" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="样式:fill" />
+                    </linear>
+                </card>
+                <card style="outline" h="50" margin="5" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="样式:outline" />
+                    </linear>
+                </card>
+                <card style="elevate" h="50" margin="5" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="样式:elevate" />
+                    </linear>
+                </card>
+
+                <!--支持点击-->
+                <text gravity="center" h="50" selectable="true" text="支持点击 clickable='true'" />
+                <card style="outline" clickable="true" h="50" margin="5" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="支持点击" />
+                    </linear>
+                </card>
+
+                <!--涟漪颜色-->
+                <text gravity="center" h="50" selectable="true" text="涟漪颜色 ripper='#C94F4F'" />
+                <card style="outline" clickable="true" h="50" margin="5" ripper="#C94F4F" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="涟漪颜色" />
+                    </linear>
+                </card>
+
+                <!--卡片弧度-->
+                <text gravity="center" h="50" selectable="true" text="卡片弧度 radius='0'" />
+                <card style="outline" h="50" margin="5" radius="0" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="卡片弧度:0" />
+                    </linear>
+                </card>
+                <card style="outline" h="50" margin="5" radius="10" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="卡片弧度:10" />
+                    </linear>
+                </card>
+                <card style="outline" h="50" margin="5" radius="17" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="卡片弧度:17" />
+                    </linear>
+                </card>
+                <card style="outline" h="50" margin="5" radius="25" w="max">
+                    <linear gravity="center" h="max" w="max">
+                        <text text="卡片弧度:25" />
+                    </linear>
+                </card>
+
+                <text h="100" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

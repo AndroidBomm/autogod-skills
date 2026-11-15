@@ -1,0 +1,81 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="下拉框" title="Drop" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" padding="30" w="max">
+
+                <text gravity="center" h="50" selectable="true" text="基础用法" w="max" />
+
+                <drop style="outline" def="小明" hint="选谁?" id="mDrop" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <button id="mButton" text="获取选中值" w="max" />
+
+                <text gravity="center" h="50" selectable="true" text="样式(默认)style='fill'"
+                    w="max" />
+                <drop w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text gravity="center" h="50" selectable="true" text="样式 style='outline'"
+                    w="max" />
+                <drop style="outline" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text gravity="center" h="50" selectable="true" text="提示 hint='我是提示'"
+                    w="max" />
+                <drop hint="我是提示" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text gravity="center" h="50" selectable="true" text="提示 def='默认项目文字'"
+                    w="max" />
+                <drop def="默认项目文字" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text gravity="center" h="50" selectable="true" text="主题颜色 color='#55C94F4F'"
+                    w="max" />
+                <drop style="outline" color="#55C94F4F" def="主题颜色" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text gravity="center" h="50" selectable="true"
+                    text="设置文本颜色 textColor='#09f24a'" w="max" />
+                <drop style="outline" def="小明" hint="选谁?" textColor="#09f24a" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text gravity="center" h="50" selectable="true" text="隐藏三角图标:hideIcon='true'"
+                    w="max" />
+                <drop style="outline" def="小明" hideIcon="true" hint="选谁?" w="max">
+                    <item text="小明" />
+                    <item text="小王" />
+                    <item text="小李" />
+                </drop>
+
+                <text h="100" selectable="true" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

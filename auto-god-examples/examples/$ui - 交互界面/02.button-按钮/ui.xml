@@ -1,0 +1,72 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="按钮" title="Button" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max" padding="30">
+
+                <!--基础使用-->
+                <text gravity="center" h="50" selectable="true" text="监听点击事件" />
+                <button id="mButton" text="点我试试" />
+
+                <!--按钮样式-->
+                <text gravity="center" h="50" selectable="true"
+                    text="按钮样式 style='text|outline|icon|tonal'" />
+
+                <button text="默认样式" />
+
+                <text gravity="center" h="50" selectable="true" text="按钮样式 style='text'" />
+                <button style="text" text="文本样式" />
+
+                <text gravity="center" h="50" selectable="true" text="按钮样式 style='outline'" />
+                <button style="outline" text="边框样式" />
+
+                <text gravity="center" h="50" selectable="true" text="按钮样式 style='tonal'" />
+                <button style="tonal" text="色调样式" />
+
+                <text gravity="center" h="50" selectable="true" text="按钮样式 style='icon'" />
+                <button style="icon" icon="ic_app" text="图标样式" />
+
+                <!--主题颜色-->
+                <text gravity="center" h="50" selectable="true" text="主题颜色 color='#57965C'" />
+                <button style="text" color="#57965C" text="主题色为绿色" />
+                <button style="text" color="#C94F4F" text="主题色为红色" />
+
+                <!--文本颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="文本颜色 textColor='#FFFFFF'" />
+                <button style="text" color="#57965C" text="文本为白色" textColor="#FFFFFF" />
+                <button style="text" color="#C94F4F" text="文本为白色" textColor="#FFFFFF" />
+
+                <!--文本尺寸-->
+                <text gravity="center" h="50" selectable="true" text="文本尺寸 textSize='20'" />
+                <button text="文本尺寸20" textSize="20" />
+                <button text="文本尺寸25" textSize="25" />
+
+                <!--涟漪颜色-->
+                <text gravity="center" h="50" selectable="true"
+                    text="涟漪颜色 textColor='#FFFFFF'" />
+                <button style="text" ripper="#000000" text="涟漪颜色:黑色" />
+
+                <!--圆角弧度-->
+                <text gravity="center" h="50" selectable="true" text="圆角弧度 radius='8'" />
+                <button radius="8" text="圆角弧度:8dp" />
+                <button radius="15" text="圆角弧度:15dp" />
+
+                <!--内边距-->
+                <text gravity="center" h="50" selectable="true" text="内边距 padding='20'" />
+                <button padding="20" text="内边距" />
+
+                <!--重力-->
+                <text gravity="center" h="50" selectable="true" text="重力 gravity='start'" />
+                <button gravity="start" h="100" margin="20" text="重力:start" w="max" />
+
+
+                <text h="200" />
+            </linear>
+        </nested>
+    </coord>
+</ui>

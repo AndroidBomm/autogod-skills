@@ -1,0 +1,15 @@
+<ui>
+    <statusbar />
+    <coord w="max">
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                subTitle="网页加载" title="WebView" w="max" />
+        </appbar-layout>
+        <nested behavior="appbar" h="max" w="max">
+            <linear gravity="center" h="max" w="max">
+                <!--加载网页   url="http://47.105.110.90/"  -->
+                <webview h="max" id="mWebView" w="max" url="http://47.105.110.90/"/>
+            </linear>
+        </nested>
+    </coord>
+</ui>

@@ -1,0 +1,89 @@
+<ui>
+    <statusbar />
+    <coord h="max" w="max">
+
+        <appbar-layout w="max">
+            <appbar back="true" h="max" id="mAppbar" scrollFlags="scroll|enterAlways"
+                title="PS项目" w="max">
+                <menu icon="ic_add" iconTint="#000000" text="创建" />
+                <menu icon="ic_favorite_border" iconTint="#000000" text="收藏" />
+                <menu icon="ic_share_w" iconTint="#000000" text="分享" />
+                <menu>
+                    <item text="作品商店" />
+                    <item text="历史记录" />
+                    <item text="帮助文档" />
+                </menu>
+            </appbar>
+        </appbar-layout>
+
+        <nested behavior="appbar" h="max" padding="0,0,0,80" w="max">
+            <linear gravity="center" h="max" padding="15" w="max">
+
+                <card margin="0,10,0,10" w="max">
+                    <linear dir="h" h="max" padding="15" w="max">
+                        <linear gravity="center" h="max" weight="0">
+                            <img imgTint="#000000" src="ic_image" />
+                        </linear>
+                        <linear gravity="center|start" h="max" padding="5,0,0,0" weight="1">
+                            <text size="16" text="修改边框" />
+                            <text size="11" text="2025.04.16" />
+                            <text size="11" text="客户发来一张手机截屏,叫我帮忙修改边框..." />
+                        </linear>
+                        <linear gravity="center" h="max" weight="0">
+                            <button style="icon" icon="ic_delete_outline" iconTint="#000000" />
+                        </linear>
+                    </linear>
+                </card>
+
+                <card margin="0,10,0,10" w="max">
+                    <linear dir="h" h="max" padding="15" w="max">
+                        <linear gravity="center" h="max" weight="0">
+                            <img imgTint="#000000" src="ic_image" />
+                        </linear>
+                        <linear gravity="center|start" h="max" padding="5,0,0,0" weight="1">
+                            <text size="16" text="抠图项目" />
+                            <text size="11" text="2025.03.08" />
+                            <text size="11" text="把草地上的小狗抠出来,太可爱啦!" />
+                        </linear>
+                        <linear gravity="center" h="max" weight="0">
+                            <button style="icon" icon="ic_delete_outline" iconTint="#000000" />
+                        </linear>
+                    </linear>
+                </card>
+
+                <card margin="0,10,0,10" w="max">
+                    <linear dir="h" h="max" padding="15" w="max">
+                        <linear gravity="center" h="max" weight="0">
+                            <img imgTint="#000000" src="ic_image" />
+                        </linear>
+                        <linear gravity="center|start" h="max" padding="5,0,0,0" weight="1">
+                            <text size="16" text="拉长腿部" />
+                            <text size="11" text="2025.02.02" />
+                            <text size="11" text="健身美女,可惜腿短,叫我把她的腿拉长点" />
+                        </linear>
+                        <linear gravity="center" h="max" weight="0">
+                            <button style="icon" icon="ic_delete_outline" iconTint="#000000" />
+                        </linear>
+                    </linear>
+                </card>
+
+            </linear>
+        </nested>
+
+        <btm-appbar id="mBtmAppbar" layout_gravity="bottom|center" w="max">
+            <menu icon="ic_menu_line" iconTint="#000000" text="菜单" />
+            <menu icon="ic_mail_outline" iconTint="#000000" text="发送" />
+            <menu icon="ic_delete_outline" iconTint="#000000" text="删除" />
+            <menu>
+                <item text="打开项目" />
+                <item text="清空界面" />
+                <item text="帮助文档">
+                    <item text="创建项目.doc" />
+                    <item text="删除项目.doc" />
+                </item>
+            </menu>
+        </btm-appbar>
+
+        <fab icon="ic_undo_w" iconTint="#000000" layout_gravity="bottom|end" margin="15" />
+    </coord>
+</ui>

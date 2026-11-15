@@ -1,0 +1,14 @@
+<ui>
+    <linear gravity="center" h="max" padding="20" w="max">
+        <card h="auto" w="max">
+            <linear h="auto" padding="15" w="max">
+                <text color="#000000" size="16" text="选择运行模式" />
+                <radio-group dir="h" id="mRadioGroup" w="max">
+                    <radio color="#57965C" gravity="center|start" text="无障碍" />
+                    <radio color="#57965C" gravity="center|start" text="ROOT" />
+                    <radio color="#57965C" gravity="center|start" text="Shizuku" />
+                </radio-group>
+            </linear>
+        </card>
+    </linear>
+</ui>
