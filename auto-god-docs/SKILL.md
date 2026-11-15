@@ -10,9 +10,11 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 > 这三条的共同特征是**全程没有报错**：界面正常、日志安静、行为诡异。
 > 看到这个组合，**先回来查这里**，别去猜业务逻辑。
 
-1. **主线程就是 UI 线程，`Sync` 后缀的 API 绝不能放上去。**
-   `$root.exeRootShellSync()` 在已经 `ui.show()` 起来的实例里会**永久不返回** —— 不报错、不超时、界面直接假死。
-   改用异步 `$root.exeRootShell(cmd, output, terminate, complete)` + **自己的超时兜底**。详见 `api/root.md` 顶部。
+1. **`$root` 的两条真实边界（2026-11 A/B 实测，旧说法「同步必卡死」已作废）。**
+   健康实例里同步 `$root.exeRootShellSync()` **只要 6~11ms**，异步 `$root.exeRootShell()` 约 2 秒，两者可混用、互不干扰。
+   真正会卡死/不回调的是这两个前提：① 本次运行**调过 `$root.getPermit()`**（毒化整条通道）；
+   ② 实例是 **`adb broadcast runJs` 启动的**（残废实例，异步回调全不触发）。
+   详见 `guide/踩坑记录.md` 第十二章、`api/root.md` 顶部。
 2. **不要调用 `$root.getPermit()`。**
    它会把整条 root 通道搞坏（之后任何同步 root 命令永久卡死）。判断权限**只用 `$root.hasPermit()`**。详见 `api/root.md`。
 3. **所有 `$log.*` 只接受一个参数。**
@@ -21,6 +23,9 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 
 **调试时还要记住**：`adb broadcast runJs` 启动的实例是「残废」的（异步回调全不触发、同步调用直接卡死）。
 **判断某个 API 能不能用，必须用客户端「运行」按钮启动**（详见 `debug/adb-setup.md`）。
+**开关 WiFi 断网必须成对下发**：`su -c 'nohup sh -c "svc wifi disable; sleep 4; svc wifi enable" >/dev/null 2>&1 &'`。
+从电脑端单独执行 `svc wifi disable` 会连 adb 一起关掉（模拟器只有 wlan0），实例直接报废。
+这是唯一能让游戏**秒级**弹「连接中断」的手段（约 4 秒，iptables 要 57~120 秒）。详见 `guide/踩坑记录.md` 第十三章。
 
 ---
 
