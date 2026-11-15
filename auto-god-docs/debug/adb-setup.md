@@ -1,3 +1,8 @@
+> **开关 WiFi 会把 adb 一起打断**：雷电只有 `lo` + `wlan0`，adb 也走 wlan0。
+> 从电脑端单独 `svc wifi disable` 会导致设备彻底失联且无法恢复，只能重启实例（约 105 秒）。
+> 必须用**设备端成对下发**：`su -c 'nohup sh -c "svc wifi disable; sleep 4; svc wifi enable" >/dev/null 2>&1 &'`。
+> 详见 `guide/踩坑记录.md` 第十三章。
+
 # ADB 广播调试实操（雷电模拟器 · 已实测跑通）
 
 > 本文是 `debug/adb.md` 协议的**实操落地版**：一套已验证可用的完整流程、可直接复制的命令、以及踩过的坑。
