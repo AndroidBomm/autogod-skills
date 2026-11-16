@@ -1,25 +1,41 @@
-## 滑动条
+# 滑动条
+
+- 更新时间:2026-10-22 10:58:42
+
+> 滑动条-slider
+> 
+> 原生类型:{com.google.android.material.slider.Slider}
 
 
-#滑动条 
 
-更新时间:2026-06-15 07:53:04
 
-滑动条-slider
 
-原生类型:{com.google.android.material.slider.Slider}
-
-  
-  
+<div style="width: 100%; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe 
+    src="//player.bilibili.com/player.html?isOutside=true&aid=116230673406058&bvid=BV18jwKzXEKu&cid=36706649433&p=1" 
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+    scrolling="no" 
+    frameborder="no" 
+    allowfullscreen="true">
+  </iframe>
+</div>
 
 滚动条：常用于动态设置数字参数，通过滑动就可以变换数值。
 
-#一、常用属性
 
-#from - 开始值
+![](./img/slider_demo.png)
 
-设置开始值
+## 一、常用属性
 
+
+### from - 开始值
+
+> 设置开始值
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -29,11 +45,23 @@
         <slider from="20" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#to - 结束值
 
-设置结束值
+![](./img/slider_from.png)
 
+### to - 结束值
+
+> 设置结束值
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -46,11 +74,23 @@
         <slider from="20" to="30" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#value - 初始值
 
-设置初始值
+![](./img/slider_to.png)
 
+### value - 初始值
+
+> 设置初始值
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -60,11 +100,23 @@
         <slider value="50" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#step - 进步值
 
-设置进步值
+![](./img/slider_value.png)
 
+### step - 进步值
+
+> 设置进步值
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -74,11 +126,23 @@
         <slider step="1" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#color - 主题颜色
 
-设置主题颜色
+![](./img/slider_step.png)
 
+### color - 主题颜色
+
+> 设置主题颜色
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -88,11 +152,23 @@
         <slider color="#B44A4A" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#label - 标签文字
 
-设置标签文字
+![](./img/slider_demo.png)
 
+### label - 标签文字
+
+> 设置标签文字
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -102,11 +178,23 @@
         <slider label="进度:" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#labelEnd - 标签文字尾部
 
-设置标签文字尾部
+![](./img/slider_label.png)
 
+### labelEnd - 标签文字尾部
+
+> 设置标签文字尾部
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -117,11 +205,23 @@
         <slider labelEnd="个" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#padding - 内边距
 
-设置内边距
+![](./img/slider_labelEnd.png)
 
+### padding - 内边距
+
+> 设置内边距
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -134,11 +234,23 @@
         <slider padding="15" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#bg - 背景颜色
 
-设置背景颜色
+![](./img/slider_padding.png)
 
+### bg - 背景颜色
+
+> 设置背景颜色
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -149,11 +261,24 @@
         <slider bg="#B44A4A" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#bgImg - 背景图片
 
-设置背景图片
+![](./img/slider_bg.png)
 
+### bgImg - 背景图片
+
+> 设置背景图片
+
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+// 若布局引用图片、视频或其他资源，请先准备文件并改成实际可用的路径。
+var layoutXml = `
 <ui>
     <statusbar />
     <linear w="max" h="max" dir="v" gravity="center">
@@ -163,22 +288,40 @@
         <slider bgImg="/res/bg_slider.png" />
     </linear>
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#storeKey - 应用内存储
 
-应用内存储
+![](./img/slider_bgImg.png)
 
-通过storeKey(存储关键字)指定一个存储整数的关键字，获取值时可以直接通过$storage($存储)获取进度值。
+### storeKey - 应用内存储
 
-注意：不同的控件存储的类型不同，对于本控件(进度条)则存储的是整数类型，表达当前进度值
+> 应用内存储
+> 
+> 通过storeKey(存储关键字)指定一个存储整数的关键字，获取值时可以直接通过$storage($存储)获取进度值。
+> 
+> 注意：不同的控件存储的类型不同，对于本控件(进度条)则存储的是整数类型，表达当前进度值
 
-<!-- 你必须在ui(界面)节点中通过store(存储)指定$storage($存储)的命名空间，等价于使用代码：let storage = $storage.create("MySlider"); -->
+
+```html
+// 将布局保存为字符串；标签表示控件，标签中的属性决定显示效果。
+var layoutXml = `
+<!-- 你必须在ui(界面)节点中通过store(存储)指定$storage($存储)的命名空间，等价于使用代码：var storage = $storage.create("MySlider"); -->
 <ui store="MySlider">
     <statusbar />
-    <!-- 使用storeKey(存储关键字)属性，指定关键字，等价于使用代码：let data = $storage.create("MySlider").getFloat("progress"); -->
-    <!-- 使用storeDef(存储默认值)属性，指定关键字，等价于使用代码：let data = $storage.create("MySlider").getFloat("progress",50); -->
+    <!-- 使用storeKey(存储关键字)属性，指定关键字，等价于使用代码：var data = $storage.create("MySlider").getFloat("progress"); -->
+    <!-- 使用storeDef(存储默认值)属性，指定关键字，等价于使用代码：var data = $storage.create("MySlider").getFloat("progress",50); -->
     <slider storeKey="progress" storeDef="50" />
 </ui>
+`;
+// 解析布局后得到界面对象，显示它即可查看本节属性的效果。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
 
 如果我们已经配置好了应用内存储，则可以直接获取数据：
 
@@ -186,231 +329,267 @@
 二、不是所有的控件都支持应用内存储；
 三、不同的控件存储的数据类型可能都不一致，例如：输入类型的控件存储的是字符串类型，开关、多选框存储的就是布尔类型的数据。
 
+
+```javascript
 //创建(或者加载)存储对象
-let storage = $storage.create("MySlider");//名称要一致
+var storage = $storage.create("MySlider");//名称要一致
 //获取数据
-let data = storage.getFloat("progress",50);//数据类型是小数
+var data = storage.getFloat("progress",50);//数据类型是小数
+```
 
-#二、常用函数
 
-#setBg(color)
+## 二、常用函数
 
-设置背景颜色
 
-参数 : color {int} 颜色值
+### setBg(color)
 
-版本 : 1.8.2
+> 代码里把整个滑动条的背景涂成指定颜色（用颜色数字）。
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置背景颜色
-slider.setBg($color.RED);
+- 参数 : color {Number} 颜色数字，例如 $color.RED
+- 版本 : 1.8.2
 
-#setBg(color)
 
-设置背景颜色
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setBg($color.RED); //背景涂成红色
+```
 
-参数 : color {string} 颜色字符串
 
-版本 : 1.8.2
+### setBg(color)
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置背景颜色
-slider.setBg("#1E1F22");
+> 代码里把整个滑动条的背景涂成指定颜色（用颜色字符串，如 "#FF0000"）。
 
-#setColor(color)
+- 参数 : color {String} 颜色字符串，例如 "#FF0000"
+- 版本 : 1.8.2
 
-设置主题颜色
 
-参数 : color {int} 颜色值
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setBg("#FF0000"); //背景涂成红色
+```
 
-版本 : 1.8.2
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置主题颜色
-slider.setColor($color.RED);
+### setColor(color)
 
-#setColor(color)
+> 代码里把滑动条的主题色（小圆点、已拖过的那一段线）换成指定颜色（颜色数字版）。
 
-设置主题颜色
+- 参数 : color {Number} 颜色数字，例如 $color.BLUE
+- 版本 : 1.8.2
 
-参数 : color {string} 颜色字符串
 
-版本 : 1.8.2
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setColor($color.BLUE); //主题色变蓝
+```
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置主题颜色
-slider.setColor("#1E1F22");
 
-#onLabel(callback)
+### setColor(color)
 
-设置标签格式化
+> 代码里把滑动条的主题色换成指定颜色（颜色字符串版，如 "#3574F0"）。
 
-参数 : callback {(floatValue)=>{ return "标签"; }} 格式化回调
+- 参数 : color {String} 颜色字符串，例如 "#3574F0"
+- 版本 : 1.8.2
 
-#onChange(callback)
 
-设置数值变化监听
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setColor("#3574F0"); //主题色变蓝
+```
 
-注意:只监听由用户手动触发的数值变化,若为编程时设置的数值,则忽略
 
-参数 : callback {(value)=>{}}
+### onLabel(callback)
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置选中的下标
-slider.onChange((value)=>{
-    //..
+> 自定义拖动时弹出的那个小标签上显示什么字。
+> 
+> 你传一个函数，拖动到某个数值时系统会把当前数值传给你，你返回一段想显示的文字。返回 null 则显示原始数字。
+
+- 参数 : callback {function} 格式化函数，参数是当前数值，返回要显示的文字
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.onLabel(function(value) {
+    return "评分 " + value;
 });
-//取消监听 slider.onChange(null);
+```
 
-#getValue()
 
-获取当前进度值
+### onChange(callback)
 
-返回 : {float} 当前数值
+> 监听用户拖动滑动条：小圆点一动就回调，并告诉你当前数值。
+> 
+> 注意：只监听用户手动拖出来的变化，代码里 setValue 不会触发。传 null 可取消监听。
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//获取当前进度值
-let val = slider.getValue();
+- 参数 : callback {function} 变化回调，参数是当前数值；传 null 取消监听
 
-#setValue(value)
 
-设置数据
-
-参数 : value {float} 当前值
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置当前值
-slider.setValue(10);
-
-#setFrom(from)
-
-设置数据
-
-参数 : from {float} 开始值
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置开始大小
-slider.setFrom(0);
-
-#setStep(step)
-
-设置数据
-
-参数 : step {float} 进步值
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置进步值
-slider.setStep(1);
-
-#setTo(to)
-
-设置数据
-
-参数 : to {float} 结束值
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置结束大小
-slider.setTo(100);
-
-#setData(from, to)
-
-设置数据
-
-参数 : from {float} 开始值(当前值一致)
-
-参数 : to {float} 结束值
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置数据(开始,结束)
-slider.setData(0,100);
-
-#setData(from, to, value)
-
-设置数据
-
-参数 : from {float} 开始值
-
-参数 : to {float} 结束值
-
-参数 : value {float} 当前值
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//设置数据(开始,结束,当前值)
-slider.setData(0,100,20);
-
-#onTouchStart(callback)
-
-监听触摸开始
-
-用户用手指滑动时，当触摸开始时回调。若要取消监听，则设置为null即可。
-
-参数 : callback {()=>{}} 回调
-
-版本 : 1.9.5
-
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//监听触摸开始
-slider.onTouchStart(()=>{
-    //..
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.onChange(function(value) {
+    log("当前值:" + value);
 });
+```
 
-#onTouchStop(callback)
 
-监听触摸结束
+### getValue()
 
-用户用手指滑动时，当触摸结束时回调。若要取消监听，则设置为null即可。
+> 读出小圆点当前停在多少。
 
-参数 : callback {()=>{}} 回调
+- 返回 : {number} 当前数值
 
-版本 : 1.9.5
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let slider = ui.id("mSlider");
-//监听触摸结束
-slider.onTouchStop(()=>{
-    //..
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setValue(50);
+var val = slider.getValue(); //读出来
+log("当前是" + val);
+```
+
+
+### setValue(value)
+
+> 代码里直接把小圆点跳到某个数值。
+
+- 参数 : value {Number} 要设的数值
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setValue(50); //小圆点跳到 50
+```
+
+
+### setFrom(from)
+
+> 代码里设置滑动条允许的最小值（最左边是几）。
+
+- 参数 : from {Number} 最小值
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setFrom(10); //最左边变成 10
+```
+
+
+### setStep(step)
+
+> 设置每次拖动要跳几格（步长）。比如步长 5，小圆点就只能停在 0、5、10、15…
+
+- 参数 : step {Number} 步长
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setStep(5); //每次跳 5
+```
+
+
+### setTo(to)
+
+> 代码里设置滑动条允许的最大值（最右边是几）。
+
+- 参数 : to {Number} 最大值
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setTo(200); //最右边变成 200
+```
+
+
+### setData(from, to)
+
+> 一次性设置滑动条的最小值、最大值（开始值和结束值）。结束值必须比开始值大。
+
+- 参数 : from {Number} 最小值（开始）
+- 参数 : to {Number} 最大值（结束），必须比 from 大
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setData(10, 90); //最小 10，最大 90
+```
+
+
+### setData(from, to, value)
+
+> 一次性设置最小值、最大值，并把小圆点直接放到某个当前值。结束值必须比开始值大。
+
+- 参数 : from {Number} 最小值（开始）
+- 参数 : to {Number} 最大值（结束），必须比 from 大
+- 参数 : value {Number} 小圆点当前位置
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.setData(10, 90, 30); //最小 10，最大 90，小圆点停在 30
+```
+
+
+### onTouchStart(callback)
+
+> 监听用户“刚用手指按住滑动条”这一刻，立刻回调你传进来的函数（没有参数）。
+> 
+> 传 null 可取消监听。
+
+- 参数 : callback {function} 手指按下时回调，无参数；传 null 取消
+- 版本 : 1.9.5
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.onTouchStart(function() {
+    log("开始拖了");
 });
+```
 
 
----
+### onTouchStop(callback)
+
+> 监听用户“手指离开滑动条”这一刻，立刻回调你传进来的函数（没有参数）。
+> 
+> 传 null 可取消监听。
+
+- 参数 : callback {function} 手指松开时回调，无参数；传 null 取消
+- 版本 : 1.9.5
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><slider id="mSlider" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var slider = ui.id("mSlider"); //根据 id 拿到这个滑动条
+slider.onTouchStop(function() {
+    log("松手了");
+});
+```
+
+

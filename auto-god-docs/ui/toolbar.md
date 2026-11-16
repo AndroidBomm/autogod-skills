@@ -1,27 +1,43 @@
-## 工具栏
+# 工具栏
+
+- 更新时间:2026-10-22 10:58:42
+
+> 工具栏-toolbar
+> 
+> 原生类型:{com.google.android.material.bottomappbar.BottomAppBar}
 
 
-#工具栏 
 
-更新时间:2026-06-15 07:53:05
 
-工具栏-toolbar
 
-原生类型:{com.google.android.material.bottomappbar.BottomAppBar}
-
-  
-  
+<div style="width: 100%; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe 
+    src="//player.bilibili.com/player.html?isOutside=true&aid=116230807687629&bvid=BV1ybwKzyEt9&cid=36707238993&p=1" 
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+    scrolling="no" 
+    frameborder="no" 
+    allowfullscreen="true">
+  </iframe>
+</div>
 
 一般放在布局的最下方作为工具条
 
-#一、常用属性
 
-#bg - 背景颜色
+![](./img/toolbar-fabMode-out.png)
 
-设置背景颜色
+## 一、常用属性
 
-icon/图标：用于指定图标，可以填写图标库的名称，也可以填写图标的相对路径或者绝对路径
 
+### bg - 背景颜色
+
+> 设置背景颜色
+> 
+> icon/图标：用于指定图标，可以填写图标库的名称，也可以填写图标的相对路径或者绝对路径
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <toolbar w="max" bg="#C94F4F">
@@ -30,11 +46,24 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <menu icon="ic_more_horiz_fill" text="更多" />
     </toolbar>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#bgImg - 背景图片
 
-设置背景图片
+![](./img/toolbar-bg.png)
 
+### bgImg - 背景图片
+
+> 设置背景图片
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+// 示例用到的本地资源需要提前准备，请把文件路径改为项目中的实际路径。
+var layoutXml = `
 <ui>
     <statusbar />
     <toolbar w="max" bgImg="example/$ui - 交互界面/26.toolbar-工具条/img/img.png">
@@ -43,15 +72,30 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <menu icon="ic_more_horiz_fill" text="更多" />
     </toolbar>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#二、锚定系统
+
+![](./img/toolbar-bgImg.png)
+
+## 二、锚定系统
 
 在M3的布局中有一种很有趣的锚定系统，它允许多个组件通过锚定来进行布局的调整，类似于船舶停靠在码头。
 
 在这里我将实现最常用的fab(悬浮按钮)和toolbar(应用条)的锚定系统，值得提醒的是：有一件比较遗憾的事情，目前锚点系统中，只有toolbar(工具条)可以和fab(悬浮按钮)组成联动效果。
 
+
+![](./img/toolbar-fabMode-out.png)
+
 示例代码：
 
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <!--
@@ -109,9 +153,19 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         -->
     </coord>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#设置按钮模式
 
+### 设置按钮模式
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <coord h="max" w="max">
@@ -141,17 +195,57 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <fab anchorLayout="toolbar" icon="ic_add_outline" iconTint="txt" radius="27" />
     </coord>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#按钮模式：(in)内部
 
-<toolbar fabMode="in" w="max" />
+#### 按钮模式：(in)内部
 
-#按钮模式：(out)外部
 
-<toolbar fabMode="out" w="max" />
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabMode="in" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#设置按钮重力
 
+![](./img/toolbar-fabMode-in.png)
+
+#### 按钮模式：(out)外部
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabMode="out" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+![](./img/toolbar-fabMode-out.png)
+
+### 设置按钮重力
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <coord h="max" w="max">
@@ -181,19 +275,59 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <fab anchorLayout="toolbar" icon="ic_add_outline" iconTint="txt" radius="27" />
     </coord>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#按钮重力：(center)中间
 
-<toolbar fabGravity="center" w="max" />
+#### 按钮重力：(center)中间
 
-#按钮重力：(end)结束
 
-<toolbar fabGravity="end" w="max" />
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabGravity="center" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#设置按钮外边距(中间)
+
+![](./img/toolbar-fabGravity-center.png)
+
+#### 按钮重力：(end)结束
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabGravity="end" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+![](./img/toolbar-fabGravity-end.png)
+
+### 设置按钮外边距(中间)
 
 该属性需要指定fabGravity(按钮重力)=center(中间)
 
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <coord h="max" w="max">
@@ -223,19 +357,59 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <fab anchorLayout="toolbar" icon="ic_add_outline" iconTint="txt" radius="27" />
     </coord>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#按钮外边距：10
 
-<toolbar fabMargin="10" w="max" />
+#### 按钮外边距：10
 
-#按钮外边距：30
 
-<toolbar fabMargin="30" w="max" />
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabMargin="10" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#设置按钮外边距(结束)
+
+![](./img/toolbar-fabMargin-m.png)
+
+#### 按钮外边距：30
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabMargin="30" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+![](./img/toolbar-fabMargin-s.png)
+
+### 设置按钮外边距(结束)
 
 该属性需要指定fabGravity(按钮重力)=end(结束)
 
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <coord h="max" w="max">
@@ -265,17 +439,57 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <fab anchorLayout="toolbar" icon="ic_add_outline" iconTint="txt" radius="27" />
     </coord>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#按钮结束外边距：10
 
-<toolbar fabEndMargin="10" w="max" />
+#### 按钮结束外边距：10
 
-#按钮结束外边距：30
 
-<toolbar fabEndMargin="30" w="max" />
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabEndMargin="10" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#设置按钮弧度
 
+![](./img/toolbar-fabEndMargin-m.png)
+
+#### 按钮结束外边距：30
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabEndMargin="30" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+![](./img/toolbar-fabEndMargin-s.png)
+
+### 设置按钮弧度
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
 <ui>
     <statusbar />
     <coord h="max" w="max">
@@ -305,27 +519,66 @@ icon/图标：用于指定图标，可以填写图标库的名称，也可以填
         <fab anchorLayout="toolbar" icon="ic_add_outline" iconTint="txt" radius="27" />
     </coord>
 </ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#按钮弧度：10
 
-<toolbar fabRadius="10" w="max" />
+#### 按钮弧度：10
 
-#按钮弧度：30
 
-<toolbar fabRadius="30" w="max" />
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabRadius="10" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#三、常用函数
 
-#menu(callback)
+![](./img/toolbar-fabRadius-m.png)
 
-监听菜单事件
+#### 按钮弧度：30
 
-参数 : callback {(title)=>{}} 菜单点击事件
 
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <toolbar fabRadius="30" w="max" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+![](./img/toolbar-fabRadius-s.png)
+
+## 三、常用函数
+
+
+### menu(callback)
+
+> 监听菜单事件
+
+- 参数 : callback {function(title){}} 菜单点击事件
+
+
+```javascript
 //监听菜单事件
-toolbar.menu((title)=>{
+toolbar.menu(function(title){
     console.log(title);
 });
+```
 
 
----

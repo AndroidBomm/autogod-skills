@@ -1,933 +1,1013 @@
 # $file - 文件系统
 
-- 更新时间:2026-04-04 08:56:39
+- 更新时间:2026-10-22 10:55:48
 
-文件系统
+> 文件系统对象（脚本里写作 $file，中文名叫 $文件）。
+> 
+> 它是你操作手机里各种文件、文件夹的"工具箱"：可以读文件、写文件、创建、删除、复制、移动、
+> 罗列目录里有哪些文件，还能查询手机里的图片、视频、音频媒体信息。
+> 
+> 新手提示：路径既可以写完整绝对路径（如 "/sdcard/Download/a.txt"），也可以写相对脚本目录的
+> 相对路径（如 "./main.js"、"res"）。写入操作通常需要把文件放到外部存储（SD 卡）目录。
 
-文件系统本身是用来操作外部存储(sdcard)文件的，但是部分函数也可以操作assets目录(app打包后的项目目录)下的文件。
 
-如果你希望通过$file操作assets下的文件，你需要知道如下规则：
 
-1.assets中的文件夹不能以_开头(安卓机制)否则无法读取文件
+```javascript
+// 读取一个文本文件的全部内容
+var text = $file.read("/sdcard/Download/config.txt");
+// 把内容写到另一个新文件里，完成一次复制
+$file.write(text, "/sdcard/Download/config-copy.txt");
+```
 
-2.assets只能进行读取操作，因此我们可以进行的操作有：罗列文件、拷贝文件、读取文件
+
+
 
 ### uri(path)
 
-获得Uri对象
+> 把一个本地文件路径转换成系统可共享的 Uri（内容提供者地址）。
+> 
+> 有时候你想把手机里的一个本地文件发给别的 App（比如微信），别的 App 不能直接访问你的
+> 私有文件路径，需要先把路径"包装"成一个 Uri 地址。本方法就是干这个用的，常用于分享文件。
 
-通过文件提供器{FileProvider}来解析文件路径，获得{Uri}对象。
-
-如果你想单纯的解析字符串构建Uri对象，那么可以使用$http.uri("uriStr");函数
-
-该函数只能操作外部存储(sdcard)文件，不能操作assets目录下的文件。
-
-- 参数 : path {String} 路径
-
-- 返回 : {Uri} Uri对象
-
+- 参数 : path {String} 要转换的本地文件路径（绝对路径或相对脚本目录的路径）
+- 返回 : {Uri} 包装后的 Uri 对象；转换失败时可能返回 null
 - 版本 : 1.3.7
 
-```javascript
-//一般用来获取图片uri
-let uri = $file.uri("/storage/emulated/0/Pictures/小红.png");
 
+```javascript
+// 把一张本地图片的路径包装成 Uri，便于分享给其它 App
+var uri = $file.uri("/storage/emulated/0/Pictures/小红.png");
+log(uri); // 输出类似 content:// 开头的地址
 ```
+
+
 ### open(path)
 
-获得File对象
+> 打开（获得）一个文件对象 File，并不会真正读写文件内容。
+> 
+> 它只是根据路径造一个 File 对象给你，方便你后续调用 exists、isFile 之类的判断。
+> 路径若写成相对路径，会自动补全到脚本所在的外部存储目录。
 
-该函数本质上是一个拼接函数，无论传入的path是否存在，都会根据构想返回一个完整路径。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {File} 文件对象
-
+- 参数 : path {string} 文件或文件夹路径（绝对路径或相对路径）
+- 返回 : {File} 对应的 Java File 文件对象
 - 版本 : 1.0.0
 
-```javascript
-//获得res目录
-let file = $file.open("res");
-alert("文件对象",file);///storage/emulated/0/Pictures/API教学/res
 
+```javascript
+// 根据路径得到一个 File 对象（这里指向脚本目录下的 res 文件夹）
+var file = $file.open("res");
+log(file.getAbsolutePath()); // 输出该路径的完整绝对路径
 ```
+
+
 ### isFile(path)
 
-是否是文件
+> 检查路径是否为文件。
+> 
+> 判断这个路径指向的到底是一个"文件"（比如 main.js）还是一个"文件夹"（比如 res）。
+> 如果路径根本不存在，会直接返回 false。
 
-如果传入的路径不存在或者不是目录都会返回false，该函数只能操作外部存储(sdcard)文件，不能操作assets目录下的文件。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {boolean} 是否是文件
-
+- 参数 : path {string} 要判断的路径（绝对路径或相对路径）
+- 返回 : {boolean} 是文件返回 true，不是文件或路径不存在返回 false
 - 版本 : 1.0.0
 
-```javascript
-//是否是文件
-log($file.isFile("res"));//false
-log($file.isFile("main.js"));//true
 
+```javascript
+// 判断 res 这个路径是不是文件（它其实是文件夹，所以是 false）
+log($file.isFile("res"));      // false
+// 判断 main.js 是不是文件（它就是一个文件，所以是 true）
+log($file.isFile("main.js"));  // true
 ```
+
+
 ### isDir(path)
 
-是否是文件夹
+> 检查路径是否为目录（文件夹）。
+> 
+> 判断这个路径指向的是不是一个文件夹。如果路径根本不存在，会直接返回 false。
 
-如果传入的路径不存在或者不是目录都会返回false，该函数只能操作外部存储(sdcard)文件，不能操作assets目录下的文件。
-
-- 参数 : path {string} 路径
-
-- 返回 : {boolean} 是否是文件夹
-
+- 参数 : path {string} 要判断的路径（绝对路径或相对路径）
+- 返回 : {boolean} 是文件夹返回 true，否则返回 false
 - 版本 : 1.0.0
 
-```javascript
-//是否是目录
-log($file.isDir("res"));//true
-log($file.isDir("main.js"));//false
 
+```javascript
+// res 是文件夹，返回 true
+log($file.isDir("res"));      // true
+// main.js 是文件不是文件夹，返回 false
+log($file.isDir("main.js"));  // false
 ```
+
+
 ### isEmptyDir(path)
 
-是否是空文件夹
+> 判断一个文件夹是不是空的（里面没有任何文件）。
+> 
+> 如果路径指向的是一个普通文件，也算作"空"（返回 true）；如果路径不存在，也返回 true。
 
-只有当目标路径是目录并且存在文件的时候才会返回false，如果文件不存在或者不是目录都会返回true。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {boolean} 是否是空文件夹
-
+- 参数 : path {string} 要判断的文件夹路径
+- 返回 : {boolean} 文件夹为空（或本身是文件、或不存在）时返回 true
 - 版本 : 1.0.0
 
-```javascript
-//是否是空目录
-log($file.isEmptyDir("res"));//false
-log($file.isEmptyDir("xml"));//true
 
+```javascript
+// res 文件夹里有东西，返回 false
+log($file.isEmptyDir("res")); // false
+// xml 文件夹是空的，返回 true
+log($file.isEmptyDir("xml")); // true
 ```
+
+
 ### isEmpty(path)
 
-是否是空文件或文件夹
+> 判断一个文件或文件夹是不是"空的"。
+> 
+> 如果是文件夹，就看里面有没有内容；如果是文件，就看文件里有没有写过任何内容。
+> 一句话搞定，不用再分情况。
 
-如果不存在则返回false
-
-如果是文件则判断文件内容是否为空
-
-如果是文件夹则判断文件夹是否为空
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {boolean} 是否是文件夹
-
+- 参数 : path {string} 要判断的文件或文件夹路径
+- 返回 : {boolean} 为空返回 true，有内容返回 false
 - 版本 : 1.0.0
 
-```javascript
-//是否是空文件或文件夹
-log($file.isEmpty("res"));//false
-log($file.isEmpty("xml"));//true
-log($file.isEmpty("main.js"));//false
 
+```javascript
+// res 文件夹里有东西，不是空的
+log($file.isEmpty("res"));      // false
+// xml 文件夹是空的
+log($file.isEmpty("xml"));      // true
+// main.js 文件里有内容
+log($file.isEmpty("main.js"));  // false
 ```
+
+
 ### join(parent, child)
 
-路径拼接
+> 把两段路径拼接成一段完整路径。
+> 
+> 手动拼路径时最容易漏掉或多加"/"，本方法自动帮你处理好斜杠。比如父级是 "sdcard"、
+> 子级是 "Pictures"，就会得到 "sdcard/Pictures"。
 
-- 参数 : parent {string} 路径(不支持相对路径)
-
-- 参数 : child {string} 路径(不支持相对路径)
-
-- 返回 : {string} 路径
-
+- 参数 : parent {string} 前面那一段路径
+- 参数 : child {string} 后面要接上去的那一段路径
+- 返回 : {string} 拼接好的完整路径
 - 版本 : 1.0.0
 
-```javascript
-let path = $file.join("sdcard", "Pictures");
-alert("路径",path);
 
+```javascript
+// 把两段路径拼起来，自动补好中间的斜杠
+var path = $file.join("sdcard", "Pictures");
+log(path); // 输出：sdcard/Pictures
 ```
+
+
 ### join(path)
 
-拼接路径
+> 把很多段路径依次拼接成一条完整路径。
+> 
+> 当你有一大堆文件夹名字需要一层层拼起来时，用这个版本最方便：把它们放进一个数组里传进去。
+> 如果数组里只有一段，就直接返回那一段；数组为空则返回 null。
 
-- 参数 : path {string[]} 路径数组(不支持相对路径)
-
-- 返回 : {string} 拼接好的路径
-
+- 参数 : path {string[]} 由多段路径组成的数组（列表）
+- 返回 : {string} 拼接好的完整路径；数组为空时返回 null
 - 版本 : 1.0.0
 
-```javascript
-let path = $file.join(["sdcard", "Pictures", "我的项目", "res"]);
-alert("路径",path);
 
+```javascript
+// 把多段路径一次拼好
+var path = $file.join(["sdcard", "Pictures", "我的项目", "res"]);
+log(path); // 输出：/sdcard/Pictures/我的项目/res
 ```
+
+
 ### create(path)
 
-创建文件
+> 创建一个空白文件（注意：是文件，不是文件夹）。
+> 
+> 如果这个路径已经存在文件，就不会重复创建，直接返回 false；创建成功返回 true。
+> 它只会建出一个空文件，要写内容请再调用 write。
 
-如果目录不存在,则会自动创建目录。此函数只能操作外部存储(sdcard)文件，不能操作assets目录下的文件。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {boolean} 是否创建成功(文件存在会返回false)
-
+- 参数 : path {string} 要创建的文件路径
+- 返回 : {boolean} 创建成功返回 true，文件已存在或失败返回 false
 - 版本 : 1.0.0
 
-```javascript
-$file.create("xml/res/test.js");
 
+```javascript
+// 在 xml/res 目录下创建一个空的 test.js 文件
+var ok = $file.create("xml/res/test.js");
+log("创建结果：" + ok);
 ```
+
+
 ### mkdir(path)
 
-创建目录
+> 创建一个文件夹（目录）。
+> 
+> 如果路径里中间的文件夹不存在，会一并把它们建出来（可一次建多层）。创建成功返回 true。
+> 注意区分：create 建的是文件，mkdir 建的是文件夹。
 
-只能操作外部存储(sdcard)目录，不能操作assets目录下的目录。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {boolean} 是否创建成功
-
+- 参数 : path {string} 要创建的文件夹路径
+- 返回 : {boolean} 创建成功返回 true，失败返回 false
 - 版本 : 1.0.0
 
-```javascript
-$file.mkdir("xml/kir");
 
+```javascript
+// 在 xml 目录下创建名为 kir 的文件夹
+var ok = $file.mkdir("xml/kir");
+log("建文件夹结果：" + ok);
 ```
+
+
 ### exists(path)
 
-路径是否存在
+> 检查某个路径到底存不存在（不管它是文件还是文件夹）。
+> 
+> 操作文件前经常先问一句"它在不在？"，避免报错。存在返回 true，不存在返回 false。
 
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {boolean} 是否存在
-
+- 参数 : path {string} 要检查的路径（文件或文件夹都行）
+- 返回 : {boolean} 存在返回 true，不存在返回 false
 - 版本 : 1.0.0
 
-```javascript
-$file.create("./测试文件夹/a.js");
-if($file.exists("./测试文件夹/a.js")){
-    alert("文件","路径存在");
-}
 
+```javascript
+// 先创建一个文件
+$file.create("./测试文件夹/a.js");
+// 再判断它是否存在
+if ($file.exists("./测试文件夹/a.js")) {
+    log("路径存在");
+}
 ```
+
+
 ### ensureDir(path)
 
-确保文件夹存在
+> 确保一个文件所在的文件夹一定存在（不存在就自动创建）。
+> 
+> 写文件前最怕"上级文件夹不存在"导致写入失败。本方法会顺着路径把中间缺的文件夹都建好，
+> 然后原样返回这个路径，方便你接着拿去写文件。
 
-如果路径中的目录不存在则会创建目录
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {string} 路径
-
+- 参数 : path {string} 要确保其父目录存在的文件或文件夹路径
+- 返回 : {string} 原样返回这个路径
 - 版本 : 1.0.0
 
-```javascript
-//创建目录:/测试文件夹/demo
-$file.ensureDir("./测试文件夹/demo/a.js");
 
+```javascript
+// 确保 "./测试文件夹/demo" 这个文件夹存在（缺的层级会自动建出来）
+var p = $file.ensureDir("./测试文件夹/demo/a.js");
+log(p); // 返回传入的路径
 ```
+
+
 ### read(path)
 
-读取文件
+> 读取一个文本文件的全部内容，按 UTF-8 编码读成字符串。
+> 
+> 最常用的读文件方法：把整个文本文件一次读成一大段文字。如果文件不存在，会打印警告并返回
+> 空字符串 ""，不会让脚本崩溃。
 
-此函数支持读取assets中的文件，适用于打包app后读取文本文件。在未打包时将会读取sdcard上的文件。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {string} 文本内容
-
+- 参数 : path {string} 要读取的文本文件路径
+- 返回 : {string} 文件里的文字内容；文件不存在时返回空字符串 ""
 - 版本 : 1.0.0
 
-```javascript
-//开始读取文件
-let content = $file.read("./main.js");
-alert("内容",content);
 
+```javascript
+// 读取 main.js 这个文本文件的全部内容
+var content = $file.read("./main.js");
+log(content); // 打印文件里的文字
 ```
+
+
 ### read(path, encoding)
 
-读取文件
+> 用指定的编码读取文本文件内容。
+> 
+> 默认 read 按 UTF-8 读。如果你的文件是别的编码（比如老式的 GBK/GB2312，读出来会乱码），
+> 就用这个版本，把编码名传进去。
 
-此函数支持读取assets中的文件，适用于打包app后读取文本文件。在未打包时将会读取sdcard上的文件。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 参数 : encoding {string} 编码
-
-- 返回 : {string} 文本内容
-
+- 参数 : path {string} 要读取的文件路径
+- 参数 : encoding {string} 文件编码名，如 "utf-8"、"gbk"、"gb2312"
+- 返回 : {string} 文件里的文字内容；文件不存在时返回空字符串
 - 版本 : 1.0.0
 
-```javascript
-let content = $file.read("./main.js","gbk");
-alert("内容",content);
 
+```javascript
+// 用 GBK 编码读取文件，避免中文乱码
+var content = $file.read("./main.js", "gbk");
+log(content);
 ```
+
+
 ### reads(path)
 
-读取文件行
+> 读取文本文件，并按"行"切成一个字符串数组。
+> 
+> read 会得到一整段文字；reads 则会在每个换行符处切开，每一行是数组里的一个元素，
+> 方便你逐行处理。文件读出来是空的时返回空数组。
 
-此函数支持读取assets中的文件，适用于打包app后读取文本文件。在未打包时将会读取sdcard上的文件。
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {string[]} 文件行列表
-
+- 参数 : path {string} 要读取的文本文件路径
+- 返回 : {string[]} 每一行文字组成的数组；文件为空时返回空数组
 - 版本 : 1.0.0
 
-```javascript
-let list = $file.reads("./main.js");
-alert("内容",list);
 
+```javascript
+// 把文件按行读成数组
+var list = $file.reads("./main.js");
+// 逐行打印（i 从 0 开始，依次取到最后一行）
+for (var i = 0; i < list.length; i++) {
+    log("第" + i + "行：" + list[i]);
+}
 ```
+
+
 ### readByte(path)
 
-读取文件字节
+> 读取文件的原始二进制内容（字节数组）。
+> 
+> 前面的 read 是按"文字"读；readByte 是按"字节"读，适合图片、音频、未知格式的二进制文件。
+> 文件不存在或读取失败时返回一个空数组。
 
-此函数支持读取assets中的文件，适用于打包app后读取二进制文件。在未打包时将会读取sdcard上的二进制文件。
-
-- 参数 : path {string} 路径
-
-- 返回 : {byte[]} 文件字节
-
+- 参数 : path {string} 要读取的文件路径
+- 返回 : {byte[]} 文件的二进制字节数组；失败时返回空数组
 - 版本 : 1.0.0
 
-```javascript
-let data = $file.readByte("./main.js");
-log("内容:",data);
 
+```javascript
+// 读取一个文件的原始字节
+var data = $file.readByte("./main.js");
+log("一共读到 " + data.length + " 个字节");
 ```
+
+
 ### write(content, path)
 
-写入文件
+> 把一段文字内容写入文件（覆盖原内容）。
+> 
+> 会用 UTF-8 编码写入。如果文件已经存在，原来的内容会被整个替换掉（不是追加）。
+> 如果文件夹不存在会自动处理。只适用于写到外部存储。
 
-只适用于写入到外部存储
-
-- 参数 : content {string} 内容
-
-- 参数 : path {string} 路径(支持相对路径)
-
+- 参数 : content {string} 要写入的文字内容
+- 参数 : path {string} 写入的目标文件路径
 - 版本 : 1.0.0
 
-```javascript
-$file.write("我是内容","./xml/a.js");
 
+```javascript
+// 把文字 "我是内容" 写入 a.js，原来的内容会被覆盖
+$file.write("我是内容", "./xml/a.js");
 ```
+
+
 ### write(content, path, encoding)
 
-写入文件
+> 用指定编码把文字内容写入文件（覆盖原内容）。
+> 
+> 和 write 一样是覆盖写入，只是多了一个参数让你指定文件编码，比如写成 GBK 方便别的老软件读取。
 
-只适用于写入到外部存储
-
-- 参数 : content {string} 内容
-
-- 参数 : path {string} 路径
-
-- 参数 : encoding {string} 编码
-
+- 参数 : content {string} 要写入的文字内容
+- 参数 : path {string} 目标文件路径
+- 参数 : encoding {string} 文件编码名，如 "utf-8"、"gbk"
 - 版本 : 1.0.0
 
-```javascript
-$file.write("我是内容","./code/a.js","GBK");
 
+```javascript
+// 用 GBK 编码把内容写入 a.js
+$file.write("我是内容", "./code/a.js", "GBK");
 ```
+
+
 ### writes(lines, path)
 
-写入行数据
+> 把一个字符串数组（每行一条）整批写入文件（覆盖原内容）。
+> 
+> 数组里的每一项会作为一行写进去，自动加上换行。相当于把 reads 读出来的数组原样写回去。
 
-只适用于写入到外部存储
-
-- 参数 : lines {string[]} 行数据
-
-- 参数 : path {string} 路径(支持相对路径)
-
+- 参数 : lines {string[]} 要写入的多行内容数组
+- 参数 : path {string} 目标文件路径
 - 版本 : 1.0.0
 
-```javascript
-$file.writes(["我是内容1","我是内容2","我是内容3"],"./code/a.js");
 
+```javascript
+// 准备三行内容
+var lines = ["我是内容1", "我是内容2", "我是内容3"];
+// 一次性写入文件，每行一条
+$file.writes(lines, "./code/a.js");
 ```
+
+
 ### add(content, path)
 
-追加文件
+> 往文件末尾追加一段文字（不覆盖原有内容）。
+> 
+> write 会把旧内容冲掉，add 则是在文件最后面接着写。你想逐行往日志里追加记录时用它。
+> 需要换行的话，自己在内容里加 "\n"。
 
-只适用于写入到外部存储
-
-- 参数 : content {string} 内容
-
-- 参数 : path {string} 路径(支持相对路径)
-
+- 参数 : content {string} 要追加的文字
+- 参数 : path {string} 目标文件路径
 - 版本 : 1.0.0
 
-```javascript
-//追加一行字符并且换行
-$file.add("我是新的内容\n","./code/a.js");
 
+```javascript
+// 在文件末尾追加一行文字（自己带换行符）
+$file.add("我是新的内容\n", "./code/a.js");
 ```
+
+
 ### adds(lines, path)
 
-追加行数据
+> 把字符串数组里的每一行追加到文件末尾（自动换行）。
+> 
+> 和 adds 对应的单行追加不同，这里一次追加多行，而且每一行会自动换行，不需要你手写 "\n"。
 
-只适用于写入到外部存储
-
-- 参数 : lines {string[]} 行数据
-
-- 参数 : path {string} 路径(支持相对路径)
-
+- 参数 : lines {string[]} 要追加的多行内容数组
+- 参数 : path {string} 目标文件路径
 - 版本 : 1.0.0
 
-```javascript
-//无需换行符号,自动换行
-$file.adds(["追加01","追加02","追加03"],"./code/a.js");
 
+```javascript
+// 一次往文件末尾追加三行，自动换行
+$file.adds(["追加01", "追加02", "追加03"], "./code/a.js");
 ```
+
+
 ### writeByte(bytes, path)
 
-写入文件
+> 把二进制字节数组写入文件（覆盖原内容）。
+> 
+> 和 write 写文字对应，这里写的是原始字节，常用于把读出来的图片、音频等二进制数据另存为新文件。
 
-只适用于写入到外部存储
-
-- 参数 : bytes {byte[]} 内容
-
-- 参数 : path {string} 路径(支持相对路径)
-
+- 参数 : bytes {byte[]} 要写入的字节数组
+- 参数 : path {string} 目标文件路径
 - 版本 : 1.0.0
 
-```javascript
-$file.writeByte([09,46,36,7,89,34],"./xml/mFile.txt");
 
+```javascript
+// 把一组字节写入一个文件
+$file.writeByte([9, 46, 36, 7, 89, 34], "./xml/mFile.txt");
 ```
+
+
 ### copy(src, dest)
 
-拷贝文件
+> 把一个文件复制到另一个位置。
+> 
+> 源文件保持不动，在目标位置生成一份一模一样的副本。源文件必须存在，否则返回 false。
+> 目标路径可以是相对路径。
 
-支持将assets文件拷贝到外部存储，也支持将外部存储文件拷贝到指定路径中，虽然目标路径支持书写相对路径，但是建议源路径使用相对路径，而目标路径最好用绝对路径。
-
-- 参数 : src {string} 源(支持相对路径)
-
-- 参数 : dest {string} 目标(支持相对路径)
-
+- 参数 : src {string} 源文件路径（要被复制的那个文件）
+- 参数 : dest {string} 目标文件路径（副本放哪）
+- 返回 : {boolean} 复制成功返回 true，源文件不存在或失败返回 false
 - 版本 : 1.6.8
 
-```javascript
-//把assets文件拷贝到sdcard上
-$file.copy("res/a.txt","/sdcard/Pictures/测试项目/res/a.txt");
 
+```javascript
+// 把 res 目录里的 a.txt 复制到 Pictures 下的项目目录里
+var ok = $file.copy("res/a.txt", "/sdcard/Pictures/测试项目/res/a.txt");
+log("复制结果：" + ok);
 ```
+
+
 ### move(src, dest)
 
-移动文件或文件夹
+> 把文件或文件夹移动到另一个位置。
+> 
+> 和复制不同，移动后原来的位置就没有了。源文件/文件夹必须存在。如果目标是一个文件夹，
+> 文件会被放进该文件夹里。移动成功返回 true。
 
-此函数只适用于操作外部存储文件
-
-- 参数 : src {string} 源文件夹(支持相对路径)
-
-- 参数 : dest {string} 目标文件夹(支持相对路径)
-
+- 参数 : src {string} 要移动的源文件或文件夹路径
+- 参数 : dest {string} 目标位置（可以是文件夹）
+- 返回 : {boolean} 移动成功返回 true，失败返回 false
 - 版本 : 1.0.0
 
-```javascript
-//把位于modules文件夹下的所有文件都移动到xml下
-//注意传入的都是目录(可以是相对路径)
-let ok = $file.move("modules","xml");
-if(ok){
-    alert("移动文件","成功");
-}else{
-    alert("移动文件","失败");
-}
-//移动文件的话,src必须是存在的(支持相对路径)
-let ok = $file.move("res/code.js","/");
-if(ok){
-    alert("移动文件","成功");
-}else{
-    alert("移动文件","失败");
-}
 
+```javascript
+// 把整个 modules 文件夹移动到 xml 目录下
+var ok = $file.move("modules", "xml");
+if (ok) {
+    log("移动成功");
+} else {
+    log("移动失败");
+}
 ```
+
+
 ### rename(src, dest)
 
-重命名文件
+> 给文件或文件夹改名（也可以连路径一起改，相当于移动到新路径）。
+> 
+> 源必须存在。它会先确保目标路径的父文件夹存在，再执行改名。成功返回 true。
 
-此函数只适用于操作外部存储文件
-
-- 参数 : src {string} 源
-
-- 参数 : dest {string} 目标
-
-- 返回 : {boolean} 是否重命名成功
-
+- 参数 : src {string} 原来的路径
+- 参数 : dest {string} 新的路径（新名字）
+- 返回 : {boolean} 成功返回 true，失败返回 false
 - 版本 : 1.0.0
 
-```javascript
-let ok = $file.rename("run.js","res/code.js");
-if(ok){
-    alert("重命名","成功");
-}else{
-    alert("重命名","失败");
-}
 
+```javascript
+// 把 run.js 改名为 res/code.js
+var ok = $file.rename("run.js", "res/code.js");
+if (ok) {
+    log("重命名成功");
+} else {
+    log("重命名失败");
+}
 ```
+
+
 ### size(path)
 
-获取文件大小
+> 获取文件大小（字节数）。
+> 
+> 返回这个文件占了多少个字节。1024 字节约等于 1 KB。如果文件不存在，返回 0。
+> 想要"KB/MB"这种好看的写法，请用 sizeStr。
 
-如果文件不存在,则返回0，此函数只适用于操作外部存储文件
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {number} 文件大小
-
+- 参数 : path {string} 文件路径
+- 返回 : {number} 文件字节数；文件不存在时返回 0
 - 版本 : 1.0.0
 
-```javascript
-let size = $file.size("./xml/mFile.txt");
-alert("文件大小",size);//6(字节)
 
+```javascript
+// 取文件大小，单位是字节
+var size = $file.size("./xml/mFile.txt");
+log("文件大小：" + size + " 字节");
 ```
+
+
 ### sizeStr(size)
 
-获取文件可视化大小
+> 把一个字节数转换成"好看的"大小文字（自动用 B/KB/MB/GB）。
+> 
+> 比如 1099 字节会显示成 "1.07 KB" 这种人能看懂的写法。它不读文件，只帮你换算数字。
 
-如果文件不存在，则返回0b，此函数只适用于操作外部存储文件
-
-- 参数 : size {long} 文件长度
-
-- 返回 : {string} 文件大小
-
+- 参数 : size {long} 文件字节数
+- 返回 : {string} 带单位的易读大小文字，如 "6 B"、"1.07 KB"；传 null 返回 "0b"
 - 版本 : 1.0.0
 
-```javascript
-let size = $file.size(1099);
-alert("文件大小",size);//6(字节)
 
+```javascript
+// 把字节数换算成易读的大小
+var s = $file.sizeStr(1099);
+log(s); // 类似 "1.07 KB"
 ```
+
+
 ### sizeStr(path)
 
-获取文件可视化大小
+> 直接读取某个文件，并返回它"好看的"大小文字。
+> 
+> 相当于先 size 拿到字节数，再 sizeStr 换算。文件不存在时返回 "0b"。
 
-如果文件不存在，则返回0b，此函数只适用于操作外部存储文件
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {string} 文件大小(格式化单位)
-
+- 参数 : path {string} 文件路径
+- 返回 : {string} 易读大小文字，如 "6 B"；文件不存在返回 "0b"
 - 版本 : 1.0.0
 
-```javascript
-let size = $file.sizeStr("./xml/mFile.txt");
-alert("文件大小",size);//6 B
 
+```javascript
+// 直接得到文件的易读大小
+var s = $file.sizeStr("./xml/mFile.txt");
+log(s); // 类似 "6 B"
 ```
+
+
 ### name(path)
 
-文件名称
+> 从一个路径里解析出"文件名"（含后缀名）。
+> 
+> 它不读磁盘，只是对路径字符串做切分。比如 "/sdcard/a/mFile.txt" 会得到 "mFile.txt"。
 
-该函数本质上就是字符串操作，解析得到文件名称。
-
-- 参数 : path {string} 路径
-
-- 返回 : {string} 文件名称
-
+- 参数 : path {string} 文件路径
+- 返回 : {string} 文件名（含后缀）
 - 版本 : 1.0.0
 
-```javascript
-let fn = $file.name("./xml/mFile.txt");
-alert("文件名称",fn);//mFile.txt
 
+```javascript
+// 从路径里取出文件名
+var fn = $file.name("/sdcard/a/mFile.txt");
+log(fn); // mFile.txt
 ```
+
+
 ### mainName(path)
 
-主文件名
+> 从路径里解析出"主文件名"（不含后缀名）。
+> 
+> 和 name 的区别：name 会带 ".txt"，mainName 把后缀去掉。比如 "mFile.txt" 得到 "mFile"。
 
-不包含后缀名的文件名称，该函数本质上就是字符串操作，解析得到文件名称(不包含后缀)。
-
-- 参数 : path {string} 路径
-
-- 返回 : {string} 文件名称
-
+- 参数 : path {string} 文件路径
+- 返回 : {string} 不含后缀的文件名
 - 版本 : 1.0.0
 
-```javascript
-let fn = $file.mainName("./xml/mFile.txt");
-alert("文件名称",fn);//mFile
 
+```javascript
+// 取出不带后缀的主文件名
+var fn = $file.mainName("/sdcard/a/mFile.txt");
+log(fn); // mFile
 ```
+
+
 ### ext(path)
 
-后缀名
+> 从路径里解析出文件后缀名（不含那个点）。
+> 
+> 比如 "mFile.txt" 得到 "txt"。只是字符串切分，不读磁盘。
 
-该函数本质上就是字符串操作，解析得到文件后缀名。
-
-- 参数 : path {string} 路径
-
-- 返回 : {string} 文件名称
-
+- 参数 : path {string} 文件路径
+- 返回 : {string} 后缀名（不带点）
 - 版本 : 1.0.0
 
-```javascript
-let fn = $file.ext("./xml/mFile.txt");
-alert("后缀名",fn);//txt
 
+```javascript
+// 取出后缀名
+var e = $file.ext("/sdcard/a/mFile.txt");
+log(e); // txt
 ```
+
+
 ### sd()
 
-获得存储目录
+> 获取手机外部存储（SD 卡）根目录的绝对路径。
+> 
+> 通常返回类似 "/storage/emulated/0" 的路径。拼大路径时常用它开头。
 
-- 返回 : {string} sdcard路径
-
+- 返回 : {string} 外部存储根目录路径
 - 版本 : 1.0.0
 
-```javascript
-let path = $file.sd();
-alert("SDCard路径",path);///storage/emulated/0
 
+```javascript
+// 取 SD 卡根目录路径
+var path = $file.sd();
+log(path); // 类似 /storage/emulated/0
 ```
+
+
 ### del(path)
 
-删除文件或文件夹
+> 删除文件或文件夹。
+> 
+> 如果删的是文件夹，会把里面的内容一起递归删掉。万一第一次没删掉，内部会自动重试最多三次。
+> 不可恢复，删之前想清楚。
 
-递归删除文件或者文件夹,如果没有删除成功,则内部会有三次重试机制,强制进行删除
-
-该函数只适用于操作外部存储文件
-
-- 参数 : path {string} 文件路径(支持相对路径)
-
-- 返回 : {boolean} 是否删除成功
-
+- 参数 : path {string} 要删除的文件或文件夹路径
+- 返回 : {boolean} 删除成功返回 true，失败返回 false
 - 版本 : 1.0.0
 
-```javascript
-//删除目录
-$file.del("tools");
-//删除文件
-$file.del("main.js");
 
+```javascript
+// 删除一个文件夹
+$file.del("tools");
+// 删除一个文件
+$file.del("main.js");
 ```
+
+
 ### ls(path)
 
-罗列文件
+> 列出某个文件夹里所有内容的路径。
+> 
+> 传入一个文件夹路径，它会返回这个文件夹里每一项（文件和子文件夹）的完整路径，装在一个数组里。
+> 如果传的是脚本自带的 assets 资源路径，也能列出来。
 
-该函数支持罗列打包后apk中的资源文件(assets目录)，但是注意书写相对路径
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 返回 : {list[string]} 文件路径集合
-
+- 参数 : path {string} 要罗列的文件夹路径
+- 返回 : {list[string]} 里面每一项的完整路径组成的数组；不是文件夹时返回空数组
 - 版本 : 1.6.8
 
-```javascript
-let arr = $file.ls("res");
-for(let path of arr){
-    log(path);
-}
 
+```javascript
+// 列出 res 文件夹里的所有项
+var arr = $file.ls("res");
+// 用普通 for 循环逐个打印每一条路径
+for (var i = 0; i < arr.length; i++) {
+    log(arr[i]);
+}
 ```
+
+
 ### ls(path, filter)
 
-罗列文件
+> 列出文件夹内容，并按你给的过滤器筛选。
+> 
+> 比不带过滤器的 ls 多一步：数组里每出现一条路径，都会先调用你传入的 filter 函数问一句
+> "这条要不要保留？"，返回 true 才收进结果。适合只要 .txt 文件之类的场景。
 
-支持罗列打包后apk中的资源文件，但是注意书写相对路径
-
-- 参数 : path {string} 路径(支持相对路径)
-
-- 参数 : filter {(path)=>{return true;}} 过滤函数
-
-- 返回 : {list[string]} 文件路径集合
-
+- 参数 : path {string} 要罗列的文件夹路径
+- 参数 : filter {function(path){return true;}} 过滤器函数，参数是每条路径，返回 true 保留
+- 返回 : {list[string]} 过滤后留下的路径数组
 - 版本 : 1.6.8
 
-```javascript
-let arr = $file.ls("res",(path)=>{
-    //过滤器
-    return true;
-});
-for(let path of arr){
-    log(path);
-}
 
+```javascript
+// 列出 res 下的文件，过滤器返回 true 表示全部保留
+var arr = $file.ls("res", function(path) {
+    return true; // 这里可以加判断，比如只保留以 .txt 结尾的
+});
+for (var i = 0; i < arr.length; i++) {
+    log(arr[i]);
+}
 ```
+
+
 ### loopFiles(path, accept)
 
-递归遍历文件
+> 递归遍历一个文件夹，把里面所有层级的文件都找出来。
+> 
+> ls 只看一层；loopFiles 会钻进所有子文件夹，把每一个文件都交给你。每找到一个文件，就调用
+> accept 函数让你决定要不要（返回 true 保留）。返回的是 File 对象数组。
 
-该函数只适用于操作外部存储文件
-
-- 参数 : path {string}  路径(支持相对路径)
-
-- 参数 : accept {(file)=>{return false;}} 过滤函数
-
-- 返回 : {File[]} 文件列表
-
+- 参数 : path {string} 要递归遍历的文件夹路径
+- 参数 : accept {function(file){return true;}} 每遇到一个文件就回调，返回 true 保留
+- 返回 : {File[]} 遍历得到的 File 文件对象数组
 - 版本 : 1.4.9
 
+
 ```javascript
-$file.looFiles("/res",(file)=>{
-    //参数类型:file:java.io.File
+// 递归遍历 /res 下所有文件，这里全部保留
+$file.loopFiles("/res", function(file) {
+    log(file.getName()); // 打印每一个文件名
     return true;
 });
-
 ```
+
+
 ### lsVideo()
 
-罗列视频文件
+> 查询系统媒体库中当前可见的视频信息。
+> 
+> 输入参数：无。返回类型为 List&lt;VideoInfo&gt;，即 Java 列表，每一项是一个 VideoInfo 信息对象。
+> 用 size() 取得数量，用 get(序号) 取出一项；第一项序号是零。不能把它当作脚本数组用长度属性和方括号读取。
+> 查询按加入媒体库的时间从新到旧排列，只读取系统已经收录且当前应用可见的资料，不会遍历手机里的每个目录。
+> 对象记录名称、路径、字节大小和以秒为单位的加入时间；修改这些对象不会修改真实文件。
+> 播放时长单位是毫秒，除以一千得到秒数。
+> 安卓十三及以上入口检查读取视频权限；没有通过检查时打印提示并返回空列表。
+> 安卓十二及以下入口检查读取外部存储权限。媒体库没有可见记录或没有提供查询结果时也会返回空列表。
+> 系统查询异常会向外抛出；下面用异常处理展示如何记录失败，空列表不一定表示手机没有这种文件。
 
-通过安卓媒体库获取视频文件,需要获取读取视频权限($permit.readVideo())
-
-- 返回 : {VideoInfo[]} 视频文件列表
-
+- 返回 : {List<VideoInfo>} 视频信息列表；数量为零时不要取第一项
 - 版本 : 1.5.4
 
-```javascript
-//VideoInfo属性:
-let info = {
-    id: 0,    //视频id
-    name: "视频名称",
-    path: "视频路径",
-    size: 0,  //视频大小
-    dur: 0,   //视频时长
-    time: 0,  //时间
-}
-//获取视频列表
-let arr = $file.lsVideo();
-//遍历视频列表
-for(let info of arr){
-    log(info);
-}
 
+```javascript
+try {
+    // 先在设备上授予相应读取权限，再查询列表。
+    var list = $file.lsVideo();
+    if (list == null || list.size() === 0) {
+        log("没有可读取的视频记录，请检查权限和媒体库内容。");
+    } else {
+        // 逐项读取信息：序号从零开始，不超过列表数量。
+        for (var index = 0; index < list.size(); index++) {
+            var info = list.get(index); // 得到一个 VideoInfo 对象。
+            log("名称：" + info.getName());
+            log("路径：" + info.getPath());
+            log("大小（字节）：" + info.getSize());
+            log("时长（秒）：" + Number(info.getDur()) / 1000);
+            // 媒体库保存秒数；脚本日期对象需要毫秒。
+            log(new Date(Number(info.getTime()) * 1000).toString());
+        }
+    }
+} catch (error) {
+    log("查询视频信息失败：" + error);
+}
 ```
+
+
 ### lsAudio()
 
-罗列音频文件
+> 查询系统媒体库中当前可见的音频信息。
+> 
+> 输入参数：无。返回类型为 List&lt;AudioInfo&gt;，即 Java 列表，每一项是一个 AudioInfo 信息对象。
+> 用 size() 取得数量，用 get(序号) 取出一项；第一项序号是零。不能把它当作脚本数组用长度属性和方括号读取。
+> 查询按加入媒体库的时间从新到旧排列，只读取系统已经收录且当前应用可见的资料，不会遍历手机里的每个目录。
+> 对象记录名称、路径、字节大小和以秒为单位的加入时间；修改这些对象不会修改真实文件。
+> 播放时长单位是毫秒，除以一千得到秒数。
+> 安卓十三及以上入口检查读取音频权限；没有通过检查时打印提示并返回空列表。
+> 安卓十二及以下入口检查读取外部存储权限。媒体库没有可见记录或没有提供查询结果时也会返回空列表。
+> 系统查询异常会向外抛出；下面用异常处理展示如何记录失败，空列表不一定表示手机没有这种文件。
 
-通过安卓媒体库获取音频文件,需要获取读取音频权限($permit.readAudio())
-
-- 返回 : {AudioInfo[]} 音频文件列表
-
+- 返回 : {List<AudioInfo>} 音频信息列表；数量为零时不要取第一项
 - 版本 : 1.5.4
 
-```javascript
-//AudioInfo属性:
-let info = {
-    id: 0,    //音频id
-    name: "音频名称",
-    path: "音频路径",
-    size: 0,  //音频大小
-    dur: 0,   //音频时长
-    artist: "艺术家",
-    album: "专辑",
-    time: 0,  //时间
-}
-//获取音频列表
-let arr = $file.lsAudio();
-//遍历音频列表
-for(let info of arr){
-    log(info);
-}
 
+```javascript
+try {
+    // 先在设备上授予相应读取权限，再查询列表。
+    var list = $file.lsAudio();
+    if (list == null || list.size() === 0) {
+        log("没有可读取的音频记录，请检查权限和媒体库内容。");
+    } else {
+        // 逐项读取信息：序号从零开始，不超过列表数量。
+        for (var index = 0; index < list.size(); index++) {
+            var info = list.get(index); // 得到一个 AudioInfo 对象。
+            log("名称：" + info.getName());
+            log("路径：" + info.getPath());
+            log("大小（字节）：" + info.getSize());
+            log("时长（秒）：" + Number(info.getDur()) / 1000);
+            // 艺术家和专辑可能为空，不要假设每条记录都填写了。
+            log("艺术家：" + info.getArtist());
+            log("专辑：" + info.getAlbum());
+            // 媒体库保存秒数；脚本日期对象需要毫秒。
+            log(new Date(Number(info.getTime()) * 1000).toString());
+        }
+    }
+} catch (error) {
+    log("查询音频信息失败：" + error);
+}
 ```
+
+
 ### lsImages()
 
-罗列图片文件
+> 查询系统媒体库中当前可见的图片信息。
+> 
+> 输入参数：无。返回类型为 List&lt;ImageInfo&gt;，即 Java 列表，每一项是一个 ImageInfo 信息对象。
+> 用 size() 取得数量，用 get(序号) 取出一项；第一项序号是零。不能把它当作脚本数组用长度属性和方括号读取。
+> 查询按加入媒体库的时间从新到旧排列，只读取系统已经收录且当前应用可见的资料，不会遍历手机里的每个目录。
+> 对象记录名称、路径、字节大小和以秒为单位的加入时间；修改这些对象不会修改真实文件。
+> 还可以读取宽度和高度，单位是像素；返回的是图片资料，不是已经解码的图像。
+> 当前实现的权限检查有特殊之处：在安卓十三及以上，入口检查的是读取视频权限，而随后查询的是图片库。
+> 因此仅授予图片权限仍可能在入口取得空列表，通过入口检查也不代表图片查询一定成功。请结合实际授权范围判断结果。
+> 安卓十二及以下入口检查读取外部存储权限。媒体库没有可见记录或没有提供查询结果时也会返回空列表。
+> 系统查询异常会向外抛出；下面用异常处理展示如何记录失败，空列表不一定表示手机没有这种文件。
 
-通过安卓媒体库获取图片文件,需要获取读取图片权限($permit.readImage())
-
-- 返回 : {ImageInfo[]} 图片文件列表
-
+- 返回 : {List<ImageInfo>} 图片信息列表；数量为零时不要取第一项
 - 版本 : 1.5.4
 
-```javascript
-//ImageInfo属性:
-let info = {
-    id: 0,    //图片id
-    name: "图片名称",
-    path: "图片路径",
-    size: 0,  //图片大小
-    width: 0, //图片宽度
-    height: 0,//图片高度
-    time: 0,  //时间
-}
-//获取图片列表
-let arr = $file.lsImages();
-//遍历图片列表
-for(let info of arr){
-    log(info);
-}
 
+```javascript
+try {
+    // 先在设备上授予相应读取权限，再查询列表。
+    var list = $file.lsImages();
+    if (list == null || list.size() === 0) {
+        log("没有可读取的图片记录，请检查权限和媒体库内容。");
+    } else {
+        // 逐项读取信息：序号从零开始，不超过列表数量。
+        for (var index = 0; index < list.size(); index++) {
+            var info = list.get(index); // 得到一个 ImageInfo 对象。
+            log("名称：" + info.getName());
+            log("路径：" + info.getPath());
+            log("大小（字节）：" + info.getSize());
+            log("尺寸（像素）：" + info.getWidth() + " × " + info.getHeight());
+            // 媒体库保存秒数；脚本日期对象需要毫秒。
+            log(new Date(Number(info.getTime()) * 1000).toString());
+        }
+    }
+} catch (error) {
+    log("查询图片信息失败：" + error);
+}
 ```
+
+
 ### getDir(name, isPublic)
 
-获取安卓目录路径
+> 获取安卓系统常用目录（图片、下载、音乐、视频等）的路径。
+> 
+> 你传一个目录类型名字，它就返回对应目录的绝对路径。常见取值有：图片、下载、dcim、音乐、
+> 视频、文档、闹钟、通知、播客、铃声。第二个参数控制要"公共目录"还是"应用私有目录"。
+> 如果传的名字不在这些常见类型里，就当成自定义目录名，返回应用内部私有目录。
 
-获取安卓系统指定目录的路径，根据目录类型返回对应的目录路径字符串。
-
-目录类型可选项有: "pictures","图片", "downloads","下载", "dcim", "music","音乐", "movies","视频", "documents", "文档", "alarms", "闹钟", "notifications", "通知", "podcasts", "播客", "ringtones", "铃声"
-
-如果目录类型为自己自己自定义的目录名称，则会返回应用内部私有目录路径，并且以传入的目录类型作为目录的名称。
-
-- 参数 : name {string} 目录类型,可选项有: "pictures","图片", "downloads","下载", "dcim", "music","音乐", "movies","视频", "documents", "文档", "alarms", "闹钟", "notifications", "通知", "podcasts", "播客", "ringtones", "铃声"
-
-- 参数 : isPublic {boolean} 是否为公共目录(true为公共目录，false为私有目录)，默认为true，公共目录访问时都需要存储权限
-
-- 返回 : {string} 目录路径字符串
-
+- 参数 : name {string} 目录类型名，如 "图片"、"下载"、"音乐"、"视频"、"dcim"
+- 参数 : isPublic {boolean} true 取公共目录，false 取应用私有目录；传 null 按 true 处理
+- 返回 : {string} 对应目录的绝对路径；name 为 null 时返回 null
 - 版本 : 1.6.1
 
-```javascript
-let videoPath = $file.getDir("视频",true);
 
+```javascript
+// 取公共的"视频"目录路径
+var videoPath = $file.getDir("视频", true);
+log(videoPath);
 ```
+
+
 ### getDir(name)
 
-获取安卓公共目录路径
+> 获取安卓"公共目录"的路径（默认取公共目录版本）。
+> 
+> 和两个参数的版本一样，只是省掉第二个参数，默认按公共目录处理。
 
-获取安卓系统指定目录的路径，根据目录类型返回对应的目录路径字符串。
-
-目录类型可选项有: "pictures","图片", "downloads","下载", "dcim", "music","音乐", "movies","视频", "documents", "文档", "alarms", "闹钟", "notifications", "通知", "podcasts", "播客", "ringtones", "铃声"
-
-如果目录类型为自己自己自定义的目录名称，则会返回应用内部私有目录路径，并且以传入的目录类型作为目录的名称。
-
-- 参数 : name {string} 目录类型,可选项有: "pictures","图片", "downloads","下载", "dcim", "music","音乐", "movies","视频", "documents", "文档", "alarms", "闹钟", "notifications", "通知", "podcasts", "播客", "ringtones", "铃声"
-
-- 返回 : {string} 目录路径字符串
-
+- 参数 : name {string} 目录类型名，如 "图片"、"下载"、"视频"
+- 返回 : {string} 对应公共目录的绝对路径
 - 版本 : 1.6.1
 
-```javascript
-let videoPath = $file.getDir("视频");
 
+```javascript
+// 取公共"视频"目录路径
+var videoPath = $file.getDir("视频");
+log(videoPath);
 ```
+
+
 ### flushSd(successCallback, failCallback)
 
-刷新sd卡
+> 刷新整个外部存储的媒体库，让系统立刻识别新写入的文件。
+> 
+> 你用脚本往相册目录写了一张图后，系统相册可能要过一会儿才看得见。调用本方法会通知媒体库
+> 重新扫描。扫描完成后会回调 successCallback；失败回调 failCallback。
 
-刷新安卓媒体库文件
-
-- 参数 : successCallback {()=>{}} 刷新成功回调
-
-- 参数 : failCallback {()=>{}}   刷新失败回调
-
+- 参数 : successCallback {function()} 刷新成功后回调
+- 参数 : failCallback {function()} 刷新失败后回调
 - 版本 : 1.9.5
+
+
+```javascript
+// 刷新 SD 卡媒体库，完成后打印日志
+$file.flushSd(function() {
+    log("刷新成功");
+}, function() {
+    log("刷新失败");
+});
+```
+
 
 ### flush(filePath, successCallback, failCallback)
 
-刷新媒体文件
+> 刷新某一个具体文件，让系统媒体库立刻识别它。
+> 
+> 和刷新整个 SD 卡不同，这里只通知系统扫描你指定的那一个文件（比如刚保存的图片），
+> 扫描完回调 successCallback，失败回调 failCallback。
 
-刷新安卓媒体库文件
-
-- 参数 : filePath {String}   文件路径
-
-- 参数 : successCallback {()=>{}} 刷新成功回调
-
-- 参数 : failCallback {()=>{}} 刷新失败回调
-
+- 参数 : filePath {String} 要刷新的文件路径
+- 参数 : successCallback {function()} 成功后回调
+- 参数 : failCallback {function()} 失败后回调
 - 版本 : 1.9.5
+
+
+```javascript
+// 让系统立刻识别刚保存的这张图片
+$file.flush("/sdcard/Pictures/sample.png", function() {
+    log("刷新成功");
+}, function() {
+    log("刷新失败");
+});
+```
+
 
 ### hotUpdate(path, data)
 
-热更新
+> 写入一个"热更新"文件：以后脚本读这个相对路径时会优先用你这里写的内容。
+> 
+> 作用是不重新打包 App，也能临时替换某个资源文件的内容。传入的是相对路径和新内容，
+> 系统会把它存到热更新目录；之后脚本用到该相对路径时优先读它。
 
-该函数是专门为热更新而设计，当项目打包成APP后，允许通过此函数更新相对路径下的文件内容。
-
-注意
-
-当AG用到该相对路径文件的时候，会优先使用热更新的文件。
-如果想使用之前老旧的文件，需要调用 delHotUpdate(删除热更新) 函数：删除热更新的文件才行。
-
-- 参数 : path {String} 需要更新的文件相对路径
-
-- 参数 : data {String} 文件内容
-
+- 参数 : path {String} 要热更新的相对路径
+- 参数 : data {String} 新的文件内容
 - 版本 : 1.9.6
+
+
+```javascript
+// 把 sample 这个相对路径的内容热更新为 "sample text"
+$file.hotUpdate("/sdcard/Pictures/sample.png", "sample text");
+```
+
 
 ### delHotUpdate(path)
 
-删除热更新文件
+> 删除某个相对路径的热更新文件。
+> 
+> 因为系统会优先读热更新文件，如果项目本身的文件已经更新，但热更新目录里还留着旧的同名文件，
+> 就会一直读到旧的。这时调用本方法把热更新删掉，让它恢复读正式文件。
 
-由于无论是否是打包环境，项目在读取资源的时候都会优先读取热更新文件，因此，当项目文件(非热更新目录的文件)更新时，如果热更新目录下相对路径也存在这个文件，那么依然优先使用热更新目录下的文件。
-也就会造成：实际上并没有读取项目文件(非热更新目录的文件)，而是依然读取的热更新目录文件。
-
-为了避免上述情况发生，可以调用此函数，将热更新目录下的相对路径文件删除。
-
-- 参数 : path {String} 被更新的文件相对路径
-
+- 参数 : path {String} 要删除热更新的相对路径
 - 版本 : 1.9.6
 
-### pack(projectPath)
-
-打包项目
-
-该函数会启动打包界面，注意：打包界面会严格检查 project.json 文件的正确性。
-
-- 参数 : projectPath {string} 项目路径
-
-- 版本 : 1.8.6
 
 ```javascript
-//打包项目
-$file.pack("/sdcard/my_project");
-
+// 删除 sample 对应的热更新文件
+$file.delHotUpdate("/sdcard/Pictures/sample.png");
 ```
-### check(projectPath)
 
-检查项目配置文件
 
-该函数会检查 project.json 文件格式是否正确，如果正确则返回 yes，否则返回错误原因。
+### reext(src, newExt)
 
-- 参数 : projectPath {String} 项目路径
+> 修改文件的后缀名（把 a.txt 改成 a.md 这种）。
+> 
+> 它保留原来的文件夹和主文件名，只换后缀。如果原文件本来没有后缀，就相当于给它追加一个后缀。
+> 源文件必须存在，新后缀不能为空。
 
-- 返回 : {String} yes/错误原因
+- 参数 : src {String} 源文件路径
+- 参数 : newExt {String} 新的后缀名（不要带那个点）
+- 返回 : {boolean} 成功返回 true，源文件不存在或新后缀为空返回 false
+- 版本 : 2.0.2
 
-- 版本 : 1.8.6
 
 ```javascript
-//检查项目配置文件
-let result = $file.check("/sdcard/my_project");
-if(result === "yes"){
-    $log.alert("配置文件正确");
-}else{
-    $log.alert("配置错误", result);
-}
-
+// 把 sample 文件的后缀改成 sample（即改名为 xxx.sample）
+var result = $file.reext("sample", "sample");
+log("改后缀结果：" + result);
 ```
-### edit(codePath)
-
-启动代码编辑器
-
-启动代码编辑器打开指定的代码文件。
-
-- 参数 : codePath {String} 代码路径
-
-- 版本 : 1.8.6
-
-### relPath(projectFolder, relativePath)
-
-获取绝对路径
-
-该函数会计算出相对于项目的绝对路径，例如当前项目文件夹为：/sdcard/Project 相对路径为 ./index.js 则调用函数会返回 /sdcard/Project/index.js。
-
-- 参数 : projectFolder {String} 项目文件夹
-
-- 参数 : relativePath {String} 相对路径
-
-- 返回 : {String} 绝对路径
-
-- 版本 : 1.8.6
-
-### append(content, path)
-
-追加写入文件
-
-用追加的方式写入内容到文件路径中。
-
-- 参数 : content {String} 文件内容
-
-- 参数 : path {String} 文件路径
-
-- 版本 : 1.8.6
-
----
 
 
+### getParent(src)
 
+> 取一个文件路径的"上一层目录"。
+> 
+> 比如路径是 "/sdcard/dir/love.txt"，父目录就是 "/sdcard/dir"。路径必须真实存在，
+> 不存在时返回 null。
+
+- 参数 : src {String} 文件路径
+- 返回 : {String} 上一层目录路径；文件不存在返回 null
+- 版本 : 2.0.2
+
+
+```javascript
+// 取上一层目录
+var path = "/sdcard/dir/love.txt";
+var parent = $file.getParent(path);
+log(parent); // 结果：/sdcard/dir
+```
 
 

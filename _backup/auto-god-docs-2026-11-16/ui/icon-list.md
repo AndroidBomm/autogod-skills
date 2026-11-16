@@ -1,0 +1,223 @@
+# AutoGOD 内置图标名清单（1537 个）
+
+> **来源**：从 AutoGOD 客户端 apk 的 `resources.arsc` 里提取（实测于 org.auto.god v2.0.1）。
+> 提取方法见 `guide/踩坑记录.md` 第 9.1 节。
+>
+> ## ⚠️ 使用前必读
+>
+> **这份清单里的名字不代表一定能渲染。** 实测反例：
+>
+> | 名字 | 在 arsc 里 | 实际渲染 |
+> |---|---|---|
+> | `ic_search` | ✅ | ❌ |
+> | `ic_search_fill` | ✅ | ✅ |
+> | `ic_search_outline` | ✅ | ✅ |
+> | `ic_pie_chart_outline` | ✅ | ❌ |
+>
+> **最可靠的确认方式**：AutoGOD 客户端 → 侧边栏 → 辅助信息 → **「内置图标」**
+> （页面标题「图标库」，带搜索框，可滚动浏览）。
+> 拿不准的名字也可以写个最小布局在真机上试（见 `guide/踩坑记录.md` 9.5）。
+>
+> **命名规律**：每个图标有 `_fill`（填充版）和 `_outline`（描边版）两种后缀，
+> **没有不带后缀的裸名**。写 `ic_search` 会静默不显示（不报错）。
+>
+> 用法：`<img src="ic_search_fill" w="24" h="24" />`；
+> 运行时改色用 `img.setTint("#00897B")`。
+
+## 全部图标名
+
+```
+ic_aa, ic_ab_back_material, ic_absorb, ic_access_alarm_fill, ic_access_alarm_outline, ic_access_alarms_fill, ic_access_alarms_outline, ic_access_time_fill
+ic_access_time_filled_fill, ic_access_time_filled_outline, ic_access_time_outline, ic_accessibility_fill, ic_accessibility_new_fill, ic_accessibility_new_outline, ic_accessibility_outline, ic_account_box_fill
+ic_account_box_outline, ic_account_circle_fill, ic_account_circle_outline, ic_adb_fill, ic_adb_outline, ic_add_alarm_fill, ic_add_alarm_outline, ic_add_alert_fill
+ic_add_alert_outline, ic_add_box_fill, ic_add_box_outline, ic_add_card_fill, ic_add_card_outline, ic_add_chart_fill, ic_add_chart_outline, ic_add_circle_fill
+ic_add_circle_outline, ic_add_circle_outline_fill, ic_add_circle_outline_outline, ic_add_fill, ic_add_link_fill, ic_add_link_outline, ic_add_location_alt_fill, ic_add_location_alt_outline
+ic_add_moderator_fill, ic_add_moderator_outline, ic_add_outline, ic_add_to_photos_fill, ic_add_to_photos_outline, ic_addchart_fill, ic_addchart_outline, ic_adjust_fill
+ic_adjust_outline, ic_admin_panel_settings_fill, ic_aigame_logo, ic_airplanemode_active_fill, ic_airplanemode_active_outline, ic_airplay_fill, ic_airplay_outline, ic_alarm_add_fill
+ic_alarm_add_outline, ic_alarm_fill, ic_alarm_on_fill, ic_alarm_on_outline, ic_alarm_outline, ic_alive_add_alarm, ic_alive_query_builder, ic_analytics_fill
+ic_analytics_outline, ic_android_fill, ic_android_outline, ic_announcement_fill, ic_announcement_outline, ic_api_adb, ic_api_add, ic_api_adjust
+ic_api_apps, ic_api_article, ic_api_back, ic_api_book, ic_api_brightness, ic_api_bug_report, ic_api_cat_debug, ic_api_close
+ic_api_cloud_circle, ic_api_color, ic_api_cross, ic_api_devices, ic_api_dot_red, ic_api_edit, ic_api_examples, ic_api_exit
+ic_api_file_present, ic_api_float_ball, ic_api_hand, ic_api_handyman, ic_api_info, ic_api_layout_hierarchy, ic_api_locked, ic_api_menu
+ic_api_more, ic_api_move, ic_api_network_wifi, ic_api_notifications_none, ic_api_ocr_debug, ic_api_overlay, ic_api_phone, ic_api_photo
+ic_api_point, ic_api_pointer, ic_api_project, ic_api_region, ic_api_remote, ic_api_resize, ic_api_run, ic_api_safe
+ic_api_screen, ic_api_sd_card, ic_api_settings, ic_api_settings_applications, ic_api_style, ic_api_task, ic_api_task_stop, ic_api_tasker
+ic_api_to_home, ic_api_unlock, ic_api_update, ic_api_video, ic_api_volume_down, ic_api_window, ic_api_window2, ic_api_xml
+ic_api_yolo_debug, ic_app_registration_fill, ic_app_registration_outline, ic_app_settings_alt_fill, ic_app_settings_alt_outline, ic_apps_fill, ic_apps_outline, ic_architecture_fill
+ic_architecture_outline, ic_archive_fill, ic_archive_outline, ic_arrow_back, ic_arrow_back_black_24, ic_arrow_back_fill, ic_arrow_back_ios_fill, ic_arrow_back_ios_new_fill
+ic_arrow_back_ios_new_outline, ic_arrow_back_ios_outline, ic_arrow_back_outline, ic_arrow_circle_down_fill, ic_arrow_circle_down_outline, ic_arrow_circle_up_fill, ic_arrow_circle_up_outline, ic_arrow_downward_fill
+ic_arrow_downward_outline, ic_arrow_drop_down, ic_arrow_drop_right_black_24dp, ic_arrow_drop_up, ic_arrow_forward, ic_arrow_forward_fill, ic_arrow_forward_ios_fill, ic_arrow_forward_ios_outline
+ic_arrow_forward_outline, ic_arrow_upward_fill, ic_arrow_upward_outline, ic_article_fill, ic_article_outline, ic_aspect_ratio_fill, ic_aspect_ratio_outline, ic_assessment_fill
+ic_assessment_outline, ic_assignment_fill, ic_assignment_late_fill, ic_assignment_late_outline, ic_assignment_outline, ic_attach_file_fill, ic_attach_file_outline, ic_attachment_fill
+ic_attachment_outline, ic_audio_file_fill, ic_audio_file_outline, ic_audiotrack_fill, ic_audiotrack_outline, ic_auto_awesome_fill, ic_auto_awesome_outline, ic_auto_delete_fill
+ic_auto_delete_outline, ic_auto_fix_high, ic_auto_fix_high_fill, ic_auto_fix_high_outline, ic_auto_fix_normal_fill, ic_auto_fix_normal_outline, ic_autorenew_fill, ic_autorenew_outline
+ic_back_hand_fill, ic_back_hand_outline, ic_backspace_fill, ic_backspace_outline, ic_backup_fill, ic_backup_outline, ic_battery_1_bar_fill, ic_battery_1_bar_outline
+ic_bedtime_fill, ic_bedtime_outline, ic_bg_switch, ic_block_fill, ic_block_outline, ic_bluetooth_audio_fill, ic_bluetooth_audio_outline, ic_bluetooth_disabled_fill
+ic_bluetooth_disabled_outline, ic_bluetooth_fill, ic_bluetooth_outline, ic_book, ic_book_fill, ic_book_outline, ic_bookmark_add_fill, ic_bookmark_add_outline
+ic_bookmark_added_fill, ic_bookmark_added_outline, ic_bookmark_border_fill, ic_bookmark_border_outline, ic_bookmarks_fill, ic_bookmarks_outline, ic_border_color_fill, ic_border_color_outline
+ic_branding_watermark_fill, ic_branding_watermark_outline, ic_brightness, ic_brightness_2_fill, ic_brightness_2_outline, ic_brightness_3_fill, ic_brightness_3_outline, ic_brightness_4_fill
+ic_brightness_4_outline, ic_brightness_5_fill, ic_brightness_5_outline, ic_brightness_6_fill, ic_brightness_6_outline, ic_brightness_auto_fill, ic_brightness_auto_outline, ic_brightness_medium_fill
+ic_brightness_medium_outline, ic_broken_image_fill, ic_broken_image_outline, ic_brush_fill, ic_brush_outline, ic_bug_report_fill, ic_bug_report_outline, ic_build_back_hand
+ic_build_bluetooth_connected, ic_build_build, ic_build_code_off, ic_build_compare_arrows, ic_build_fill, ic_build_motion_photos_auto, ic_build_outline, ic_build_phonelink_setup
+ic_build_remove_red_eye, ic_build_settings_system_daydream, ic_build_system_security_update_warning, ic_cached_fill, ic_cached_outline, ic_calendar_black_24dp, ic_calendar_month_fill, ic_calendar_month_outline
+ic_call_answer, ic_call_answer_video, ic_call_decline, ic_call_end_fill, ic_call_end_outline, ic_camera_alt_fill, ic_camera_alt_outline, ic_camera_fill
+ic_camera_outline, ic_cameraswitch_fill, ic_cameraswitch_outline, ic_campaign_fill, ic_campaign_outline, ic_cancel, ic_cancel_fill, ic_cancel_outline
+ic_card_travel_fill, ic_card_travel_outline, ic_cast_connected_fill, ic_cast_connected_outline, ic_cast_fill, ic_cast_outline, ic_chat_bubble_outline_fill, ic_chat_bubble_outline_outline
+ic_chat_fill, ic_chat_outline, ic_check_box_outline_blank_fill, ic_check_circle_outline_fill, ic_check_circle_outline_outline, ic_check_mark, ic_checkbox_checked, ic_checkbox_unchecked
+ic_checklist_rtl_fill, ic_checklist_rtl_outline, ic_chevron_left_fill, ic_chevron_left_outline, ic_chevron_right_fill, ic_chevron_right_outline, ic_class_fill, ic_class_outline
+ic_clear_black_24, ic_clear_black_24dp, ic_clear_fill, ic_clear_material, ic_clear_outline, ic_clock_black_24dp, ic_close, ic_close_fill
+ic_close_fullscreen_fill, ic_close_fullscreen_outline, ic_close_outline, ic_cloud_done_fill, ic_cloud_done_outline, ic_cloud_download_fill, ic_cloud_download_outline, ic_cloud_fill
+ic_cloud_outline, ic_cloud_queue_fill, ic_cloud_queue_outline, ic_cloud_upload_fill, ic_cloud_upload_outline, ic_code_fill, ic_code_off_fill, ic_code_off_outline
+ic_code_outline, ic_collections_fill, ic_collections_outline, ic_color_dark_error, ic_color_dark_error_container, ic_color_dark_on_error, ic_color_dark_on_error_container, ic_color_lens_fill
+ic_color_lens_outline, ic_color_light_error, ic_color_light_error_container, ic_color_light_on_error, ic_color_light_on_error_container, ic_colorize_fill, ic_colorize_outline, ic_commit_search_api_mtrl_alpha
+ic_compare_arrows_fill, ic_compare_arrows_outline, ic_compress_fill, ic_compress_outline, ic_computer_fill, ic_computer_outline, ic_construction_fill, ic_construction_outline
+ic_container_message, ic_container_quickfix, ic_content_copy_fill, ic_content_copy_outline, ic_content_cut_fill, ic_content_cut_outline, ic_content_paste_fill, ic_content_paste_go_fill
+ic_content_paste_go_outline, ic_content_paste_outline, ic_content_paste_search_fill, ic_content_paste_search_outline, ic_contrast_fill, ic_contrast_outline, ic_control_point_fill, ic_control_point_outline
+ic_copy_button, ic_copyright_fill, ic_copyright_outline, ic_create_fill, ic_create_new_folder_fill, ic_create_new_folder_outline, ic_create_outline, ic_crop_box
+ic_crop_din_fill, ic_crop_din_outline, ic_crop_fill, ic_crop_free_fill, ic_crop_free_outline, ic_crop_original_fill, ic_crop_original_outline, ic_crop_outline
+ic_crop_square_fill, ic_crop_square_outline, ic_cross_line, ic_dark_background, ic_dark_default_color_primary_text, ic_dark_default_color_secondary_text, ic_dark_error, ic_dark_error_container
+ic_dark_highlighted_text, ic_dark_hint_foreground, ic_dark_inverse_on_surface, ic_dark_inverse_primary, ic_dark_inverse_surface, ic_dark_mode_fill, ic_dark_mode_outline, ic_dark_on_background
+ic_dark_on_error, ic_dark_on_error_container, ic_dark_on_primary, ic_dark_on_primary_container, ic_dark_on_secondary, ic_dark_on_secondary_container, ic_dark_on_surface, ic_dark_on_surface_variant
+ic_dark_on_tertiary, ic_dark_on_tertiary_container, ic_dark_outline, ic_dark_outline_variant, ic_dark_primary, ic_dark_primary_container, ic_dark_primary_text_disable_only, ic_dark_secondary
+ic_dark_secondary_container, ic_dark_surface, ic_dark_surface_bright, ic_dark_surface_container, ic_dark_surface_container_high, ic_dark_surface_container_highest, ic_dark_surface_container_low, ic_dark_surface_container_lowest
+ic_dark_surface_dim, ic_dark_surface_variant, ic_dark_tertiary, ic_dark_tertiary_container, ic_dashboard_customize_fill, ic_dashboard_customize_outline, ic_data_object_fill, ic_data_object_outline
+ic_db_app_settings_alt, ic_db_bug_report, ic_db_info, ic_db_network_wifi, ic_db_phonelink, ic_db_refresh, ic_db_remote, ic_default_color_primary_text
+ic_default_color_secondary_text, ic_dehaze_fill, ic_dehaze_outline, ic_delete, ic_delete_fill, ic_delete_outline, ic_delete_outline_fill, ic_delete_outline_outline
+ic_delete_sweep_fill, ic_delete_sweep_outline, ic_description_fill, ic_description_outline, ic_design_services_fill, ic_design_services_outline, ic_desktop_windows_fill, ic_desktop_windows_outline
+ic_devices_fill, ic_devices_other_fill, ic_devices_other_outline, ic_devices_outline, ic_discount_fill, ic_discount_outline, ic_do_disturb_alt_fill, ic_do_disturb_alt_outline
+ic_do_disturb_fill, ic_do_disturb_on_fill, ic_do_disturb_on_outline, ic_do_disturb_outline, ic_do_not_disturb_alt_fill, ic_do_not_disturb_alt_outline, ic_do_not_disturb_fill, ic_do_not_disturb_on_fill
+ic_do_not_disturb_on_outline, ic_do_not_disturb_outline, ic_doc_book, ic_doc_bookmark_border, ic_doc_bookmarks, ic_doc_close, ic_doc_dot, ic_doc_expand_more
+ic_doc_menu, ic_doc_search, ic_doc_top, ic_document_scanner_fill, ic_document_scanner_outline, ic_done, ic_done_all, ic_done_fill
+ic_done_outline, ic_done_outline_fill, ic_down, ic_download_fill, ic_download_outline, ic_drive_file_rename_outline_fill, ic_drive_file_rename_outline_outline, ic_drive_folder_upload_fill
+ic_drive_folder_upload_outline, ic_duo_fill, ic_duo_outline, ic_edit_black_24dp, ic_edit_fill, ic_edit_location_alt_fill, ic_edit_location_alt_outline, ic_edit_location_fill
+ic_edit_location_outline, ic_edit_note_fill, ic_edit_note_outline, ic_edit_outline, ic_edt_photo, ic_email_fill, ic_email_outline, ic_error
+ic_error_fill, ic_error_outline, ic_error_outline_fill, ic_error_outline_outline, ic_event_available_fill, ic_event_available_outline, ic_exit_to_app_24, ic_exit_to_app_fill
+ic_exit_to_app_outline, ic_exp_arrow_back, ic_exp_code, ic_exp_file, ic_exp_folder, ic_exp_image, ic_exp_js, ic_exp_run
+ic_expand_fill, ic_expand_less_22px, ic_expand_less_fill, ic_expand_less_outline, ic_expand_more_22px, ic_expand_more_fill, ic_expand_more_outline, ic_expand_outline
+ic_extension_fill, ic_extension_outline, ic_fast_forward_fill, ic_fast_forward_outline, ic_fast_rewind_fill, ic_fast_rewind_outline, ic_favorite_border_fill, ic_favorite_border_outline
+ic_favorite_fill, ic_favorite_outline, ic_fc_file, ic_fc_folder, ic_feed_fill, ic_feed_outline, ic_feedback_fill, ic_feedback_outline
+ic_file_copy_fill, ic_file_copy_outline, ic_file_download_fill, ic_file_download_outline, ic_file_upload_fill, ic_file_upload_outline, ic_filter_center_focus_fill, ic_filter_center_focus_outline
+ic_filter_list_fill, ic_filter_list_outline, ic_filter_none_fill, ic_filter_none_outline, ic_filter_tilt_shift_fill, ic_filter_tilt_shift_outline, ic_fingerprint_fill, ic_fingerprint_outline
+ic_flight_fill, ic_flight_outline, ic_flow_info, ic_fm_add_box, ic_fm_android, ic_fm_arrow_right, ic_fm_audio, ic_fm_bat
+ic_fm_c, ic_fm_close, ic_fm_compress, ic_fm_content_copy, ic_fm_content_cut, ic_fm_cpp, ic_fm_delete, ic_fm_file
+ic_fm_file_move, ic_fm_folder, ic_fm_golang, ic_fm_h, ic_fm_html, ic_fm_image, ic_fm_jar, ic_fm_java
+ic_fm_js, ic_fm_json, ic_fm_key, ic_fm_lua, ic_fm_markdown, ic_fm_more_h, ic_fm_php, ic_fm_python
+ic_fm_rust, ic_fm_text, ic_fm_video, ic_fm_xml, ic_fm_yaml, ic_fm_zip, ic_fmd_good_fill, ic_fmd_good_outline
+ic_fmx_add, ic_fmx_add_bookmark, ic_fmx_all_bookmark, ic_fmx_architecture, ic_fmx_arrow_right, ic_fmx_back, ic_fmx_c, ic_fmx_change_screen_dir
+ic_fmx_clib, ic_fmx_close, ic_fmx_color_lens, ic_fmx_copy, ic_fmx_cut, ic_fmx_delete, ic_fmx_edit, ic_fmx_exchange
+ic_fmx_file, ic_fmx_file_type_android, ic_fmx_file_type_file, ic_fmx_file_type_folder, ic_fmx_file_type_html, ic_fmx_file_type_img, ic_fmx_file_type_jar, ic_fmx_file_type_java
+ic_fmx_file_type_jks, ic_fmx_file_type_js, ic_fmx_file_type_json, ic_fmx_file_type_mp4, ic_fmx_file_type_music, ic_fmx_file_type_python, ic_fmx_file_type_txt, ic_fmx_file_type_xml
+ic_fmx_file_type_zip, ic_fmx_folder, ic_fmx_hex_code, ic_fmx_javascript, ic_fmx_json, ic_fmx_lock, ic_fmx_lua, ic_fmx_md
+ic_fmx_module, ic_fmx_more, ic_fmx_music, ic_fmx_pause, ic_fmx_player, ic_fmx_properties, ic_fmx_props, ic_fmx_rename
+ic_fmx_resources, ic_fmx_run, ic_fmx_search, ic_fmx_share, ic_fmx_single_loop_not, ic_fmx_single_loop_yet, ic_fmx_speed, ic_fmx_ttf
+ic_fmx_unlock, ic_fmx_unzip, ic_fmx_xml, ic_fmx_zip, ic_folder, ic_folder_copy_fill, ic_folder_copy_outline, ic_folder_fill
+ic_folder_open_fill, ic_folder_open_outline, ic_folder_outline, ic_folder_special_fill, ic_folder_special_outline, ic_folder_zip_fill, ic_folder_zip_outline, ic_font_download_fill
+ic_font_download_outline, ic_format_color_fill_fill, ic_format_color_fill_outline, ic_format_color_text_fill, ic_format_color_text_outline, ic_format_indent_decrease_fill, ic_format_indent_decrease_outline, ic_format_list_bulleted_fill
+ic_format_list_bulleted_outline, ic_format_shapes_fill, ic_format_shapes_outline, ic_format_size_fill, ic_format_size_outline, ic_fullscreen_exit_fill, ic_fullscreen_exit_outline, ic_fullscreen_fill
+ic_fullscreen_outline, ic_g_translate_fill, ic_g_translate_outline, ic_gamepad_fill, ic_gamepad_outline, ic_go_search_api_material, ic_gpp_good_fill, ic_gpp_good_outline
+ic_gpp_maybe_fill, ic_gpp_maybe_outline, ic_gps_fixed_fill, ic_gps_fixed_outline, ic_gps_not_fixed_fill, ic_gps_not_fixed_outline, ic_grade_fill, ic_grade_outline
+ic_graphic_eq_fill, ic_graphic_eq_outline, ic_group_add_fill, ic_group_add_outline, ic_group_fill, ic_group_off_fill, ic_group_off_outline, ic_group_outline
+ic_group_remove_fill, ic_group_remove_outline, ic_groups_fill, ic_groups_outline, ic_handyman_fill, ic_handyman_outline, ic_headphones_fill, ic_headphones_outline
+ic_headset_fill, ic_headset_mic_fill, ic_headset_mic_outline, ic_headset_outline, ic_help_fill, ic_help_outline, ic_help_outline_fill, ic_help_outline_outline
+ic_highlight_off_fill, ic_highlight_off_outline, ic_highlighted_text, ic_hint_foreground, ic_history_fill, ic_history_outline, ic_home_fill, ic_home_outline
+ic_hourglass_bottom_fill, ic_hourglass_bottom_outline, ic_hourglass_empty_fill, ic_hourglass_empty_outline, ic_hourglass_top_fill, ic_hourglass_top_outline, ic_how_to_reg_outline, ic_https_fill
+ic_https_outline, ic_ica_arrow_back, ic_ica_close, ic_ica_delete, ic_ica_folder, ic_ica_more, ic_image_fill, ic_image_outline
+ic_image_search_fill, ic_image_search_outline, ic_import_contacts_fill, ic_import_contacts_outline, ic_import_export_fill, ic_import_export_outline, ic_indeterminate, ic_indeterminate_check_box_fill
+ic_indeterminate_check_box_outline, ic_info_fill, ic_info_outline, ic_input_fill, ic_input_outline, ic_insert_chart_fill, ic_insert_chart_outline, ic_insert_chart_outlined_fill
+ic_insert_chart_outlined_outline, ic_insert_drive_file_fill, ic_insert_drive_file_outline, ic_insert_page_break_fill, ic_insert_page_break_outline, ic_insert_photo_fill, ic_insert_photo_outline, ic_interpreter_mode_fill
+ic_interpreter_mode_outline, ic_inventory_fill, ic_inventory_outline, ic_ios_share_fill, ic_ios_share_outline, ic_jks_add, ic_jks_build, ic_jks_key
+ic_key_fill, ic_key_outline, ic_keyboard_arrow_down_fill, ic_keyboard_arrow_down_outline, ic_keyboard_arrow_left_black_24dp, ic_keyboard_arrow_left_fill, ic_keyboard_arrow_left_outline, ic_keyboard_arrow_next_black_24dp
+ic_keyboard_arrow_previous_black_24dp, ic_keyboard_arrow_right_black_24dp, ic_keyboard_arrow_right_fill, ic_keyboard_arrow_right_outline, ic_keyboard_arrow_up_fill, ic_keyboard_arrow_up_outline, ic_keyboard_black_24dp, ic_keyboard_control_key_fill
+ic_keyboard_control_key_outline, ic_keyboard_double_arrow_left_fill, ic_keyboard_double_arrow_left_outline, ic_keyboard_double_arrow_up_fill, ic_keyboard_double_arrow_up_outline, ic_keyboard_tab, ic_keyboard_voice_fill, ic_keyboard_voice_outline
+ic_language_fill, ic_language_outline, ic_laptop_fill, ic_laptop_mac_fill, ic_laptop_mac_outline, ic_laptop_outline, ic_laptop_windows_fill, ic_laptop_windows_outline
+ic_last_page_fill, ic_last_page_outline, ic_launch_fill, ic_launch_outline, ic_launcher, ic_launcher_background, ic_launcher_foreground, ic_launcher_round
+ic_layers_fill, ic_layers_outline, ic_leaderboard_fill, ic_leaderboard_outline, ic_left, ic_library_add_fill, ic_library_add_outline, ic_library_books_fill
+ic_library_books_outline, ic_library_music_fill, ic_library_music_outline, ic_light_background, ic_light_error, ic_light_error_container, ic_light_inverse_on_surface, ic_light_inverse_primary
+ic_light_inverse_surface, ic_light_mode_fill, ic_light_mode_outline, ic_light_on_background, ic_light_on_error, ic_light_on_error_container, ic_light_on_primary, ic_light_on_primary_container
+ic_light_on_secondary, ic_light_on_secondary_container, ic_light_on_surface, ic_light_on_surface_variant, ic_light_on_tertiary, ic_light_on_tertiary_container, ic_light_outline, ic_light_outline_variant
+ic_light_primary, ic_light_primary_container, ic_light_secondary, ic_light_secondary_container, ic_light_surface, ic_light_surface_bright, ic_light_surface_container, ic_light_surface_container_high
+ic_light_surface_container_highest, ic_light_surface_container_low, ic_light_surface_container_lowest, ic_light_surface_dim, ic_light_surface_variant, ic_light_tertiary, ic_light_tertiary_container, ic_link_fill
+ic_link_outline, ic_local_airport_fill, ic_local_airport_outline, ic_local_grocery_store_fill, ic_local_grocery_store_outline, ic_local_mall_fill, ic_local_mall_outline, ic_local_offer_fill
+ic_local_offer_outline, ic_local_post_office_fill, ic_local_post_office_outline, ic_local_printshop_fill, ic_local_printshop_outline, ic_local_see_fill, ic_local_see_outline, ic_location_on_fill
+ic_location_on_outline, ic_location_searching_fill, ic_location_searching_outline, ic_lock_clock_fill, ic_lock_clock_outline, ic_lock_fill, ic_lock_open_fill, ic_lock_open_outline
+ic_lock_outline, ic_log_24, ic_login_fill, ic_login_outline, ic_logout_fill, ic_logout_outline, ic_loop_fill, ic_loop_outline
+ic_loyalty_fill, ic_loyalty_outline, ic_m3_chip_checked_circle, ic_m3_chip_close, ic_mail_fill, ic_mail_outline, ic_mail_outline_fill, ic_mail_outline_outline
+ic_manage_accounts_fill, ic_manage_accounts_outline, ic_manage_history_fill, ic_manage_history_outline, ic_mark_chat_unread_fill, ic_mark_chat_unread_outline, ic_mark_email_read_fill, ic_mark_email_read_outline
+ic_mark_email_unread_fill, ic_mark_email_unread_outline, ic_mark_unread_chat_alt_fill, ic_mark_unread_chat_alt_outline, ic_markunread_fill, ic_markunread_outline, ic_medical_services_fill, ic_medical_services_outline
+ic_memory_fill, ic_memory_outline, ic_menu_arrow_down_black_24dp, ic_menu_book_fill, ic_menu_book_outline, ic_menu_copy_mtrl_am_alpha, ic_menu_cut_mtrl_alpha, ic_menu_fill
+ic_menu_outline, ic_menu_overflow_material, ic_menu_paste_mtrl_am_alpha, ic_menu_selectall_mtrl_alpha, ic_menu_share_mtrl_alpha, ic_message_fill, ic_message_outline, ic_mic_fill
+ic_mic_none_fill, ic_mic_none_outline, ic_mic_outline, ic_mode_comment_fill, ic_mode_comment_outline, ic_mode_edit_fill, ic_mode_edit_outline, ic_mode_edit_outline_fill
+ic_mode_edit_outline_outline, ic_mode_fill, ic_mode_night_fill, ic_mode_night_outline, ic_mode_outline, ic_mode_standby_fill, ic_mode_standby_outline, ic_monitor_fill
+ic_monitor_outline, ic_more_horiz_fill, ic_more_horiz_outline, ic_more_line, ic_more_time_fill, ic_more_time_outline, ic_more_vert_fill, ic_more_vert_outline
+ic_mtrl_arrow_circle, ic_mtrl_checked_circle, ic_mtrl_chip_checked_black, ic_mtrl_chip_checked_circle, ic_mtrl_chip_close_circle, ic_music_note_fill, ic_music_note_outline, ic_music_video_fill
+ic_music_video_outline, ic_my_location_fill, ic_my_location_outline, ic_navigate_before_fill, ic_navigate_before_outline, ic_navigate_next_fill, ic_navigate_next_outline, ic_navigation_fill
+ic_navigation_outline, ic_near_me_fill, ic_near_me_outline, ic_network_wifi_3_bar_fill, ic_network_wifi_3_bar_outline, ic_neutral_variant10, ic_neutral_variant100, ic_neutral_variant12
+ic_neutral_variant17, ic_neutral_variant22, ic_neutral_variant24, ic_neutral_variant30, ic_neutral_variant4, ic_neutral_variant50, ic_neutral_variant6, ic_neutral_variant60
+ic_neutral_variant80, ic_neutral_variant87, ic_neutral_variant90, ic_neutral_variant92, ic_neutral_variant94, ic_neutral_variant96, ic_neutral_variant98, ic_neutral10
+ic_neutral20, ic_neutral90, ic_neutral95, ic_new_releases_fill, ic_new_releases_outline, ic_nightlight_fill, ic_nightlight_outline, ic_nightlight_round_fill
+ic_nightlight_round_outline, ic_no_encryption_gmailerrorred_fill, ic_no_encryption_gmailerrorred_outline, ic_north_west_fill, ic_north_west_outline, ic_not_interested_fill, ic_not_interested_outline, ic_not_listed_location_fill
+ic_not_listed_location_outline, ic_note_add_fill, ic_note_add_outline, ic_notification_add_fill, ic_notification_add_outline, ic_notifications_fill, ic_notifications_none_fill, ic_notifications_none_outline
+ic_notifications_off_fill, ic_notifications_off_outline, ic_notifications_outline, ic_offline_pin_fill, ic_offline_pin_outline, ic_on_primary_fixed, ic_on_primary_fixed_variant, ic_on_secondary_fixed
+ic_on_secondary_fixed_variant, ic_on_tertiary_fixed, ic_on_tertiary_fixed_variant, ic_open, ic_open_in_full, ic_open_in_full_fill, ic_open_in_full_outline, ic_open_in_new_fill
+ic_open_in_new_outline, ic_open_with_fill, ic_open_with_outline, ic_outlined_flag_fill, ic_output_fill, ic_output_outline, ic_palette_fill, ic_palette_outline
+ic_pan_tool_fill, ic_pan_tool_outline, ic_panorama_fill, ic_panorama_fish_eye_fill, ic_panorama_fish_eye_outline, ic_panorama_outline, ic_pause_circle_fill, ic_pause_circle_filled_fill
+ic_pause_circle_filled_outline, ic_pause_circle_outline, ic_pause_circle_outline_fill, ic_pause_circle_outline_outline, ic_pause_fill, ic_pause_outline, ic_people_alt_outline, ic_people_fill
+ic_people_outline, ic_people_outline_fill, ic_people_outline_outline, ic_perm_contact_calendar_fill, ic_perm_contact_calendar_outline, ic_perm_identity_fill, ic_perm_identity_outline, ic_perm_media_fill
+ic_perm_media_outline, ic_person_add_alt_1_fill, ic_person_add_alt_1_outline, ic_person_add_alt_fill, ic_person_add_alt_outline, ic_person_add_fill, ic_person_add_outline, ic_person_fill
+ic_person_outline, ic_person_outline_fill, ic_person_outline_outline, ic_person_remove_fill, ic_person_remove_outline, ic_person_search_fill, ic_person_search_outline, ic_personal_video_fill
+ic_personal_video_outline, ic_pest_control_fill, ic_pest_control_outline, ic_phone_android_fill, ic_phone_android_outline, ic_phone_enabled_fill, ic_phone_enabled_outline, ic_phone_fill
+ic_phone_in_talk_fill, ic_phone_in_talk_outline, ic_phone_iphone_fill, ic_phone_iphone_outline, ic_phone_outline, ic_phonelink_fill, ic_phonelink_outline, ic_phonelink_setup_fill
+ic_phonelink_setup_outline, ic_photo_camera_back_fill, ic_photo_camera_back_outline, ic_photo_camera_fill, ic_photo_camera_outline, ic_photo_fill, ic_photo_library_fill, ic_photo_library_outline
+ic_photo_outline, ic_photo_size_select_actual_fill, ic_photo_size_select_actual_outline, ic_picture_in_picture_fill, ic_picture_in_picture_outline, ic_pie_chart_outline_fill, ic_place_fill, ic_place_outline
+ic_play_arrow, ic_play_arrow_fill, ic_play_arrow_outline, ic_play_circle_fill, ic_play_circle_filled_fill, ic_play_circle_filled_outline, ic_play_circle_outline, ic_play_circle_outline_fill
+ic_play_circle_outline_outline, ic_player, ic_poll_fill, ic_poll_outline, ic_popup_animation, ic_portrait_fill, ic_portrait_outline, ic_post_add_fill
+ic_post_add_outline, ic_power_settings_new_fill, ic_power_settings_new_outline, ic_primary_fixed, ic_primary_fixed_dim, ic_primary_text_disable_only, ic_primary10, ic_primary100
+ic_primary20, ic_primary30, ic_primary40, ic_primary80, ic_primary90, ic_print_fill, ic_print_outline, ic_privacy_tip_fill
+ic_privacy_tip_outline, ic_psychology_fill, ic_psychology_outline, ic_public_fill, ic_public_outline, ic_publish_fill, ic_publish_outline, ic_push_pin_outline
+ic_qr_code_2_fill, ic_qr_code_2_outline, ic_qr_code_fill, ic_qr_code_outline, ic_query_builder_fill, ic_query_builder_outline, ic_queue_fill, ic_queue_music_fill
+ic_queue_music_outline, ic_queue_outline, ic_quiz_fill, ic_quiz_outline, ic_radio_button_checked_fill, ic_radio_button_checked_outline, ic_receipt_fill, ic_receipt_outline
+ic_redo_24, ic_redo_fill, ic_redo_outline, ic_refresh_fill, ic_refresh_outline, ic_reg, ic_remove_circle_fill, ic_remove_circle_outline
+ic_remove_circle_outline_fill, ic_remove_circle_outline_outline, ic_repeat_fill, ic_repeat_one_fill, ic_repeat_one_outline, ic_repeat_outline, ic_replay_fill, ic_replay_outline
+ic_reply_all_fill, ic_reply_all_outline, ic_reply_fill, ic_reply_outline, ic_report_fill, ic_report_outline, ic_report_problem_fill, ic_report_problem_outline
+ic_restore_fill, ic_restore_outline, ic_right, ic_room_fill, ic_room_outline, ic_rss_feed_fill, ic_rss_feed_outline, ic_save_alt_fill
+ic_save_alt_outline, ic_save_as, ic_save_as_fill, ic_save_as_outline, ic_save_fill, ic_save_outline, ic_schedule_fill, ic_schedule_outline
+ic_school_fill, ic_school_outline, ic_screen_rotation_fill, ic_screen_rotation_outline, ic_sd_card_alert_fill, ic_sd_card_alert_outline, ic_sd_card_fill, ic_sd_card_outline
+ic_sdk_360, ic_sdk_access_time, ic_sdk_access_time_filled, ic_sdk_account, ic_sdk_account_box, ic_sdk_add, ic_sdk_add_card, ic_sdk_add_circle
+ic_sdk_analytics, ic_sdk_android, ic_sdk_app_registration, ic_sdk_app_settings_alt, ic_sdk_assignment_return, ic_sdk_close, ic_sdk_cloud_upload, ic_sdk_code
+ic_sdk_crop_free, ic_sdk_delete, ic_sdk_delete_outline, ic_sdk_device_informatio, ic_sdk_do_not_disturb, ic_sdk_document_scanner, ic_sdk_edit, ic_sdk_email
+ic_sdk_handyman, ic_sdk_info, ic_sdk_key_off, ic_sdk_keyboard_arrow_right, ic_sdk_lock, ic_sdk_menu, ic_sdk_menu_book, ic_sdk_more_horiz
+ic_sdk_output, ic_sdk_people, ic_sdk_person, ic_sdk_person_off, ic_sdk_privacy_tip, ic_sdk_publish, ic_sdk_sd_card, ic_sdk_search
+ic_sdk_security_update, ic_sdk_security_update_warning, ic_sdk_settings, ic_sdk_sim_card_alert, ic_sdk_tab, ic_sdk_textsms, ic_sdk_verified_user, ic_sdk_web
+ic_search, ic_search_api_material, ic_search_fill, ic_search_outline, ic_searcher, ic_secondary_fixed, ic_secondary_fixed_dim, ic_secondary10
+ic_secondary100, ic_secondary20, ic_secondary30, ic_secondary40, ic_secondary80, ic_secondary90, ic_security_fill, ic_security_outline
+ic_select_all_fill, ic_select_all_outline, ic_sell_fill, ic_sell_outline, ic_send_fill, ic_send_outline, ic_set_arrow_right, ic_set_bilibili
+ic_set_cloud_pan, ic_set_file_present, ic_set_gitee, ic_set_ima, ic_set_insert_link, ic_set_mail, ic_set_person, ic_set_qq
+ic_settings_ethernet_fill, ic_settings_ethernet_outline, ic_settings_fill, ic_settings_outline, ic_share_fill, ic_share_outline, ic_shield_fill, ic_shield_outline
+ic_shopping_bag_fill, ic_shopping_bag_outline, ic_short_text, ic_sign_android, ic_sign_build, ic_signal_cellular_alt_fill, ic_signal_cellular_alt_outline, ic_sim_card_alert_fill
+ic_sim_card_alert_outline, ic_sim_card_download_fill, ic_sim_card_download_outline, ic_sim_card_fill, ic_sim_card_outline, ic_skip_next_fill, ic_skip_next_outline, ic_skip_previous_fill
+ic_skip_previous_outline, ic_smartphone_fill, ic_smartphone_outline, ic_sms_failed_fill, ic_sms_failed_outline, ic_sms_fill, ic_sms_outline, ic_sora_handle_drop
+ic_sort_fill, ic_sort_outline, ic_source_fill, ic_source_outline, ic_spellcheck_fill, ic_spellcheck_outline, ic_star_border_fill, ic_star_border_outline
+ic_star_border_purple500_fill, ic_star_border_purple500_outline, ic_star_fill, ic_star_half_fill, ic_star_half_outline, ic_star_outline, ic_star_outline_fill, ic_star_outline_outline
+ic_star_rate_fill, ic_star_rate_outline, ic_stay_primary_portrait_fill, ic_stay_primary_portrait_outline, ic_stop_circle_fill, ic_stop_circle_outline, ic_stop_fill, ic_stop_outline
+ic_store_fill, ic_store_mall_directory_fill, ic_store_mall_directory_outline, ic_store_outline, ic_style_fill, ic_style_outline, ic_supervisor_account_fill, ic_supervisor_account_outline
+ic_swap_vert_fill, ic_swap_vert_outline, ic_switch_account_fill, ic_switch_account_outline, ic_sync_alt_fill, ic_sync_alt_outline, ic_sync_fill, ic_sync_outline
+ic_system_security_update_good_fill, ic_system_security_update_good_outline, ic_system_update_fill, ic_system_update_outline, ic_tablet_android_fill, ic_tablet_android_outline, ic_tablet_mac_fill, ic_tablet_mac_outline
+ic_tag_a, ic_tag_c, ic_tag_js, ic_tag_json, ic_tag_lua, ic_tag_python, ic_tag_txt, ic_tag_xml
+ic_task_alt_fill, ic_task_alt_outline, ic_task_fill, ic_task_outline, ic_terminal_fill, ic_terminal_outline, ic_tertiary_fixed, ic_tertiary_fixed_dim
+ic_tertiary10, ic_tertiary100, ic_tertiary20, ic_tertiary30, ic_tertiary40, ic_tertiary80, ic_tertiary90, ic_text_decrease_fill
+ic_text_decrease_outline, ic_text_fields_fill, ic_text_fields_outline, ic_text_format_fill, ic_text_format_outline, ic_text_increase_fill, ic_text_increase_outline, ic_text_rotate_vertical_fill
+ic_text_rotate_vertical_outline, ic_text_snippet_fill, ic_text_snippet_outline, ic_textsms_fill, ic_textsms_outline, ic_title_fill, ic_title_outline, ic_tools
+ic_tooltip_brief_message, ic_tooltip_detailed_message, ic_tooltip_more_actions, ic_tooltip_preferred_action, ic_tooltip_window, ic_tooltip_window_enter, ic_tooltip_window_exit, ic_topic_fill
+ic_topic_outline, ic_touch_app_fill, ic_touch_app_outline, ic_translate_fill, ic_translate_outline, ic_tree_arrow_down, ic_tree_arrow_right, ic_trending_flat_fill
+ic_trending_flat_outline, ic_tune_fill, ic_tune_outline, ic_turned_in_fill, ic_turned_in_not_fill, ic_turned_in_not_outline, ic_turned_in_outline, ic_tv_fill
+ic_tv_outline, ic_ui_apps, ic_undo_24, ic_undo_fill, ic_undo_outline, ic_unfold_less_fill, ic_unfold_less_outline, ic_unfold_more_fill
+ic_unfold_more_outline, ic_up, ic_upload_file_fill, ic_upload_file_outline, ic_verified_fill, ic_verified_outline, ic_verified_user_fill, ic_verified_user_outline
+ic_vertical_align_bottom_fill, ic_vertical_align_bottom_outline, ic_vertical_align_center_fill, ic_vertical_align_center_outline, ic_video_camera_back_fill, ic_video_camera_back_outline, ic_video_file_fill, ic_video_file_outline
+ic_videocam_fill, ic_videocam_outline, ic_view_kanban_fill, ic_view_kanban_outline, ic_visibility, ic_visibility_fill, ic_visibility_off, ic_visibility_outline
+ic_voice_search_api_material, ic_volume_down_fill, ic_volume_down_outline, ic_volume_mute_fill, ic_volume_mute_outline, ic_volume_off_fill, ic_volume_off_outline, ic_volume_up_fill
+ic_volume_up_outline, ic_volunteer_activism_fill, ic_volunteer_activism_outline, ic_vpn_key_fill, ic_vpn_key_off_fill, ic_vpn_key_off_outline, ic_vpn_key_outline, ic_wallpaper_fill
+ic_wallpaper_outline, ic_warning_amber_fill, ic_warning_amber_outline, ic_watch_later_fill, ic_watch_later_outline, ic_wb_cloudy_fill, ic_wb_cloudy_outline, ic_where_to_vote_fill
+ic_where_to_vote_outline, ic_widgets_fill, ic_widgets_outline, ic_wifi_fill, ic_wifi_off_fill, ic_wifi_off_outline, ic_wifi_outline, ic_work_outline_outline
+ic_wrap_text, ic_zoom_in_fill, ic_zoom_in_map_fill, ic_zoom_in_map_outline, ic_zoom_in_outline, ic_zoom_out_fill, ic_zoom_out_map_fill, ic_zoom_out_map_outline
+ic_zoom_out_outline
+```

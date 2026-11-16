@@ -5,6 +5,18 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 
 # AutoGOD 编码参考手册
 
+## 📚 文档来源（先看这一段）
+
+| 层 | 目录 | 来源 | 语言 |
+|---|---|---|---|
+| API | `api/` | **官方 AutoGod-Docs v-26.10.24 英文版**（更新时间 2026-10-22），**原样搬运、未改一个字** | 英文 |
+| UI | `ui/` | 同上（英文版），按控件分子目录：`<控件>.md` + `<控件>/demo.md` | 英文 |
+| 经验 | `guide/` `debug/` `projects/` `examples/` | 本项目踩坑与实战沉淀 | 中文 |
+
+- 官方中文版（`api_cn` / `ui_cn`）**没有收进来**，按用户要求只保留英文版
+- 官方文档里的图片（ui 的 png/gif 共 223 个）**没有收进来**，文中的 `![](../img/xxx.png)` 链接会断，属正常
+- 来源版本与重跑方法记在 `_meta.md`
+
 ## ⛔ 三条红线（违反必出「不报错」的故障）
 
 > 这三条的共同特征是**全程没有报错**：界面正常、日志安静、行为诡异。
@@ -33,7 +45,7 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 
 本手册提供 **AutoGOD（AiGame）** 平台的完整 API 文档和编码参考，覆盖安卓自动化的各个方面：
 
-- **手势动作**：点击、滑动、手势、节点查找（`$act`, `act-UiSelector.md`）
+- **手势动作**：点击、滑动、手势、节点查找（`$act`, `api/act/UiSelector.md`）
 - **图色识别**：找图、等图、找色、图色函数（`$ag`, `$img`, `$color`）
 - **屏幕与 OCR**：截屏、亮度控制、文字识别 ncnn/mlkit/ppv5（`$screen`, `$ocr`）
 - **UI 界面构建**：17 种布局 + 30+ 控件，XML 模板引擎（`ui/`）
@@ -109,10 +121,10 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 
 当涉及 UI 界面构建或 XML 布局时，**必须按以下顺序查阅文档**：
 
-1. 先读取 `ui/` 目录下对应控件的文档（如 `button.md`、`input.md`、`layout-linear.md` 等），**不要凭记忆写 XML 标签和属性名**
-2. 再读取 `ui/examples/` 下的综合案例（`案例-登录界面.md`、`案例-标签联动.md` 等）参考完整用法
+1. 先读取 `ui/` 目录下对应控件的文档（如 `button.md`、`button/demo.md`、`layout/linear.md` 等；**官方英文文档，按模块分子目录**），**不要凭记忆写 XML 标签和属性名**
+2. 再读取 `examples/ui-示例-*.md` 下的综合案例（登录界面、标签联动、动态组件等）参考完整用法
 3. 最后读取 `guide/踩坑记录.md` 中的 XML 布局陷阱章节（`gravity` vs `layout_gravity`、`visibility` 不生效等）
-4. **写到图标时先查 `ui/icon-list.md`**（内置 1537 个图标名清单）—— **绝对不要凭感觉猜图标名**，名字不存在会静默不显示、不报错。命名规律是 `<名字>_fill`（填充版）/ `<名字>_outline`（描边版），没有裸名。
+4. **写到图标时先查 `guide/icon-list.md`**（内置 1537 个图标名清单）—— **绝对不要凭感觉猜图标名**，名字不存在会静默不显示、不报错。命名规律是 `<名字>_fill`（填充版）/ `<名字>_outline`（描边版），没有裸名。
    拿不准就去客户端现场看：**侧边栏 → 辅助信息 → 「内置图标」**（页面标题「图标库」，带搜索框可滚动浏览）。
 5. 写完 UI 后对照 `guide/踩坑记录.md` **第九章「UI 组件实测陷阱」**（真机实测结论：图标名、`<card>` 背景色改不动、`button-group` 的坑等）
 
@@ -139,7 +151,7 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 **任何 AutoGOD 代码开发、修改、调试前，必须同时查阅以下两个官方文档网站，与本 skill 文档相互印证，确认 API 签名、参数顺序、XML 属性名准确无误：**
 
 - **API 文档**：https://auto-god.top/api_en/act.html （全部 `$` 开头 API 的完整参考）
-- **UI 文档**：https://auto-god.top/ui_en/index.html （全部控件、布局、属性的完整参考）
+- **UI 文档**：https://auto-god.top/docs/en/ui/index（全部控件、布局、属性的完整参考）
 
 > ⚠️ 本 skill 是本地速查手册，官方文档是最新最全的权威来源。两者不一致时以**官方文档为准**；官方文档也查不到的 API 不得凭空编造，必须明确告知用户"文档中不存在此 API"。
 
@@ -189,10 +201,10 @@ API 模块文档在 `api/` 目录（英文文件名），按功能分类：
 | | `global.md` | `$global` sleep/alert/log/random 全局函数 |
 | **YOLO** | `yolo.md` | `$yolo` 目标检测 |
 | **内存读写** | `mem.md` | `$mem` 内存读写、特征码扫描、打补丁、备份、ptrace、硬件断点、远程调用 |
-| **模块与Java** | `模块化编程.md` | `require()` 模块系统 |
-| | `Java交互.md` | Java 类导入与 `$import` |
+| **插件与Java** | `plugin.md` | 插件加载 |
+| | `web-plugin/*.md` | Web 侧插件（engine / file / log） |
 
-UI 框架文档在 `ui/` 目录（英文文件名），覆盖 17 种布局 + 30+ 控件 + 演示文件。
+UI 框架文档在 `ui/` 目录（**官方英文文档，按控件分子目录**：`<控件>.md` + `<控件>/demo.md`），覆盖 17 种布局 + 30+ 控件 + 演示文件。
 
 ### 第三步：参考代码示例
 
@@ -211,7 +223,7 @@ UI 框架文档在 `ui/` 目录（英文文件名），覆盖 17 种布局 + 30+
 
 本技能只保留上面 6 个分类汇总 md。图片、jar、dex、so、apk、mp4 等大二进制素材不在任何技能内，需要时从 `H:\skill\auto-god-docs-backup-20261115.zip` 解压。
 
-在 `ui/examples/` 中查找 UI 综合案例（案例-登录界面、案例-简易播放器等）。
+在 `examples/ui-示例-*.md` 中查找 UI 综合案例（登录界面、简易播放器等）。
 
 在 `projects/` 中查看完整项目示例（光源音乐项目、悬浮界面项目）。
 

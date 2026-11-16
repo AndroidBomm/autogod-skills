@@ -1,231 +1,235 @@
 # $ext - 拓展:加载Dex,Apk,Jar,So
 
-- 更新时间:2026-02-08 19:43:38
+- 更新时间:2026-10-22 10:55:48
 
-加载DexApkJarSo拓展API
+> 扩展加载对象，脚本里叫 $ext。
+> 
+> 它可以在脚本运行时动态加载外部的 dex/apk/jar/so 文件，把里面的 Java 类引入脚本使用，
+> 相当于给脚本临时扩充能力。加载成功后会返回一个类加载器，之后就能用里面的类了。
 
-$ext顾名思义就是"拓展"的意思，主要用来加载第三方库，拓展本应用中没有的功能。
+
+
+```javascript
+$ext.loadDex("/sdcard/Download/helper.dex");
+```
+
+
+
 
 ### loadApk(apkPath)
 
-加载apk文件
+> 加载一个外部 APK 文件，把它里面的类引入脚本可用。
 
-- 参数 : apkPath {string} apk文件路径
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : apkPath {string} 要加载的 apk 文件路径
+- 返回 : {DexClassLoader} 加载成功后的类加载器，可用它反射使用 apk 里的类
 - 版本 : 1.2.5
+
 
 ```javascript
 $ext.loadApk("/sdcard/测试.apk");
-
 ```
+
+
 ### loadDex(dexPath)
 
-加载dex文件
+> 加载一个外部 dex 文件，把它里面的类引入脚本可用。
+> 
+> $ext 会把每个加载过的 dex 按一个唯一的类加载器 ID 缓存起来。
+> 
+> 首次加载时会保存 ID 和类加载器。
+> 
+> 之后再加载同一个 dex 会直接复用缓存，不会重复加载。
+> 
+> 如果想强制重新加载，要先调用 clear() 清掉缓存。
 
-$ext中存在一个内置的缓存机制,被加载的dex文件会被生成一个唯一的id作为类加载器的标识,
-
-在起初加载dex文件的时候会保存id和类加载器对象
-
-当再次加载相同的dex文件时,会通过id直接取得类加载器对象来执行类
-
-如果想重新加载需要调用$ext.clear()清除id和类加载器
-
-- 参数 : dexPath {string} dex文件路径
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : dexPath {string} 要加载的 dex 文件路径
+- 返回 : {DexClassLoader} 加载成功后的类加载器
 - 版本 : 1.1.0
+
 
 ```javascript
 $ext.loadDex("./res/demo.dex");
-//开始使用dex中的类
-
+//加载后即可在脚本里使用 dex 里的类
 ```
+
+
 ### loadDexs(paths)
 
-加载多个dex文件
+> 一次性加载多个 dex 文件，合并到同一个类加载器里。
 
-- 参数 : paths {string[]} dex文件路径
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : paths {string[]} 要加载的多个 dex 文件路径数组
+- 返回 : {DexClassLoader} 合并加载后的类加载器
 - 版本 : 1.2.6
 
-```javascript
-//加载多个dex文件(传入所有dex文件的路径数组即可)
-$ext.loadDexs(["/res/demo1.dex","/res/demo2.dex","/res/demo3.dex"]);
 
+```javascript
+//依次加载三个 dex
+$ext.loadDexs(["/res/demo1.dex","/res/demo2.dex","/res/demo3.dex"]);
 ```
+
+
 ### loadJar(jarPath)
 
-加载jar文件
+> 加载一个外部 jar 文件，把它里面的类引入脚本可用。
+> 
+> $ext 会把每个加载过的 jar 按一个唯一的类加载器 ID 缓存起来。
+> 
+> 首次加载时会保存 ID 和类加载器。
+> 
+> 之后再加载同一个 jar 会直接复用缓存。
+> 
+> 想强制重新加载要先调用 clear() 清缓存。
 
-$ext中存在一个内置的缓存机制,被加载的jar文件会被生成一个唯一的id作为类加载器的标识,
-
-在起初加载jar文件的时候会保存id和类加载器对象
-
-当再次加载相同的jar文件时,会通过id直接取得类加载器对象来执行类
-
-如果想重新加载需要调用$ext.clear()清除id和类加载器
-
-注意:被加载的jar必须经过安卓开发环境(AndroidStudio)编译生成class字节码归档文件才可被加载
-
-- 参数 : jarPath {string} jar文件路径
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : jarPath {string} 要加载的 jar 文件路径
+- 返回 : {DexClassLoader} 加载成功后的类加载器
 - 版本 : 1.1.0
+
 
 ```javascript
 $ext.loadJar("/res/demo.jar");
-//开始使用jar中的类
-
+//加载后即可使用 jar 里的类
 ```
+
+
 ### loadJars(paths)
 
-加载多个jar文件
+> 一次性加载多个 jar 文件，合并到同一个类加载器里。
+> 
+> 用法和 loadDexs 一样，只是文件类型换成 jar。
 
-注意:被加载的jar必须经过安卓开发环境(AndroidStudio)编译生成class字节码归档文件才可被加载
-
-- 参数 : paths {string[]} jar文件路径
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : paths {string[]} 要加载的多个 jar 文件路径数组
+- 返回 : {DexClassLoader} 合并加载后的类加载器
 - 版本 : 1.2.6
 
-```javascript
-//加载多个jar文件(传入所有jar文件的路径数组即可)
-$ext.loadJars(["/res/demo1.dex","/res/demo2.dex","/res/demo3.dex"]);
 
+```javascript
+//依次加载多个 jar
+$ext.loadJars(["/res/demo1.jar","/res/demo2.jar","/res/demo3.jar"]);
 ```
+
+
 ### loadDex(options)
 
-加载dex/so文件
+> 用配置对象的方式加载 dex（可同时加载依赖的 so 原生库）。
+> 
+> 适合一个 dex 还依赖若干 .so 文件的情况，一次性把 dex 和 so 都配好。
 
-值得注意的就是so文件也有很多架构(x86_64,arm64_v8a等),根据自己手机的架构来选择需要加载的so文件(安卓特性);
-此外:如果dex(java代码)中已经使用System.load(so);加载过的so文件不要重复加载,因为so文件只能被类加载器加载一次(安卓机制)
-
-- 参数 : options {LoadExtConfig} 加载配置
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : options {LoadExtConfig} 配置对象，含主 dex 路径和 so 列表
+- 返回 : {DexClassLoader} 加载成功后的类加载器
 - 版本 : 1.1.0
 
+
 ```javascript
-let options = {
-    path:["dexOrJarPath"],//jar或者dex文件路径数组(可以传入多个dex或jar文件路径)
+var options = {
+    dex: "/res/demo.dex",  //主 dex 文件路径
     so:[
-         {path:"soPath", load:false},
+         //要连带加载的 so 原生库列表
          {
-            path:"soPath",//so文件路径
-            load:false //是否执行系统加载System.load(so);
+            路径: "/res/libxxx.so",  //so 文件路径
+            加载: true              //是否立即加载
          },
          //...
     ]
 }
 $ext.loadDex(options);
-//开始使用dex里面的类
-
+//加载完成后即可使用 dex 和它依赖的 so
 ```
+
+
 ### loadJar(options)
 
-加载jar/so文件
+> 用配置对象的方式加载 jar（可同时加载依赖的 so 原生库）。
+> 
+> 适合一个 jar 还依赖若干 .so 文件时，一次性把 jar 和 so 都配好。
+> 
+> 用法和 loadDex(options) 一样，只是主文件类型换成 jar。
 
-值得注意的就是so文件也有很多架构(x86_64,arm64_v8a等),根据自己手机的架构来选择需要加载的so文件(安卓特性);
-此外:如果dex(java代码)中已经使用System.load(so);加载过的so文件不要重复加载,因为so文件只能被类加载器加载一次(安卓机制)
-
-注意:被加载的jar必须经过安卓开发环境(AndroidStudio)编译生成class字节码归档文件才可被加载
-
-- 参数 : options {LoadExtConfig} 加载配置
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : options {LoadExtConfig} 配置对象，含主 jar 路径和 so 列表
+- 返回 : {DexClassLoader} 加载成功后的类加载器
 - 版本 : 1.1.0
 
+
 ```javascript
-let options = {
-    path:["dexOrJarPath"],//jar或者dex文件路径数组,可以传入多个dex或jar文件路径
+var options = {
+    jar: "/res/demo.jar",  //主 jar 文件路径
     so:[
-         {path:"soPath", load:false},
+         //要连带加载的 so 原生库列表
          {
-            path:"soPath",//so文件路径
-            load:false //是否执行系统加载System.load(so);
+            路径: "/res/libxxx.so",  //so 文件路径
+            加载: true              //是否立即加载
          },
          //...
     ]
 }
 $ext.loadJar(options);
-//开始使用jar里面的类
-
+//加载完成后即可使用 jar 里的类
 ```
+
+
 ### loadApk(options)
 
-加载apk/so文件
+> 用配置对象的方式加载 apk（可同时加载依赖的 so 原生库）。
 
-- 参数 : options {LoadExtConfig} 加载配置
-
-- 返回 : {DexClassLoader} 类加载器
-
+- 参数 : options {LoadExtConfig} 配置对象，含主 apk 路径和 so 列表
+- 返回 : {DexClassLoader} 加载成功后的类加载器
 - 版本 : 1.2.5
 
+
 ```javascript
-let options = {
-    path:["apk路径"],数组格式,但是只支持一个apk路径,传入多个apk文件路径,只会加载第一个apk文件
+var options = {
+    apk: "/sdcard/测试.apk",  //主 apk 文件路径
     so:[
-         {path:"soPath", load:false},
+         //要连带加载的 so 原生库列表
          {
-            path:"soPath", //so文件路径
-            load:false //是否执行系统加载System.load(so);
+            路径: "/res/libxxx.so",  //so 文件路径
+            加载: true              //是否立即加载
          },
          //...
     ]
 }
 $ext.loadApk(options);
-//开始使用apk里面的类
-
+//加载完成后即可使用 apk 里的类
 ```
+
+
 ### clear()
 
-清除缓存的类加载器
-
-$ext中存在一个内置的缓存机制,被加载的jar/dex文件会被生成一个唯一的id作为类加载器的标识,
-
-在起初加载jar/dex文件的时候会保存id和类加载器对象
-
-当再次加载相同的jar/dex文件时,会通过id直接取得类加载器对象来执行类
-
-如果想重新加载需要调用$ext.clear()清除id和类加载器
-
-如果只是单纯的加载dex/jar文件,这个函数可以随便调用;
-但是如果加载了so文件,这个函数最好只使用一次,因为so文件只能被一个类加载器加载一次
-
-就算不小心把加载过so文件的类加载器清空了也没有关系，重启app重新运行即可。
+> 清除缓存的类加载器
+> 
+> $ext 会把加载过的 jar/dex 按唯一的类加载器 ID 缓存起来。
+> 
+> 首次加载时会保存 ID 和类加载器。
+> 
+> 这个方法就是把这些缓存的 ID 和类加载器全部清掉。
+> 
+> 清掉后再加载同一个文件就会重新加载，而不是复用旧缓存。
+> 
+> 注意：如果已经加载过 so 文件，本方法慎用。
+> 因为 so 只能被一个类加载器加载一次，反复清缓存重载可能报错。
+> 
+> 一般只在需要热更新重新加载 dex/jar 时才调用。
 
 - 版本 : 1.1.0
 
+
 ```javascript
 $ext.clear();
-
 ```
+
+
 ### delete()
 
-删除缓存文件
-
-dex加载必须要在安卓的私有目录(安卓机制),所以每次加载的dex文件都会放在私有目录下面
-
-然而我们最主要只是拿到类加载器,当加载完后dex文件也就不需要了,所以可以调用这个函数来删除dex文件
+> 删除缓存文件
+> 
+> 不仅清掉内存里的类加载器，还把解压缓存到磁盘上的文件也一起删掉。
+> 
+> 适合彻底清理、释放存储空间时使用。
 
 - 版本 : 1.1.1
 
+
 ```javascript
 $ext.delete();
-
 ```
----
-
-
-
 
 

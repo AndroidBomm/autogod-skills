@@ -1,998 +1,1153 @@
 # $act - 手势动作
 
-- 更新时间:2026-02-08 19:43:34
+- 更新时间:2026-10-22 10:55:44
 
-手势动作
+> 手势动作对象，脚本里叫 $act。
+> 
+> 它负责模拟人的手指操作：点击、长按、滑动、手势轨迹等，还能通过选择器在界面上定位控件节点并操作。
+> 需要先开启无障碍服务（必要时配合 Root 或 Shizuku）才能对屏幕做手势。
 
-$act是一个高度封装的框架，其中集成了无障碍、$root、$szk触摸方案，优先级为：$root>$szk>无障碍
 
-$act中所有click、press、move函数都会优先判断是否有ROOT权限，如果有，则使用$root进行点击；之后判断是否有Shizuku权限，如果有，则使用$szk进行手势操作；之后判断是否有无障碍权限，如果有，则使用无障碍执行。
+
+```javascript
+$act.click(320, 640);
+```
+
+
+
 
 ### hasPermit()
 
-无障碍服务是否开启
+> 检查无障碍服务是否已开启。
+> 
+> 只是查询当前状态，不会主动弹窗去申请；返回 true 才能做手势和节点操作。
 
-判断无障碍服务是否开启，如果开启了则返回true，否则返回false。
-
-- 返回 : {boolean} 是否开启
-
+- 返回 : {boolean} 操作成功或状态满足时返回 true，否则返回 false
 - 版本 : 1.0.0
+
 
 ```javascript
 //判断是否有权限
-let hasPermit = $act.hasPermit();
+var hasPermit = $act.hasPermit();
 $tip.show("是否获得无障碍",hasPermit);
-
 ```
+
 
 ### getPermit()
 
-获得无障碍服务
+> 请求无障碍权限，并等待权限可用。
+> 
+> 如果还没开启，会弹出系统无障碍设置页让你去打开。
+> 
+> 脚本会一直阻塞在这里等待，直到权限真正可用才往下走。
+> 
+> 每隔几秒会再次提示你去开启；超过一段时间还没开，会再次跳设置页。
+> 
+> 如果已授权 Root 或 Shizuku，会尝试用它们自动开启无障碍，省去手动点。
+> 一般在脚本最开头调用一次，确保后续手势能正常执行。
 
-如果有Root权限:则使用Root权限为本应用授权永久无障碍
-
-如果有Shizuku权限:则使用Shizuku权限为本应用授权永久无障碍
-
-如果没有Root和Shizuku:则进行普通权限申请(非永久有效,受系统限制)
-
-该函数是一个阻塞式函数，请勿放在ui线程当中操作，如果你想在ui状态下申请无障碍，建议使用$permit.wza()函数。
-
-注意：永久无障碍其实是每次启动软件时，会自动自我授权无障碍，它不会立即获得无障碍权限，一般需要等待1-5秒的时间，不过这些操作都会在应用后台进行操作，因此用户并不会感知到这一操作，只会莫名其妙的觉得自己开启的无障碍权限从未关闭过一样。
-在授权无障碍期间，你最好还是使用 $act.hasPermit() 判断无障碍权限是否可用。
-
-- 返回 : {boolean} 是否获得
-
+- 返回 : {boolean} 操作成功或状态满足时返回 true，否则返回 false
 - 版本 : 1.0.0
+
 
 ```javascript
 $act.getPermit();//获得权限
-
 ```
+
+
 ### click(x, y)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势；
-如果Shizuku可用，优先使用Shizuku执行手势；
-如果无障碍可用，使用无障碍执行手势；
-如果以上都不可用，将无任何效果；
-
-- 参数 : x {int} 点击位置x
-
-- 参数 : y {int} 点击位置y
-
+- 参数 : x {int} 屏幕横坐标（像素，从屏幕左边缘往右算）
+- 参数 : y {int} 屏幕纵坐标（像素，从屏幕上边缘往下算）
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势
 $act.click(500,800);
-
 ```
+
+
 ### click(x, y, dur)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : x {int} 点击位置x
-
-- 参数 : y {int} 点击位置y
-
-- 参数 : dur {int} 点击后延迟
-
+- 参数 : x {int} 屏幕横坐标（像素，从屏幕左边缘往右算）
+- 参数 : y {int} 屏幕纵坐标（像素，从屏幕上边缘往下算）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
 
 ```javascript
 //设置点击时常(长按效果)
 sleep(1000);
 $act.click(135,344,1500);
-
 ```
+
+
 ### click(x, y, dur, delay)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : x {int} 点击位置x
-
-- 参数 : y {int} 点击位置y
-
-- 参数 : dur {int} 点击后延迟
-
-- 参数 : delay {int} 点击前延迟
-
+- 参数 : x {int} 屏幕横坐标（像素，从屏幕左边缘往右算）
+- 参数 : y {int} 屏幕纵坐标（像素，从屏幕上边缘往下算）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
 $act.click(500,800,1500,100);
-
 ```
+
+
 ### click(index)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : index {int[]} 点击位置
-
+- 参数 : index {int[]} 坐标数组 [x, y]，x 横坐标、y 纵坐标
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击
 $act.click([500,800]);
-
 ```
+
+
 ### click(index, dur)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : index {int[]} 点击位置
-
-- 参数 : dur {int} 点击后延迟
-
+- 参数 : index {int[]} 坐标数组 [x, y]，x 横坐标、y 纵坐标
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)
 $act.click([135,347],1500);
-
 ```
+
+
 ### click(index, dur, delay)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : index {int[]} 点击位置
-
-- 参数 : dur {int} 点击后延迟
-
-- 参数 : delay {int} 点击前延迟
-
+- 参数 : index {int[]} 坐标数组 [x, y]，x 横坐标、y 纵坐标
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
 $act.click([136,347],1500,100);
-
 ```
+
+
 ### click(index)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : index {Point} 点击位置
-
+- 参数 : index {Point} 一个坐标点对象（含 x、y）
 - 版本 : 1.0.0
 
-```javascript
-//点击手势(点击opencv返参)
-let point = new org.opencv.core.Point(136,347);
-$act.click(point);
 
+```javascript
+//用一个 Point 坐标对象来点击
+var point = new org.opencv.core.Point(136,347);
+$act.click(point);
 ```
+
+
 ### click(index, dur)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : index {Point} 点击位置
-
-- 参数 : dur {int} 点击后延迟
-
+- 参数 : index {Point} 坐标数组 [x, y]，x 横坐标、y 纵坐标
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
-let point = new org.opencv.core.Point(136,347);
+var point = new org.opencv.core.Point(136,347);
 $act.click(point,1500);
-
 ```
+
+
 ### click(index, dur, delay)
 
-点击
+> 执行点击。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果Root可用，优先使用Root执行手势
-如果Shizuku可用，优先使用Shizuku执行手势
-如果无障碍可用，使用无障碍执行手势
-如果以上都不可用，将无任何效果
-
-- 参数 : index {Point} 点击位置
-
-- 参数 : dur {int} 点击后延迟
-
-- 参数 : delay {int} 点击前延迟
-
+- 参数 : index {Point} 坐标数组 [x, y]，x 横坐标、y 纵坐标
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
-let point = new org.opencv.core.Point(136,347);
+var point = new org.opencv.core.Point(136,347);
 $act.click(point,1500,100);
-
 ```
+
+
 ### click(node)
 
-点击节点
+> 点击指定节点。
+> 
+> 如果节点本身可点击，优先直接对节点执行点击；不行就退回到点它的中心坐标。
 
-如果节点支持点击，就是用节点本身的点击行为进行点击，如果不支持，则通过$act的坐标方式来点击节点的坐标位置。
-
-- 参数 : node {Node} 点击位置
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
 - 版本 : 1.0.0
+
 
 ```javascript
 //如果你通过选择器找到了节点，也可以通过这种方式来点击节点
-let node = $act.selector()
-.pkg("org.aigame.pro")
-.cls("android.widget.FrameLayout")
-.waitFirst();
+var node = $act.selector().text("确定").findOne();
 if(node!=null){
      // 绘制节点位置
-     node.draw();
+     node.bounds();      //可在屏幕上画出节点范围，方便调试
      // 可以这样点击
-     node.click();
+     node.click();       //直接点这个节点
      // 也可以这样点击
      $act.click(node);
 }
-
 ```
+
+
 ### click(node, useAct)
 
-点击节点
+> 点击指定节点（可选择是否强制用坐标点击）。
+> 
+> 多了一个开关：useAct 为 true 时，不管节点能不能点，都直接点它的中心坐标。
 
-如果节点支持点击，就是用节点本身的点击行为进行点击，如果不支持，则通过$act的坐标方式来点击节点的坐标位置。
-
-- 参数 : node {Node} 点击位置
-
-- 参数 : useAct {boolean} 是否使用无障碍点击
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : useAct {boolean} 是否强制改用坐标方式去点节点中心（true=坐标点击，false=优先用节点自身的点击能力）
 - 版本 : 1.0.0
+
 
 ```javascript
 //如果你通过选择器找到了节点，也可以通过这种方式来点击节点
-let node = $act.selector()
-.pkg("org.aigame.pro")
-.cls("android.widget.FrameLayout")
-.waitFirst();
+var node = $act.selector().text("确定").findOne();
 if(node!=null){
      // 绘制节点位置
-     node.draw();
+     node.bounds();
      // 可以这样点击
      node.click();
      // 也可以这样点击
      $act.click(node,true);//true表示直接使用$act的点击坐标方式进行点击
 }
-
 ```
+
+
 ### press(node)
 
-长按节点
+> 长按指定节点。
+> 
+> 节点支持长按就直接对它执行长按；不行就退回到长按它的中心坐标。
 
-如果节点支持点击，就是用节点本身的点击行为进行长按，如果不支持，则通过$act的坐标方式来点击节点的坐标位置。
-
-- 参数 : node {Node} 节点
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
 - 版本 : 1.0.0
+
 
 ```javascript
-//如果你通过选择器找到了节点，也可以通过这种方式来点击节点
-let node = $act.selector()
-.pkg("org.aigame.pro")
-.cls("android.widget.FrameLayout")
-.waitFirst();
+//如果你通过选择器找到了节点，也可以通过这种方式来长按节点
+var node = $act.selector().text("列表项").findOne();
 if(node!=null){
      // 绘制节点位置
-     node.draw();
-     // 长按节点 或者也可以直接调用 node.press();
+     node.bounds();
+     node.press();   //直接长按这个节点
      $act.press(node);
 }
-
 ```
+
+
 ### press(node, useAct)
 
-长按节点
+> 长按指定节点（可选择是否强制用坐标长按）。
+> 
+> useAct 为 true 时，直接用坐标长按节点中心；否则优先用节点自身的长按能力。
 
-如果设备获得了root，将优先使用root来执行手势,如果没有root,则使用无障碍来执行手势
-
-- 参数 : node {Node} 节点
-
-- 参数 : useAct {boolean} 是否使用act点击
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : useAct {boolean} 是否强制改用坐标方式去点节点中心（true=坐标点击，false=优先用节点自身的点击能力）
 - 版本 : 1.0.0
+
+
+```javascript
+var node = $act.selector().text("列表项").findOne();
+$act.press(node, true);
+```
+
 
 ### press(x, y)
 
-长按
+> 执行长按。
+> 
 
-- 参数 : x {int} 长按位置x
-
-- 参数 : y {int} 长按位置y
-
+- 参数 : x {int} 屏幕横坐标（像素，从屏幕左边缘往右算）
+- 参数 : y {int} 屏幕纵坐标（像素，从屏幕上边缘往下算）
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
 $act.press(136,347);
-
 ```
+
+
 ### press(x, y, dur)
 
-长按
+> 执行长按。
+> 
 
-- 参数 : x {int} 长按位置x
-
-- 参数 : y {int} 长按位置y
-
-- 参数 : dur {int} 长按后延迟
-
+- 参数 : x {int} 屏幕横坐标（像素，从屏幕左边缘往右算）
+- 参数 : y {int} 屏幕纵坐标（像素，从屏幕上边缘往下算）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
 $act.press(136,347,1500);
-
 ```
+
+
 ### press(x, y, dur, delay)
 
-长按
+> 执行长按。
+> 
 
-- 参数 : x {int} 长按位置x
-
-- 参数 : y {int} 长按位置y
-
-- 参数 : dur {int} 长按后延迟
-
-- 参数 : delay {int} 长按前延迟
-
+- 参数 : x {int} 屏幕横坐标（像素，从屏幕左边缘往右算）
+- 参数 : y {int} 屏幕纵坐标（像素，从屏幕上边缘往下算）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
 - 版本 : 1.0.0
+
 
 ```javascript
 //点击手势(长按)(延迟一秒)
 $act.press(136,347,1500,100);
-
 ```
+
+
 ### slide(startX, startY, endX, endY, duration)
 
-模拟人手滑动
+> 沿指定路径模拟自然的人手滑动。
 
-- 参数 : startX {int} 起点x(必填)
-
-- 参数 : startY {int} 起点y(必填)
-
-- 参数 : endX {int} 终点x(必填)
-
-- 参数 : endY {int} 终点y(必填)
-
-- 参数 : duration {int} 持续时间(可为空:默认:1秒)
-
+- 参数 : startX {int} 起点横坐标（像素）
+- 参数 : startY {int} 起点纵坐标（像素）
+- 参数 : endX {int} 终点横坐标（像素）
+- 参数 : endY {int} 终点纵坐标（像素）
+- 参数 : duration {int} 整段手势的持续时长（毫秒）
 - 版本 : 1.7.8
+
 
 ```javascript
 //随机模拟真人滑动(推荐)
 $act.slide(189,244,733,1440,3000);
-
 ```
+
+
 ### move(x1, y1, x2, y2)
 
-滑动
+> 执行滑动。
+> 
 
-- 参数 : x1 {int} 起点x
-
-- 参数 : y1 {int} 起点y
-
-- 参数 : x2 {int} 终点x
-
-- 参数 : y2 {int} 终点y
-
+- 参数 : x1 {int} 起点横坐标（像素）
+- 参数 : y1 {int} 起点纵坐标（像素）
+- 参数 : x2 {int} 终点横坐标（像素）
+- 参数 : y2 {int} 终点纵坐标（像素）
 - 版本 : 1.0.0
+
 
 ```javascript
 //滑动手势
 $act.move(500,0,500,800);
-
 ```
+
+
 ### move(x1, y1, x2, y2, dur)
 
-滑动
+> 执行滑动。
+> 
 
-- 参数 : x1 {int} 起点x
-
-- 参数 : y1 {int} 起点y
-
-- 参数 : x2 {int} 终点x
-
-- 参数 : y2 {int} 终点y
-
-- 参数 : dur {int} 滑动延迟
-
+- 参数 : x1 {int} 起点横坐标（像素）
+- 参数 : y1 {int} 起点纵坐标（像素）
+- 参数 : x2 {int} 终点横坐标（像素）
+- 参数 : y2 {int} 终点纵坐标（像素）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
 
 ```javascript
 //滑动手势
 $act.move(500,0,500,800,500);
-
 ```
+
+
 ### move(x1, y1, x2, y2, dur, delay)
 
-滑动
+> 执行滑动。
+> 
 
-- 参数 : x1 {int} 起点x
-
-- 参数 : y1 {int} 起点y
-
-- 参数 : x2 {int} 终点x
-
-- 参数 : y2 {int} 终点y
-
-- 参数 : dur {int} 滑动时间
-
-- 参数 : delay {int} 滑动延迟
-
+- 参数 : x1 {int} 起点横坐标（像素）
+- 参数 : y1 {int} 起点纵坐标（像素）
+- 参数 : x2 {int} 终点横坐标（像素）
+- 参数 : y2 {int} 终点纵坐标（像素）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
 - 版本 : 1.0.0
+
 
 ```javascript
 //滑动手势
 $act.move(500,0,500,800,500.1000);
-
 ```
+
+
 ### move(node, dir)
 
-滑动节点
+> 让一个可滚动的节点（如列表）按指定方向滚动一页。
+> 
+> 此操作只能通过无障碍服务执行。
 
-仅无障碍可用
-
-- 参数 : node {Node} 节点
-
-- 参数 : dir {String} 方向(up|down|left|right)
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : dir {String} 滑动方向，如 左/右/上/下
 - 版本 : 1.0.0
+
+
+```javascript
+$act.move(null, "up");
+```
+
 
 ### move(node, x2, y2, dur)
 
-滑动
+> 执行滑动。
+> 
 
-- 参数 : node {Node} 节点
-
-- 参数 : x2 {int} 终点x
-
-- 参数 : y2 {int} 终点y
-
-- 参数 : dur {int} 滑动时间
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : x2 {int} 终点横坐标（像素）
+- 参数 : y2 {int} 终点纵坐标（像素）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
 
 ```javascript
 //滑动手势
 $act.move(node,800,500,1000);
-
 ```
+
+
 ### move(node, x2, y2, dur, delay)
 
-滑动
+> 执行滑动。
+> 
 
-- 参数 : node {Node} 节点
-
-- 参数 : x2 {int} 终点x
-
-- 参数 : y2 {int} 终点y
-
-- 参数 : dur {int} 滑动时间
-
-- 参数 : delay {int} 滑动延迟
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : x2 {int} 终点横坐标（像素）
+- 参数 : y2 {int} 终点纵坐标（像素）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
 - 版本 : 1.0.0
+
 
 ```javascript
 //滑动手势
 $act.move(node,800,500,1000,100);
-
 ```
+
+
 ### gesture(gesture)
 
-多指手势
+> 执行多指手势。
 
-- 参数 : gesture {int[]} 动作数据数组[起点x,起点y,终点x,终点y,开始时间,时长]
-
+- 参数 : gesture {int[]} 一段手势的坐标点数组 [x,y,x,y,...]
 - 版本 : 1.0.0
+
 
 ```javascript
 // 手势模拟向下滑动
 $act.gesture([500,0,500,800,0,500]);
-
 ```
+
+
 ### gesture(gesture1, gesture2)
 
-双指手势
+> 执行双指手势。
+> 
 
-- 参数 : gesture1 {int[]} 动作数据数组[起点x,起点y,终点x,终点y,开始时间,时长]
-
-- 参数 : gesture2 {int[]} 动作数据数组[起点x,起点y,终点x,终点y,开始时间,时长]
-
+- 参数 : gesture1 {int[]} 第一段手势的坐标点数组
+- 参数 : gesture2 {int[]} 第二段手势的坐标点数组
 - 版本 : 1.0.0
+
 
 ```javascript
 // 双指放大
-let centerX = 500;
-let centerY = 800;
+var centerX = 500;
+var centerY = 800;
 $act.gesture(
-    [centerX,centerY,centerX-400,centerY-400,0,500],
-    [centerX,centerY,centerX+400,centerY+400,0,500]
+    [centerX-100, centerY, centerX-300, centerY, 0, 300],
+    [centerX+100, centerY, centerX+300, centerY, 0, 300]
 );
-
 ```
+
+
 ### gesture(gesture1, gesture2, gesture3)
 
-三指动作
+> 执行三指手势。
+> 
 
-- 参数 : gesture1 {int[]} 动作数据数组
-
-- 参数 : gesture2 {int[]} 动作数据数组
-
-- 参数 : gesture3 {int[]} 动作数据数组
-
+- 参数 : gesture1 {int[]} 第一段手势的坐标点数组
+- 参数 : gesture2 {int[]} 第二段手势的坐标点数组
+- 参数 : gesture3 {int[]} 第三段手势的坐标点数组
 - 版本 : 1.0.0
+
 
 ```javascript
 //三指滑动动作
 $act.gesture( [500,0,500,800,500,0] ,
-```
 [550,0,550,800,500,0] ,
 [600,0,600,800,500,0]
 );
+```
+
 
 ### gesture(gesture1, gesture2, gesture3, gesture4)
 
-四指动作
+> 执行四指手势。
+> 
 
-- 参数 : gesture1 {int[]} 动作数据数组
-
-- 参数 : gesture2 {int[]} 动作数据数组
-
-- 参数 : gesture3 {int[]} 动作数据数组
-
+- 参数 : gesture1 {int[]} 第一段手势的坐标点数组
+- 参数 : gesture2 {int[]} 第二段手势的坐标点数组
+- 参数 : gesture3 {int[]} 第三段手势的坐标点数组
+- 参数 : gesture4 {int[]} 第四段手势的坐标点数组
 - 版本 : 1.0.0
+
 
 ```javascript
 //四指滑动动作
 $act.gesture( [500,0,500,800,500,0] ,
-```
 [550,0,550,800,500,0] ,
 [600,0,600,800,500,0] ,
 [650,0,650,800,500,0]
 );
+```
+
 
 ### createPath(paths)
 
-通过路径来构建path对象(默认持续时间为1秒)
+> 创建一个默认时长为一秒的手势路径对象。
 
-- 参数 : paths {[][]} 动作数据数组
-
-- 返回 : {Path}
-
+- 参数 : paths {[][]} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
+- 返回 : {Path} 构造好的安卓 Path 路径对象，可用于执行手势
 - 版本 : 1.0.0
+
+
+```javascript
+var result = $act.createPath(["one", "two"]);
+```
+
 
 ### createPath(paths, dur)
 
-通过路径来构建path对象
+> 根据传入的手势路径创建路径对象。
 
-- 参数 : paths {[][]} 动作数据数组
-
-- 参数 : dur {int} 持续
-
-- 返回 : {AgPath} 路径对象
-
+- 参数 : paths {[][]} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 返回 : {AgPath} 包装好的路径对象，可直接交给多段手势执行
 - 版本 : 1.0.0
+
+
+```javascript
+var result = $act.createPath(["one", "two"], 500);
+```
+
 
 ### createPath(paths, delay, dur)
 
-通过路径来构建path对象
+> 根据传入的手势路径创建路径对象。
 
-- 参数 : paths {[][]} 动作数据数组
-
-- 参数 : delay {int} 开始时间
-
-- 参数 : dur {int} 延迟
-
-- 返回 : {Path}
-
+- 参数 : paths {[][]} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
+- 参数 : delay {int} 正式开始前延迟等待的时间（毫秒）
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
+- 返回 : {Path} 构造好的安卓 Path 路径对象，可用于执行手势
 - 版本 : 1.0.0
+
+
+```javascript
+var result = $act.createPath(["one", "two"], 1, 500);
+```
+
 
 ### path(paths)
 
-执行路径
+> 执行一个或多个手势路径。
 
-- 参数 : paths {AgPath...} 多路径
-
+- 参数 : paths {AgPath...} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
 - 版本 : 1.0.0
+
+
+```javascript
+$act.path(null);
+```
+
 
 ### path(paths)
 
-构建一个路径并且执行(默认时间为1秒)
+> 创建并执行一个默认时长为一秒的手势路径。
 
-- 参数 : paths {int[][]} 动作数据数组
-
+- 参数 : paths {int[][]} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
 - 版本 : 1.0.0
+
+
+```javascript
+$act.path(["one", "two"]);
+```
+
 
 ### path(paths, dur)
 
-构建一个路径并且执行
+> 创建并执行手势路径。
 
-- 参数 : paths {int[][]} 动作数据数组
-
-- 参数 : dur {int} 延迟
-
+- 参数 : paths {int[][]} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
+
+```javascript
+$act.path(["one", "two"], 500);
+```
+
 
 ### path(paths, startTime, dur)
 
-构建一个路径并且执行
+> 创建并执行手势路径。
 
-- 参数 : paths {int[][]} 动作数据数组
-
-- 参数 : startTime {int} 开始时间
-
-- 参数 : dur {int} 延迟
-
+- 参数 : paths {int[][]} 一组路径点（每个点是 [x,y] 或坐标对象），按顺序连成手势轨迹
+- 参数 : startTime {int} 手势开始的时间偏移（毫秒），用于多段手势错峰启动
+- 参数 : dur {int} 手势持续时长（毫秒），按下去停留多久
 - 版本 : 1.0.0
+
+
+```javascript
+$act.path(["one", "two"], 500, 500);
+```
+
 
 ### home()
 
-点击home键
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 执行返回桌面的操作。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+// 返回主页前先确认无障碍权限
+if ($act.hasPermit()) $act.home();
+}</pre>
+
 
 ```javascript
 $act.home();
-
 ```
+
+
 ### back()
 
-返回
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 执行返回操作。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.back();
+sleep(300);
+log("已返回上一页");
+}</pre>
+
 
 ```javascript
 $act.back();
-
 ```
+
+
 ### menu()
 
-返回
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 打开系统菜单。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.menu();
+log("已打开系统菜单");
+}</pre>
+
 
 ```javascript
 $act.menu();
-
 ```
+
+
 ### recent()
 
-近期任务
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 打开最近任务界面。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.recent();
+log("已打开最近任务");
+}</pre>
+
 
 ```javascript
 $act.recent();
-
 ```
+
+
 ### power()
 
-长按电源
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 长按电源键。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.power();
+log("已发送电源键事件");
+}</pre>
+
 
 ```javascript
 $act.power();
-
 ```
+
+
 ### lock()
 
-锁屏
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 锁定屏幕。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+if ($act.getPermit()) $act.lock();
+}</pre>
+
 
 ```javascript
 $act.lock();
-
 ```
+
+
 ### unlock()
 
-唤醒屏幕
-
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
+> 唤醒屏幕。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.unlock();
+log("已尝试唤醒屏幕");
+}</pre>
+
 
 ```javascript
 $act.unlock();
-
 ```
+
+
 ### splitScreen()
 
-分屏
+> 进入分屏模式。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.splitScreen();
+log("已发送分屏按键事件");
+}</pre>
+
 
 ```javascript
 $act.splitScreen();
-
 ```
+
+
 ### settings()
 
-设置
+> 打开系统设置。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.settings();
+$thread.sleep(500);
+log("已打开系统设置");
+}</pre>
+
 
 ```javascript
 $act.settings();
-
 ```
+
+
 ### notifications()
 
-通知
+> 打开通知栏。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.notifications();
+log("已打开通知栏");
+}</pre>
+
 
 ```javascript
 $act.notifications();
-
 ```
+
+
 ### screenshot()
 
-截屏
-
-唤起手机自带的截屏操作
+> 打开系统截屏界面。
+> 
+> 打开设备截屏界面。
 
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.screenshot();
+log("已发送截屏按键事件");
+}</pre>
+
 
 ```javascript
 $act.screenshot();
-
 ```
+
+
 ### input(text)
 
-粘贴到文本框
+> 将文本粘贴到输入框。
+> 
+> 优先使用 Root 或 Shizuku（若已授权）执行该手势；
+> 否则，在无障碍服务可用时通过无障碍服务执行。
+> 以上方式都不可用时，此操作不会生效。
 
-如果有root则优先使用root执行
-如果有Shizuku则优先使用shizuku执行
-如果有无障碍则优先使用无障碍执行
-如果以上都没有，则无效果
-
-- 参数 : text {String} 需要输入的文字
-
+- 参数 : text {String} 要输入或写入的文本内容
 - 版本 : 1.0.0
+
 
 ```javascript
 $act.input("我是要粘贴的内容");
-
 ```
+
+
 ### input(node, text)
 
-粘贴到文本框
+> 直接把文本写入指定的原生输入框节点（相当于设置文本，不用手动弹键盘打字）。
+> 
+> 此函数需要无障碍服务。
 
-无障碍专属的函数
-
-- 参数 : node {AccessibilityNodeInfo} 指定节点
-
-- 参数 : text {String} 需要输入的文字
-
+- 参数 : node {AccessibilityNodeInfo} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : text {String} 要输入或写入的文本内容
 - 版本 : 1.0.0
 
-```javascript
-$act.input("我是要粘贴的内容");
 
+```javascript
+//先通过选择器拿到输入框节点，再把文本写进去
+var box = $act.selector().className("EditText").findOne();
+$act.input(box, "我是要粘贴的内容");
 ```
+
+
 ### input(node, text)
 
-粘贴到文本框
+> 直接把文本写入指定的输入框节点（Node 包装版）。
+> 
+> 用法同上，只是传入的是用选择器找到的 Node 对象。
 
-无障碍专属的函数
-
-- 参数 : node {Node} 指定节点
-
-- 参数 : text {String} 需要输入的文字
-
+- 参数 : node {Node} 要操作的无障碍节点对象，由 $act.selector() 查找获得
+- 参数 : text {String} 要输入或写入的文本内容
 - 版本 : 1.0.0
 
-```javascript
-$act.input("我是要粘贴的内容");
 
+```javascript
+var box = $act.selector().className("EditText").findOne();
+$act.input(box, "我是要粘贴的内容");
 ```
+
+
 ### activity()
 
-获得activity类名
+> 获取当前活动类名。
 
-- 返回 : activity类名
-
+- 返回 : 操作结果，一般为成功与否或对应的数据对象
 - 版本 : 1.0.0
+
 
 ```javascript
-let name = $act.activity();
+var name = $act.activity();
 log("当前类名:"+name);
-
 ```
+
+
 ### activity(callback)
 
-设置窗口变化监听
+> 注册活动变化回调。
 
-- 参数 : callback {(name)=>{}} 回调
-
+- 参数 : callback {(name)=>{} 页面变化时的回调，参数是当前页面名
 - 版本 : 1.0.0
+
 
 ```javascript
 //设置监听:
-$act.activity((name)=> {
-    log("当前界面==>"+name);
+$act.activity(function(name) {
+    log("当前界面==>" + name);
 });
-
 ```
+
+
 ### selector()
 
-创建一个ui选择器
+> 创建界面选择器。
+> 
 
-- 返回 : {UiSelector} UI选择器
-
+- 返回 : {UiSelector} 选择器对象，用它在界面上按条件查找控件节点
 - 版本 : 1.0.0
+
+
+```javascript
+var result = $act.selector();
+```
+
 
 ### setDevDensity(density)
 
-设置开发环境的密度
+> 设置开发屏幕密度。
+> 
+> 填你"写脚本时那台手机"的密度，坐标适配时按它做换算。
+> 
+> 配合 setAdapt(true) 一起用，才能在不同分辨率手机上点对位置。
 
-注意：此函数用于全分辨率适配，需要配合 $act.setAdapt(true) 来使用。
-
-测试API:此方法后续可能会被删除
-
-- 参数 : density {float} 密度因子
-
+- 参数 : density {float} 屏幕密度（dpi/160），用于适配坐标
 - 版本 : 1.0.0
+
+
+```javascript
+$act.setDevDensity(1);
+```
+
 
 ### setAdapt(usable)
 
-是否启动分辨率适配
+> 启用或停用屏幕坐标适配。
+> 
+> 开启后，你写的坐标会按"开发机→当前机"的密度比例自动换算。
+> 
+> 这样同一份脚本在不同分辨率的手机上都能点到大概正确的位置。
 
-我将根据屏幕密度来等比例计算出坐标的位置。
-
-测试API:此方法后续可能会被删除
-
-- 参数 : usable {boolean} 启用分辨率适配
-
+- 参数 : usable {boolean} 是否启用该能力
 - 版本 : 1.0.0
+<p>使用示例：
+<pre>{@code
+$act.setAdapt(true);
+$act.click(100, 200);
+// 开启后坐标会按设备密度适配
+}</pre>
+
+
+```javascript
+$act.setAdapt(true);
+```
+
 
 ### isOnlyAcc()
 
-判断$act是否只使用无障碍服务
+> 查询当前是否被强制为"只使用无障碍手势"。
 
-- 返回 : {boolean} 是否只使用无障碍服务
+- 返回 : {boolean} 操作成功或状态满足时返回 true，否则返回 false
+
+
+```javascript
+var result = $act.isOnlyAcc();
+```
+
 
 ### setOnlyAcc(onlyAcc)
 
-设置$act只使用无障碍服务
+> 设置是否强制只用无障碍手势，不走 Root/Shizuku。
+> 
+> $act 会自动挑一个可用的手势执行方式：优先 Root，其次 Shizuku，最后才是无障碍手势。
+> 
+> 设为 true 后，就只用无障碍自带的手势执行。
+> 
+> 适合没有 Root/Shizuku、或想统一行为时使用。
 
-在本应用中$act是一个高度封装的框架，很多动作都会优先判断是否有$root和$szk，如果有root则优先使用root来执行手势，如果有szk(Shizuku)则优先使用Shizuku执行手势，如果$touch可用，则使用$touch执行手势。
-
-正因为$act是一个高度封装的框架，导致运行速度会比较慢，毕竟内部的执行逻辑稍微复杂一些。
-
-然而有时候我们不需要用到$root、$szk、$touch来执行操作，故设计了这个函数，用来配置$act是否只使用无障碍来进行操作，以加快运行速度。
-
-- 参数 : onlyAcc {boolean} 是否只使用无障碍进行操作
-
+- 参数 : onlyAcc {boolean} 是否强制只使用无障碍手势（不走 Root/Shizuku）
 - 版本 : 1.4.3
+
+
+```javascript
+$act.setOnlyAcc(true);
+```
+
 
 ### setJitter(jitter)
 
-设置抖动值
+> 设置坐标抖动范围。
+> 
+> 开启后，每次点击/滑动的坐标都会在原位置附近随机偏移几像素。
+> 
+> 这样不会每次都点在完全相同的坐标上，模拟真人操作更自然。
+> 
+> 传 0 表示关闭抖动。
 
-$act允许用户配置抖动值(默认是0)，以实现随机点击，而抖动值其实就是随机值的范围，例如：点击坐标 X=10，抖动值为5时，实际上点击的位置将可能是 X=5到15之间。
-假设：点击 X=5，抖动值设置为10，则实际上 X抖动之后在0-15之间(而不是-5到15之间)，我要告诉你：抖动之后的坐标不会小于0。
-
-不过我需要提醒:我并不会判断你的坐标在抖动之后是否处于屏幕的外部，因此，你需要合理的设置抖动值。
-
-- 参数 : jitter {int} 抖动值
-
+- 参数 : jitter {int} 随机抖动范围（像素），点击时加随机偏移，避免每次点在完全相同位置
 - 版本 : 1.4.3
+<p>使用示例：
+<pre>{@code
+$act.setJitter(3);
+$act.click(500, 800);
+// 点击时加入轻微随机抖动
+}</pre>
+
+
+```javascript
+$act.setJitter(1);
+```
+
 
 ### enableRoot(enableRoot)
 
-启用$root
+> 设置是否允许在有 Root 时优先用 Root 执行手势。
+> 
+> 开启后，若设备已 Root，$act 会优先用 Root 来做点击/滑动等手势。
+> 
+> Root 默认是开启的；不需要时可以用这个方法关掉。
 
-$act是一个高度封装的框架，很多动作都会判断是否有$root，如果有$root则优先使用$root来执行手势。
-
-默认情况下，$root是启用的，你可以通过此函数来禁用$root。
-
-- 参数 : enableRoot {boolean} 是否启用$root
-
+- 参数 : enableRoot {boolean} 是否允许优先使用 Root 执行手势
 - 版本 : 1.4.7
+
+
+```javascript
+$act.enableRoot(true);
+```
+
 
 ### isEnableRoot()
 
-判断$root是否启用
+> 查询当前是否允许优先使用 Root 执行手势。
 
-- 返回 : {boolean} 是否启用$root
-
+- 返回 : {boolean} 操作成功或状态满足时返回 true，否则返回 false
 - 版本 : 1.4.7
+
+
+```javascript
+var result = $act.isEnableRoot();
+```
+
 
 ### enableSzk(enableSzk)
 
-启用$szk
+> 设置是否允许在有 Shizuku 时优先用 Shizuku 执行手势。
+> 
+> 开启后，若已连接 Shizuku，$act 会优先用它来做手势。
+> 
+> Shizuku 默认是开启的；不需要时可以用这个方法关掉。
 
-$act是一个高度封装的框架，很多动作都会判断是否有$szk，如果有$szk则优先使用$szk来执行手势。
+- 参数 : enableSzk {boolean} 是否允许优先使用 Shizuku 执行手势
+                 <p>使用示例：
+                 <pre>{@code
+                                  $act.enableSzk(true);
+                                  log("优先尝试使用 Shizuku 执行动作");
+                                  }</pre>
 
-默认情况下，$szk是启用的，你可以通过此函数来禁用$szk。
 
-- 参数 : enableSzk {boolean} 是否启用$szk
+```javascript
+$act.enableSzk(true);
+```
+
 
 ### isEnableSzk()
 
-判断$szk是否启用
+> 查询当前是否允许优先使用 Shizuku 执行手势。
 
-- 返回 : {boolean} 是否启用$szk
-
+- 返回 : {boolean} 操作成功或状态满足时返回 true，否则返回 false
 - 版本 : 1.4.7
 
----
 
-
-
+```javascript
+var result = $act.isEnableSzk();
+```
 
 

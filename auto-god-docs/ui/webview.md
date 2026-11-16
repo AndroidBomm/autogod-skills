@@ -1,446 +1,558 @@
-## 网页
+# 网页
+
+- 更新时间:2026-10-22 10:58:43
+
+> 网页-webview
+> 
+> 你可以用vant,vue,layui,element-ui等框架编写html界面，在这个控件中加载这个界面，之后就是处理一些交互函数了
 
 
-#网页 
 
-更新时间:2026-06-15 07:53:05
 
-网页-webview
 
-你可以用vant,vue,layui,element-ui等框架编写html界面，在这个控件中加载这个界面，之后就是处理一些交互函数了
-
-  
-  
+<div style="width: 100%; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe 
+    src="//player.bilibili.com/player.html?isOutside=true&aid=116242836888247&bvid=BV1HRwDzvEjs&cid=36758423061&p=1" 
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+    scrolling="no" 
+    frameborder="no" 
+    allowfullscreen="true">
+  </iframe>
+</div>
 
 强大的网页组件，可以展示华丽的html页面。
 
-#一、常用属性
 
-#bridge - 桥梁对象名称
+## 一、常用属性
 
-设置桥梁对象名称
 
-<webview bridge="bridge" />
+### bridge - 桥梁对象名称
 
-#path - 网页路径
+> 设置桥梁对象名称
 
-设置网页路径
 
-<webview path="layout.html" />
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <webview bridge="bridge" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-#url - 网页链接
 
-设置网页链接
+### path - 网页路径
 
-<webview url="https://auto-god.netlify.app/" />
+> 设置网页路径
 
-#padding - 内边距
 
-设置内边距
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+// 示例用到的本地资源需要提前准备，请把文件路径改为项目中的实际路径。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <webview path="layout.html" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-<webview padding="0,0,0,0" />
 
-#bg - 背景颜色
+### url - 网页链接
 
-设置背景颜色
+> 设置网页链接
 
-<webview bg="red" />
 
-#bgImg - 背景图片
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+// 网络内容需要可用的地址和网络连接；请按实际情况替换示例地址。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <webview url="https://auto-god.netlify.app/" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-设置背景图片
 
-<webview bgImg="res/bg.png" />
+### padding - 内边距
 
-#二、常用函数
+> 设置内边距
 
-#onLoaded(onLoad)
 
-设置加载完成回调
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <webview padding="0,0,0,0" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
 
-参数 : onLoad (()=>{}) 回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//设置加载完成回调
-wv.onLoaded(()=>{
-    //一般在控件加载完html之后注册一些交互函数,例如：
-    wv.addFunc("getWza",()=>{
-        $permit.wza();//获取无障碍权限
+### bg - 背景颜色
+
+> 设置背景颜色
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <webview bg="red" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+### bgImg - 背景图片
+
+> 设置背景图片
+
+
+```html
+// 用字符串保存布局；标签表示控件，属性控制控件的外观或初始状态。
+// 示例用到的本地资源需要提前准备，请把文件路径改为项目中的实际路径。
+var layoutXml = `
+<ui>
+    <statusbar />
+    <webview bgImg="res/bg.png" />
+</ui>
+`;
+// 解析布局得到界面对象，再显示界面。
+var ui = $ui.layout(layoutXml);
+ui.show();
+```
+
+
+## 二、常用函数
+
+
+### onLoaded(onLoad)
+
+> 监听网页“整页加载完成”这一刻，立刻回调你传进来的函数（无参数）。
+> 
+> 一般在这里面注册网页要调用的函数（addFunc），因为注册太早网页还没准备好。
+
+- 参数 : onLoad {function} 网页加载完成时回调，无参数
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" url="https://example.com"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.onLoaded(function() {
+    log("网页加载完了");
+    wv.addFunc("onBtn", function() {
+        log("网页里按钮被点了");
+        return "";
     });
-    //之后就可以在html中使用:$.call("getWza");调用这个函数了
 });
+```
 
-#clear()
 
-清除网页缓存
+### clear()
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//清除网页缓存
-wv.clear();
+> 清空这个网页控件的缓存、历史记录和表单数据（让它像刚打开一样干净）。
 
-#loadUrl(url)
 
-加载url
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" url="https://example.com"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.clear(); //清掉缓存和历史
+```
 
-参数 : url url
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//加载url
-wv.loadUrl("http://...");
+### loadUrl(url)
 
-#loadHtml(html)
+> 让网页控件打开一个新的网址（会自动补 http:// 开头）。
 
-加载html字符串
+- 参数 : url {String} 要打开的网址
 
-参数 : html html字符串
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//加载html字符串
-wv.loadHtml(`
-<html>
-    //这里是html字符串
-</html>
-`);
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.loadUrl("https://www.baidu.com"); //打开百度
+```
 
-#loadFile(path)
 
-加载html文件
+### loadHtml(html)
 
-参数 : path html文件路径
+> 直接用一段 HTML 字符串当网页内容显示出来（不用先写文件）。
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//加载html文件
-wv.loadFile("./html/index.html");
+- 参数 : html {String} 要显示的 HTML 字符串
 
-#callJs(funcName, callBack)
 
-调用js无参函数
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+//用 + 拼接一段简单网页
+var html = '<html><body><h1>你好</h1></body></html>';
+wv.loadHtml(html); //直接显示这段网页
+```
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJs("mFunc",(returnValue)=>{
-    //..
+
+### loadFile(path)
+
+> 让网页控件加载项目里的一个本地 HTML 文件。
+
+- 参数 : path {String} 本地 HTML 文件路径
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.loadFile("index.html"); //加载项目里这个网页文件
+```
+
+
+### callJs(funcName, callBack)
+
+> 在脚本端去调用网页里写好的一个无参 JS 函数，并能收到它 return 的结果。
+> 
+> 网页里必须已经定义好这个函数名；网页没加载完时调用会失败。
+
+- 参数 : funcName {String} 网页里已定义的无参 JS 函数名
+- 参数 : callBack {function} 收到函数返回值（字符串）的回调
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+//网页里定义了 function mFunc(){return 123;}
+wv.callJs("mFunc", function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJs(funcName)
 
-调用js无参函数
+### callJs(funcName)
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数
-wv.callJs("mFunc");
+> 在脚本端去调用网页里写好的一个无参 JS 函数（不关心它的返回值）。
 
-#callJsInt(funcName, param, callBack)
+- 参数 : funcName {String} 网页里已定义的无参 JS 函数名
 
-调用js的整数参数函数
 
-参数 : funcName {String} js函数名
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJs("mFunc"); //网页里定义了 function mFunc(){...}
+```
 
-参数 : param {int} 参数
 
-参数 : callBack ((str)=>{}) 回调
+### callJsInt(funcName, param, callBack)
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsInt("setFontSize",22,(returnValue)=>{
-    //..
+> 在脚本端调用网页里的一个 JS 函数，并传一个整数进去，还能收到返回值。
+
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的整数
+- 参数 : callBack {function} 收到返回值（字符串）的回调
+
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+//网页里定义了 function setFontSize(n){...}
+wv.callJsInt("setFontSize", 22, function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJsInt(funcName, param)
 
-调用js的整数参数函数
+### callJsInt(funcName, param)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，传一个整数进去（不关心返回值）。
 
-参数 : param {int} 参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的整数
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数
-wv.callJsInt("setFontSize",22);
 
-#callJsLong(funcName, param, callBack)
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsInt("setFontSize", 22); //网页里定义了 function setFontSize(n){...}
+```
 
-调用js的长整数参数函数
 
-参数 : funcName {String} js函数名
+### callJsLong(funcName, param, callBack)
 
-参数 : param {long} 参数
+> 在脚本端调用网页里的一个 JS 函数，并传一个很大的整数（长整数）进去，能收到返回值。
 
-参数 : callBack ((str)=>{}) 回调
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的长整数
+- 参数 : callBack {function} 收到返回值（字符串）的回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsLong("setLength",546894564564849,(returnValue)=>{
-    //..
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsLong("setLength", 546894564564849, function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJsLong(funcName, param)
 
-调用js的长整数参数函数
+### callJsLong(funcName, param)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，传一个很大的整数（长整数）进去（不关心返回值）。
 
-参数 : param {long} 参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的长整数
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数
-wv.callJsLong("setLength",546894564564849);
 
-#callJsDouble(funcName, param, callBack)
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsLong("setLength", 546894564564849);
+```
 
-调用js的浮点数参数函数
 
-参数 : funcName {String} js函数名
+### callJsDouble(funcName, param, callBack)
 
-参数 : param {float} 参数
+> 在脚本端调用网页里的一个 JS 函数，并传一个带小数的数字进去，能收到返回值。
 
-参数 : callBack ((str)=>{}) 回调
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的小数
+- 参数 : callBack {function} 收到返回值（字符串）的回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsDouble("setVal",3.1415926,(returnValue)=>{
-    //..
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsDouble("setVal", 3.1415926, function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJsDouble(funcName, param)
 
-调用js的浮点数参数函数
+### callJsDouble(funcName, param)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，传一个带小数的数字进去（不关心返回值）。
 
-参数 : param {float} 参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的小数
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsDouble("setVal",3.1415926);
 
-#callJsFloat(funcName, param, callBack)
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsDouble("setVal", 3.1415926);
+```
 
-调用js的浮点数参数函数
 
-参数 : funcName {String} js函数名
+### callJsFloat(funcName, param, callBack)
 
-参数 : param {float} 参数
+> 在脚本端调用网页里的一个 JS 函数，并传一个小数进去，能收到返回值。
 
-参数 : callBack ((str)=>{}) 回调
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的小数
+- 参数 : callBack {function} 收到返回值（字符串）的回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsFloat("setVal",3.1415926,(returnValue)=>{
-    //..
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsFloat("setVal", 3.14, function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJsFloat(funcName, param)
 
-调用js的浮点数参数函数
+### callJsFloat(funcName, param)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，传一个小数进去（不关心返回值）。
 
-参数 : param {float} 参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Number} 要传进去的小数
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsFloat("setVal",3.1415926);
 
-#callJsChar(funcName, param, callBack)
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsFloat("setVal", 3.14);
+```
 
-调用js的字符串参数函数
 
-参数 : funcName {String} js函数名
+### callJsChar(funcName, param, callBack)
 
-参数 : param {char} 参数
+> 在脚本端调用网页里的一个 JS 函数，并传一个单字符进去，能收到返回值。
 
-参数 : callBack ((str)=>{}) 回调
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {String} 要传进去的单字符
+- 参数 : callBack {function} 收到返回值（字符串）的回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsChar("setChar",'A',(returnValue)=>{
-    //..
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsChar("setChar", "A", function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJsChar(funcName, param)
 
-调用js的字符串参数函数
+### callJsChar(funcName, param)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，传一个单字符进去（不关心返回值）。
 
-参数 : param {char} 参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {String} 要传进去的单字符
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsChar("setChar",'A');
 
-#callJsBool(funcName, param, callBack)
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsChar("setChar", "A");
+```
 
-调用js的布尔参数函数
 
-参数 : funcName {String} js函数名
+### callJsBool(funcName, param, callBack)
 
-参数 : param {boolean} 参数
+> 在脚本端调用网页里的一个 JS 函数，并传一个真/假值（true/false）进去，能收到返回值。
 
-参数 : callBack ((str)=>{}) 回调
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Boolean} 要传进去的 true 或 false
+- 参数 : callBack {function} 收到返回值（字符串）的回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsBool("setEnable",true,(returnValue)=>{
-    //..
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsBool("setEnable", true, function(returnValue) {
+    log("网页返回:" + returnValue);
 });
+```
 
-#callJsBool(funcName, param)
 
-调用js的布尔参数函数
+### callJsBool(funcName, param)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，传一个真/假值进去（不关心返回值）。
 
-参数 : param {boolean} 参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {Boolean} 要传进去的 true 或 false
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数
-wv.callJsBool("setEnable",true);
 
-#callJsStr(funcName, param, callBack)
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsBool("setEnable", true);
+```
 
-调用js的长文本参数函数
 
-在传入长文本之前，会把文本进行URL编码，所以在html使用的时候需要使用函数``解码才能得到原本的长文本内容。
+### callJsStr(funcName, param, callBack)
 
-参数 : funcName {String} js函数名
+> 在脚本端调用网页里的一个 JS 函数，并传一段长文本进去，能收到返回值。
+> 
+> 长文本会先做 URL 编码，网页里收到后要用 decodeURIComponent 解码才能还原原文。
 
-参数 : param {String} 长文本参数
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {String} 要传进去的长文本
+- 参数 : callBack {function} 收到返回值（字符串）的回调
 
-参数 : callBack ((str)=>{}) 回调
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数,如果有返回值,那么就会通过returnValue回调获取
-wv.callJsStr("setCode","一大堆文字",(returnValue)=>{
-    //..
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsStr("setCode", "一大段文字", function(returnValue) {
+    log("网页返回:" + returnValue);
 });
-//在html中的代码:
-function setCode(str){
-    //html使用的时候需要使用函数`decodeURIComponent`解码才能得到原本的长文本内容。
-    let code =  decodeURIComponent(str);
-    $.alert("代码",code);
-}
+//网页里这样接：
+// function setCode(str){
+//     var code = decodeURIComponent(str);
+//     $.alert("代码", code);
+// }
+```
 
-#callJsStr(funcName, param)
 
-调用js的长文本参数函数
+### callJsStr(funcName, param)
 
-在传入长文本之前，会把文本进行URL编码，所以在html使用的时候需要使用函数``解码才能得到原本的长文本内容。
+> 在脚本端调用网页里的一个 JS 函数，传一段长文本进去（不关心返回值）。
+> 
+> 长文本会先做 URL 编码，网页里收到后要用 decodeURIComponent 解码才能还原原文。
 
-参数 : funcName {String} js函数名
+- 参数 : funcName {String} 网页里的 JS 函数名
+- 参数 : param {String} 要传进去的长文本
 
-参数 : param {String} 长文本参数
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//调用js无参函数
-//mFunc是html中定义的函数
-wv.callJsStr("setCode","一大堆文字");
-//在html中的代码:
-function setCode(str){
-    //html使用的时候需要使用函数`decodeURIComponent`解码才能得到原本的长文本内容。
-    let code =  decodeURIComponent(str);
-    $.alert("代码",code);
-}
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max" path="index.html"/></ui>');
+ui.show(); //把界面显示出来
+var wv = ui.id("mWeb"); //根据 id 拿到这个网页控件
+wv.callJsStr("setCode", "一大段文字");
+//网页里这样接：
+// function setCode(str){
+//     var code = decodeURIComponent(str);
+//     $.alert("代码", code);
+// }
+```
 
-#addFunc(funcName, callback)
 
-注册桥梁函数
+### addFunc(funcName, callback)
 
-向桥梁对象$中注册(添加)自定义函数，之后就可以在html中通过$.call(函数名称);来调用啦
+> 注册一个供当前网页调用的脚本函数。
+> 
+> funcName 为 String（注册名称），callback 为 WebFuncCallBack 回调接口；Rhino 脚本可传 function 实现。返回 void，无返回值。
+> 名称和回调都不能为 null；再次注册同名函数会替换原回调。注册只保存回调，不会立即执行它。
+> 网页通过默认桥梁 $.call("名称", ...) 调用，最多传十个字符串参数；不足的位置由桥梁填 null，回调返回 String 文字给网页。
+> 需要传对象时，网页先 JSON.stringify，脚本回调再 JSON.parse。不要把网页代码与 Rhino 代码放在同一执行环境。
+> 可以先注册再加载自己的网页，确保网页调用前名称已经存在；并不要求只能在 onLoaded 中注册。
 
-参数 : funcName {()=>{ return "数据"; }} 回调
+- 参数 : funcName {String} 网页调用时使用的名称，不能为 null
+- 参数 : callback {WebFuncCallBack} 接收最多十个 String 参数并返回 String 的回调，不能为 null
+- 返回 : {void} 无返回值
 
-//解析布局,获得ui对象
-let ui = $ui.layout("./mUi.xml");
-//获取控件
-let wv = ui.id("mWebView");
-//设置加载完成回调
-wv.onLoaded(()=>{
-    //一般在控件加载完html之后注册一些交互函数,例如：
-    wv.addFunc("getWza",()=>{
-        $permit.wza();//获取无障碍权限
-    });
-    //之后就可以在html中使用:$.call("getWza");调用这个函数了
+
+```javascript
+var ui = $ui.layout('<ui><statusbar/><webview id="mWeb" w="max"/></ui>'); // 创建界面。
+ui.show(); // 显示控件。
+var web = ui.id("mWeb"); // 取得网页控件。
+web.addFunc("greet", function(name) { // 注册一个字符串参数的回调。
+    if (name == null) { // 网页没有传名字时使用默认值。
+        name = "访客";
+    }
+    return "你好，" + String(name); // 返回文字给网页。
 });
+// 网页按钮点击时调用桥梁，并通过桥梁显示返回文字。
+var html = '<html><body><button onclick="$.toast($.call(\'greet\', \'小明\'))">打招呼</button></body></html>';
+web.loadHtml(html); // 注册完成后再加载这段网页。
+```
 
 
----

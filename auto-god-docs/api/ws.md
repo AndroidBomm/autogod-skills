@@ -1,78 +1,98 @@
 # $ws - 双工通信:WebSocket
 
-- 更新时间:2026-02-08 19:43:43
+- 更新时间:2026-10-22 10:55:52
 
-WebSocket工具
+> 按地址发起双向长连接，返回 Ws 包装对象。
+> 输入：String 服务器地址，使用 ws:// 或 wss:// 开头，不能为 null 或无效网址；参数错误可能直接抛出异常。
+> 输出：Ws，用它注册监听、发送消息和关闭连接。返回对象不代表已经连接成功，实际结果通过网络事件通知。
+> 当前实现先发起连接，再保存并返回包装对象；极早的事件可能在对象保存或自定义监听注册之前发生，之后不会补发。
+> 各监听只保存一个函数，重复注册会替换旧函数；默认监听输出日志，传 null 停用对应监听。
+> 回调的连接参数是 okhttp3.WebSocket，响应是 okhttp3.Response，并非 Ws 或 HttpResponse；底层方法仍使用英文名。
+> 示例立即注册失败、消息和打开监听；示例网址只说明格式，需换成自己的服务地址。
 
-让客户端和服务器之间建立一条"热线电话"，双方可以随时说话(通信)，不用像以前那样每次都要重新拨号(不用重新建立连接)。
+
+
+```javascript
+var socket = $ws.create("wss://example.com/socket"); //发起连接，尚不能认为已经连上
+socket.onFail(function (error, response, raw) { //连接失败或异常中断时执行
+    log("失败原因：" + error.getMessage()); //这是宿主异常对象
+    if (response != null) { //连接失败时可能没有响应
+        log("握手响应状态：" + response.code());
+    }
+});
+socket.onMsgStr(function (text, raw) { //收到文字消息时执行
+    log("收到文字：" + text); //内容由服务器约定，不保证是对象数据
+});
+socket.onMsgByte(function (data) { //收到二进制消息时执行
+    log("字节数量：" + data.size()); //ByteString 用方法读取长度
+    var bytes = data.toByteArray(); //转换成 byte[]
+    if (bytes.length > 0) {
+        log("首字节：" + (bytes[0] & 255)); //转为无符号数值
+    }
+});
+socket.onClosing(function (code, reason, raw) { //收到关闭请求时执行
+    log("对方请求关闭：" + code + "，" + reason);
+    raw.close(1000, "收到关闭通知"); //回应关闭，最终结果等待关闭完成事件
+});
+socket.onClosed(function (code, reason, raw) { //正常关闭完成时执行
+    log("正常关闭已完成：" + code);
+    log("关闭原因：" + reason); //不要再向已关闭连接发消息
+});
+socket.onOpen(function (response, raw) { //握手成功时执行
+    log("握手状态码：" + response.code()); //底层响应的方法
+    var accepted = raw.send("你好服务器"); //使用本次事件提供的底层连接
+    log("是否进入队列：" + accepted); //不等于服务器已经处理
+});
+```
+
+
+
 
 ### create(url)
 
-创建一个 WebSocket
+> 按地址发起双向长连接，返回 Ws 包装对象。
+> 输入：String 服务器地址，使用 ws:// 或 wss:// 开头，不能为 null 或无效网址；参数错误可能直接抛出异常。
+> 输出：Ws，用它注册监听、发送消息和关闭连接。返回对象不代表已经连接成功，实际结果通过网络事件通知。
+> 当前实现先发起连接，再保存并返回包装对象；极早的事件可能在对象保存或自定义监听注册之前发生，之后不会补发。
+> 各监听只保存一个函数，重复注册会替换旧函数；默认监听输出日志，传 null 停用对应监听。
+> 回调的连接参数是 okhttp3.WebSocket，响应是 okhttp3.Response，并非 Ws 或 HttpResponse；底层方法仍使用英文名。
+> 示例立即注册失败、消息和打开监听；示例网址只说明格式，需换成自己的服务地址。
 
-- 参数 : url {string} 例如:ws://127.0.0.1:8080
+- 参数 : url {String} 有效的长连接服务器网址，例如 ws:// 或 wss:// 开头的地址
+- 返回 : {Ws} 刚创建的包装对象；实际连接状态通过回调得知
 
-- 返回 : Ws
 
-//返回的ws是经过封装的WebSocket对象(不是okhttp3.WebSocket原生对象)
-let ws = $ws.create("wss://echo.websocket.org");
-//设置监听
-ws.onOpen((res,ws)=> {
-    //当成功连接时回调(此函数可以不用设置，拥有默认回调:打印信息)
-    console.log("链接成功");
-    //参数说明：
-    // res: okhttp3.Response (参考okhttp3文档)
-    // ws: okhttp3.WebSocket (参考okhttp3文档)
-})
-.onClosed((code,reason,ws)=> {
-    //当关闭后回调(此函数可以不用设置，拥有默认回调:打印信息)
-    console.log("关闭成功");
-    //参数说明：
-    // code:   int    数字
-    // reason: String 字符串
-    // ws: okhttp3.WebSocket (参考okhttp3文档)
-})
-.onClosing((code,reason,ws)=> {
-    //处于关闭时回调(此函数可以不用设置，拥有默认回调:打印信息)
-    console.log("正在关闭");
-    //参数说明：
-    // code:   int    数字
-    // reason: String 字符串
-    // ws: okhttp3.WebSocket (参考okhttp3文档)
-})
-.onFail((err,res,ws)=> {
-    //出现异常时回调(此函数可以不用设置，拥有默认回调:打印信息)
-    console.log("出现异常",err);
-    //参数说明：
-    // err: Throwable
-    // res: okhttp3.Response (参考okhttp3文档)
-    // ws: okhttp3.WebSocket (参考okhttp3文档)
-})
-.onMsgStr((str, ws)=> {
-    //接收到字符串信息时回调
-    console.log("收到字符串：",str);
-    //参数说明：
-    // str: String 字符串数据
-    // ws: okhttp3.WebSocket (参考okhttp3文档)
-})
-.onMsgByte((bs)=> {
-    //接收到字节数据时回调
-    console.log("收到二进制消息：大小 ", bs.size());
-    console.log("hex: ", bs.hex());
-    console.log("base64: ", bs.base64());
-    console.log("md5: ", bs.md5());
-    console.log("bytes: ", bs.toByteArray());
-    //参数说明：
-    // bs: okio.ByteString (参考okhttp3文档)
+```javascript
+var socket = $ws.create("wss://example.com/socket"); //发起连接，尚不能认为已经连上
+socket.onFail(function (error, response, raw) { //连接失败或异常中断时执行
+    log("失败原因：" + error.getMessage()); //这是宿主异常对象
+    if (response != null) { //连接失败时可能没有响应
+        log("握手响应状态：" + response.code());
+    }
 });
-//发送字符串消息
-ws.send("Hello AIGame!");
-//发送二进制消息
-//ws.send([10,15,1,1,0,5]);
-
----
-
-
-
+socket.onMsgStr(function (text, raw) { //收到文字消息时执行
+    log("收到文字：" + text); //内容由服务器约定，不保证是对象数据
+});
+socket.onMsgByte(function (data) { //收到二进制消息时执行
+    log("字节数量：" + data.size()); //ByteString 用方法读取长度
+    var bytes = data.toByteArray(); //转换成 byte[]
+    if (bytes.length > 0) {
+        log("首字节：" + (bytes[0] & 255)); //转为无符号数值
+    }
+});
+socket.onClosing(function (code, reason, raw) { //收到关闭请求时执行
+    log("对方请求关闭：" + code + "，" + reason);
+    raw.close(1000, "收到关闭通知"); //回应关闭，最终结果等待关闭完成事件
+});
+socket.onClosed(function (code, reason, raw) { //正常关闭完成时执行
+    log("正常关闭已完成：" + code);
+    log("关闭原因：" + reason); //不要再向已关闭连接发消息
+});
+socket.onOpen(function (response, raw) { //握手成功时执行
+    log("握手状态码：" + response.code()); //底层响应的方法
+    var accepted = raw.send("你好服务器"); //使用本次事件提供的底层连接
+    log("是否进入队列：" + accepted); //不等于服务器已经处理
+});
+```
 
 

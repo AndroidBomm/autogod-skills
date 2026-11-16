@@ -1,242 +1,256 @@
 # $sys - 系统工具
 
-- 更新时间:2026-03-10 16:30:17
+- 更新时间:2026-10-22 10:55:51
 
-系统工具
+> $sys：一堆和手机系统有关的小工具。
+> 
+> 包括飞行模式、音量、设备标识、剪切板读写、电池优化白名单、前台保活、开发者指针等。
+> 很多改系统设置的功能需要先拿到"修改系统设置"权限（用 $permit.set()）。
+
+
+
+```javascript
+// 取一下设备唯一标识
+var id = $sys.getDeviceId();
+```
+
+
+
 
 ### airplane(enable)
 
-设置飞行模式
+> 打开或关闭飞行模式。
+> 
+> 需要"修改系统设置"权限，先调 $permit.set() 获取。如果系统安全策略不允许直接改，
+> 会自动跳到手动设置页面让用户自己开。
 
-如果无法修改系统达到设置飞行模式的目的，那么就要求用户手动设置飞行模式
-
-- 参数 : enable {boolean} 是否开启飞行模式(ture:开启,false:关闭)
-
+- 参数 : enable {boolean} true 打开，false 关闭
 - 版本 : 1.0.0
 
-```javascript
-//设置飞行模式
-$sys.airplane(true);
 
+```javascript
+// 打开飞行模式
+$sys.airplane(true);
 ```
+
+
 ### volume(mode, volume)
 
-设置媒体音量
+> 设置某一类声音的音量大小。
+> 
+> 第一个参数是声音类型，第二个是音量（会自动夹在 0 到该类型最大值之间）。
+> 常用类型：system=系统、ring=铃声、music=媒体、alarm=闹钟、notification=通知、call=通话。
 
-注意：音量模式可以只写前三个字母,比如：sys,rin,mus,ala,acc
-
-- 参数 : mode {string} 音量模式(system|ring|music|alarm|notification|call|dtmf|accessibility)
-
-- 参数 : volume {int} 音量大小
-
+- 参数 : mode {string} 声音类型，如 system/ring/music/alarm/notification/call
+- 参数 : volume {int} 目标音量，会自动限制在合法范围内
 - 版本 : 1.0.0
 
-```javascript
-//设置音量大小
-//注意：前面的英文字母可以只写前3位，比如：sys,rin,mus,ala,acc
-$sys.volume("system",100);//系统
-$sys.volume("ring",100);//铃声
-$sys.volume("music",100);//媒体
-$sys.volume("alarm",100);//闹钟
-$sys.volume("notification",100);//通知
-$sys.volume("call",100);//电话
-$sys.volume("dtmf",100);//双音多频(信号的音量流)
-$sys.volume("accessibility",100);//无障碍
-toast("音量已全部加满！");
 
+```javascript
+// 把媒体音量拉满
+$sys.volume("music", 100);
+// 把闹钟音量设到一半
+$sys.volume("alarm", 5);
 ```
+
+
 ### getDeviceId()
 
-获得唯一标识
+> 获取这台设备的唯一标识（一串 MD5 后的字符串）。
+> 
+> 它由设备型号、厂商等信息拼起来再 MD5 得到，同一台手机每次结果相同，可用来区分设备。
 
-- 返回 : 设备唯一标识
-
+- 返回 : {String} 这台设备的唯一标识字符串
 - 版本 : 1.0.0
 
-```javascript
-let id = $sys.getDeviceId();
-alert("设备id",id);
 
+```javascript
+// 取设备标识
+var id = $sys.getDeviceId();
+toast("设备id：" + id);
 ```
+
+
 ### hasClip()
 
-判断剪切板是否有内容
+> 检查系统剪切板里现在有没有内容。
 
-- 返回 : {boolean} 是否存在剪切板
-
+- 返回 : {boolean} true 表示剪切板有内容
 - 版本 : 1.0.0
 
-```javascript
-//判断是否有内容
-if($sys.hasClip()){
-    //获得内容
-    let content = $sys.getClip();
-    $tip.i(content);
-}
 
+```javascript
+// 有内容就取出来看看
+if ($sys.hasClip()) {
+    var content = $sys.getClip();
+    toast("剪切板：" + content);
+}
 ```
+
+
 ### clearClip()
 
-清除剪切板内容
+> 清空系统剪切板里的内容。
 
-- 返回 : {boolean} 是否清除成功
-
+- 返回 : {boolean} true 表示清空成功
 - 版本 : 1.0.0
 
-```javascript
-$sys.clearClip();
 
+```javascript
+// 清空剪切板
+$sys.clearClip();
 ```
+
+
 ### getClip()
 
-获得剪切板文字
+> 读取系统剪切板里当前复制的文字。
+> 
+> 一般先 hasClip 确认有内容再读。
 
-谷歌官方发布表明从安卓13开始将支持应用设置剪切板的内容为敏感信息，这就导致，获取剪切板的内容很可能无法获取，或者获取到的内容为空。
-
-因此在实际开发中，如果你发现自己无法获取剪切板的内容，完全属于正常现象，此外，较高版本的安卓系统中，剪切板无法后台获取。
-
-- 返回 : {String} 剪切板的文字
-
+- 返回 : {String} 剪切板里的文字，可能为空
 - 版本 : 1.0.0
 
-```javascript
-//获得内容
-let content = $sys.getClip();
-alert("剪切板",content);
 
+```javascript
+// 读出剪切板内容
+var content = $sys.getClip();
+toast("剪切板：" + content);
 ```
+
+
 ### setClip(text)
 
-设置剪切板
+> 把一段文字写进系统剪切板（相当于帮用户复制了这段文字）。
 
-- 参数 : text {String} 需要添加的文字
-
-- 返回 : {String} 获得文字
-
+- 参数 : text {String} 要复制到剪切板的文字
+- 返回 : {boolean} true 表示设置成功
 - 版本 : 1.0.0
 
-```javascript
-//设置剪切板
-$sys.setClip("Hello AIGame !");
 
+```javascript
+// 复制一段文字
+$sys.setClip("Hello AIGame !");
 ```
+
+
 ### ignorePower(pkgName)
 
-是否忽略电池优化
+> 检查某个应用是否已经被加入"忽略电池优化"白名单。
+> 
+> 开了这个，后台更不容易被系统杀掉。部分低版本安卓才可用。
 
-该功能只能在部分低版本安卓系统上才可使用
-
-- 参数 : pkgName {string} 包名
-
-- 返回 : {boolean} 是否成功
-
+- 参数 : pkgName {string} 要检查的应用包名
+- 返回 : {boolean} true 表示已在白名单
 - 版本 : 1.0.0
 
-```javascript
-//是否忽略电池优化
-let is = $sys.ignorePower("org.aigame.app");
-alert("是否忽略电池优化",is);
 
+```javascript
+// 检查本应用是否已忽略电池优化
+var is = $sys.ignorePower("org.aigame.app");
+toast("是否忽略电池优化：" + is);
 ```
+
+
 ### requestIgnorePower(pkgName)
 
-请求忽略电池优化
+> 弹出系统请求，让用户把指定应用加入"忽略电池优化"白名单。
+> 
+> 通常在脚本刚启动时调用一次，请求用户授权保活。
 
-该功能只能在部分低版本安卓系统上才可使用
-
-- 参数 : pkgName {string} 包名
-
+- 参数 : pkgName {string} 要申请的应用包名
 - 版本 : 1.0.0
 
-```javascript
-//请求忽略电池优化
-$sys.requestIgnorePower("org.aigame.app");
 
+```javascript
+// 弹请求框，请用户授权
+$sys.requestIgnorePower("org.aigame.app");
 ```
+
+
 ### stayAlive(enable)
 
-开启前台保活服务
+> 开启或关闭前台保活服务，让脚本在后台更不容易被杀。
 
-- 参数 : enable {boolean} 是否开启
-
+- 参数 : enable {boolean} true 开启保活，false 关闭
 - 版本 : 1.1.2
 
-```javascript
-//开启前台保活服务
-$sys.stayAlive(true);
-//关闭前台保活服务
-$sys.stayAlive(false);
 
+```javascript
+// 开启前台保活
+$sys.stayAlive(true);
+// 关闭保活
+$sys.stayAlive(false);
 ```
+
+
 ### hasStayAlive()
 
-是否开启前台保活服务
+> 查询前台保活服务当前是否正在运行。
 
-- 返回 : {boolean} 是否开启
-
+- 返回 : {boolean} true 表示保活正在运行
 - 版本 : 1.1.2
 
-```javascript
-//是否开启前台保活服务
-let is = $sys.hasStayAlive();
-alert("是否开启前台保活服务",is);
 
+```javascript
+// 查一下保活状态
+var is = $sys.hasStayAlive();
+toast("保活是否开启：" + is);
 ```
+
+
 ### hasPointer()
 
-判断是否开启指针
+> 检查开发者选项里的"指针位置"显示是否已经打开。
+> 
+> 指针显示会在屏幕上画出触摸轨迹，常用于辅助调试点击位置。
 
-判断是否开启开发者调试的指针位置显示
-
-- 返回 : {boolean} 是否开启
-
+- 返回 : {boolean} true 表示指针显示已打开
 - 版本 : 1.4.1
 
-```javascript
-if($sys.hasPointer()){
-    //已经开启了开发者指针
-    alert("指针状态","指针已开启");
-}
 
+```javascript
+if ($sys.hasPointer()) {
+    toast("指针已开启");
+}
 ```
+
+
 ### pointer(enable)
 
-开发者指针授权
+> 开启或关闭开发者选项里的"指针位置"显示。
+> 
+> 它会依次尝试用 Root、Shizuku、写 secure 设置三种方式去开。
+> 注意：授权不是立刻生效，开完最好等 1 秒再用 hasPointer 确认。
 
-需要root或者shizuku权限才能开启指针
-
+- 参数 : enable {boolean} true 开启，false 关闭
 - 版本 : 1.7.0
 
-```javascript
-//授权开启开发者指针
-$sys.pointer(true);
-//等待一秒后再判断指针是否可用(指针授权并非是立马生效的)
-sleep(1000);
-//判断指针是否可用
-if($sys.hasPointer()){
-    //指针已开启
-    alert("指针授权","指针已开启");
-}
 
+```javascript
+// 开启指针
+$sys.pointer(true);
+// 等 1 秒让它生效
+sleep(1000);
+if ($sys.hasPointer()) {
+    toast("指针已开启");
+}
 ```
+
+
 ### volumeCtrl(enable)
 
-设置音量控制
+> 打开或关闭 App 内部的音量控制功能。
+> 
+> 用来决定是否接管音量键。
 
-默认情况下，APP会监听音量键，连续减音量会停止所有脚本程序，但你可以通过此函数配置是否启用这一功能。
-
-注意：该配置不会影响$event中volume事件监听，你依旧可以自己通过$event.on("volume",(data)=>{})来自定义监听事件
-
+- 参数 : enable {boolean} true 开启音量控制，false 关闭
 - 版本 : 1.9.4
 
+
 ```javascript
-//关闭音量控制
+// 关闭音量控制
 $sys.volumeCtrl(false);
-
 ```
----
-
-
-
 
 
