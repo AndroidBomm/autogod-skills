@@ -85,6 +85,50 @@ triggers:
 > | `version()` | ✅ `js版本：v5.0.4;    插件版本：v5.0.4;`（**不要读 `_version_`，实例上没有这个属性**） |
 > | `matToBase64()` | ✅ 返回 `java.lang.String`；`.length` 是方法，先 `String(b)` 再取长度 |
 
+## ⛔ 找图找色三条硬规则（2026-11 真机实测踩出来的）
+
+这三条每一条都会导致**函数静默返回 null、不报错**，都是花了两天查出来的。
+
+### 1. 用 `findImgFast`，不要用 `findImg`
+
+```javascript
+// ✅ 官方图色工具 TuSeToolWPF 的代码生成器用的就是这个
+let arr = imageHandler.findImgFast(srcMat, tempMat, threshold, sx, sy, ex, ey, count, false);
+// arr[0] = { left, top, right, bottom, similarity }，插件不返回中心，要自己算
+let cx = (arr[0].left + arr[0].right) / 2, cy = (arr[0].top + arr[0].bottom) / 2;
+
+// ❌ findImg 内部「先按 resize 缩图 → 再用原始像素 ROI 裁剪」，两者混用会抛
+//    cv::Exception (-215:Assertion failed) ... in function 'Mat'
+//    而插件把这个异常自己 catch 吞掉只写日志，调用方只能看到 null
+```
+
+### 2. 范围参数是 0~10000 归一化坐标，**不是像素**
+
+```javascript
+// 想找屏幕右下角 x 1140~1280、y 100~520 这块（1280x720 屏）
+let nx = (px, total) => Math.round(px * 10000 / total);
+imageHandler.findImgFast(mat, tpl, 0.85,
+    nx(1140,1280), nx(100,720), nx(1280,1280), nx(520,720), 1, false);
+```
+
+传像素值的话 ROI 会被解释成极小的一块（如 `1140` ≈ 全屏的 11.4% 位置），**永远找不到**。
+
+### 3. 第 1 个参数必须是 **Mat**，不能是 Image
+
+```javascript
+// ✅ captureScreenMat() / readMat() 返回的都是 Mat
+let mat = imageHandler.captureScreenMat();
+
+// ❌ $screen.getScreen() 返回的是 Image → 报「请使用Mat格式图片」并被吞成 null
+imageHandler.findImgFast($screen.getScreen(), tpl, ...);   // ← 错
+```
+
+日志里出现 `function findImgFast 第 1 张图片请使用Mat格式图片` 就是这条。
+
+> 这三条的原始排查记录在 `guide/踩坑记录.md` 的 `auto-god-docs` 技能里；官方工具本体在
+> `H:\冉遗鱼图色工具高级版7.1.5\...\TuSeToolWPF.exe`，它自带的 `MakeCodeFun.js` 就是官方代码生成模板库，
+> 不确定签名时可以直接去翻。
+
 ## 文档目录结构
 
 ```
