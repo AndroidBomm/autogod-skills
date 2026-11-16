@@ -162,11 +162,11 @@ description: AutoGOD/AiGame 编码参考手册。提供 $act/$screen/$ocr/$http/
 | 控件的演示代码 | `ui/<控件>/demo.md`（如 `ui/button/demo.md`） |
 | 布局 | `ui/layout/<布局>.md` |
 
-#### 备选：开官网（仅供核对「有没有更新」）
+#### 备选：开官网
 
-- 入口只有根地址：**https://auto-god.top/** —— 必须**从根逐级点进去**
-- ⚠️ **所有深链都已失效**（2026-11-16 实测 `api_en/act.html`、`docs/en/ui/index`、`docs/`、`docs/en/`、`api/`、`en/`、`guide/` 等 8 个路径全部 404，只有 `/` 返回 200）。旧的 `https://auto-god.top/api_en/act.html`、`https://auto-god.top/docs/en/ui/index` **不要再写、也不要用**——网站改版后是纯前端路由，深链没有服务端回退。
-- 官网有中文版，但本技能按用户要求**只收了英文版**。
+**https://auto-god.top/**
+
+这是唯一入口。网站改版后**深链全部失效**（旧的 `api_en/act.html`、`docs/en/ui/index` 等一律 404），只能从这个根地址进去，逐级点：**文档 → API / UI → 英文**。
 
 > ⚠️ 两份文档不一致时以**官网为准**（说明本地副本过期了，应按 `_meta.md` 的步骤重新同步）；两边都查不到的 API 不得凭空编造，必须明确告知用户「文档中不存在此 API」。
 
